@@ -4,6 +4,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import Login from './pages/Login';
 
 
 
@@ -17,7 +18,7 @@ function App() {
 				<Suspense fallback={<div>Loading..</div>}>
 					<Routes>
 					<Route path="/" element={<Home />} />
-						<Route path="/oauth2/callback" element={<Home />} />
+						<Route path="/oauth2/callback" element={<Login />} />
 
 						<Route path="*" element={<NotFound />} />
 					</Routes>
