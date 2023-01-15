@@ -3,6 +3,7 @@ const GOOGLE_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=
 function Home() {
    
     console.log(GOOGLE_AUTH_URL);
+    console.log(process.env.REACT_APP_GOOGLE_REDIRECT_URI);
   return (
     <div> <button>
     <a href={GOOGLE_AUTH_URL}>구글로그인버튼</a>
