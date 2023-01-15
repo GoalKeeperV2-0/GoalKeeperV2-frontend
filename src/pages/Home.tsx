@@ -9,6 +9,7 @@ function Home() {
         console.log( "인가코드 : ",code);
         console.log( "한번 사용한 인가코드는 다시 사용못하므로 재발급 받아야함");
     },[]);
+    console.log(GOOGLE_AUTH_URL);
   return (
     <div> <button>
     <a href={GOOGLE_AUTH_URL}>구글로그인버튼</a>
