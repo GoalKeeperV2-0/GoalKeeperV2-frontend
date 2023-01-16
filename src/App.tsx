@@ -6,33 +6,21 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 
-
-
 function App() {
-  
-  return (
-    <div className="App">
-
-
-<Router>
+	return (
+		<div className="App">
+			<Router>
 				<Suspense fallback={<div>Loading..</div>}>
 					<Routes>
-					<Route path="/" element={<Home />} />
+						<Route path="/" element={<Home />} />
 						<Route path="/oauth2/callback" element={<Login />} />
 
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 				</Suspense>
 			</Router>
-      
-    </div>
-  );
+		</div>
+	);
 }
 
 export default App;
-/*
-
-
-
-
-         */
