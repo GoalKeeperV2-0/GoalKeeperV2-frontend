@@ -1,0 +1,55 @@
+/* eslint-disable react/jsx-props-no-spreading */
+// import { useDispatch, useSelector } from 'react-redux';
+// import { RootState } from 'store/slices';
+// import modalSlice, { ModalComponentState } from 'store/slices/modalSlice';
+import React, { useEffect, useRef, Suspense } from 'react';
+// import modalList from 'utils/importModal';
+import { Router, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+// import Path from 'utils/path';
+
+export default function ModalSection() {
+	const bodyRef = useRef<HTMLDivElement>(null);
+	const modalRef = useRef<HTMLDivElement>(null);
+	// const { openList, isOpenModal } = useSelector((state: RootState) => state.modal);
+	// const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const { pathname } = useLocation();
+	const [searchParams] = useSearchParams();
+
+	/*	useEffect(() => {
+		if (isOpenModal) {
+			document.body.style.cssText = `
+			  position: fixed;
+			  overflow: hidden;
+			  width: 100%;
+			  height: 100%
+			`;
+			return;
+		}
+		document.body.style.cssText = '';
+	}, [isOpenModal]);
+    */
+
+	/*	const handleModalClick = (e: React.BaseSyntheticEvent | MouseEvent) => {
+		const { target } = e;
+
+		if (modalRef.current === target || bodyRef.current === target) {
+			if (searchParams.get('goal')) {
+				navigate(-1);
+				dispatch(modalSlice.actions.close());
+				document.body.style.cssText = '';
+				return;
+			}
+			dispatch(modalSlice.actions.close());
+		}
+	};
+*/
+	return (
+		<Suspense fallback={<div>정보를 불러오는 중이에요.</div>}>
+			<div className={`absolute top-0 left-0 z-50 w-full h-full ${false ? '' : 'hidden'}`} aria-hidden>
+				<div className="absolute w-full h-full z-999 bg-primaryBlack-500 bg-opacity-20" ref={bodyRef} />
+				<div className="relative top-1/2 left-1/2" ref={modalRef} />
+			</div>
+		</Suspense>
+	);
+}

@@ -22,7 +22,12 @@
       ],
       "@typescript-eslint/no-var-requires": "error",
       "no-alert":"off",
-      "react-hooks/exhaustive-deps":"off"
+      "react-hooks/exhaustive-deps":"off",
+      "import/newline-after-import":"off",
+      "react/button-has-type":"off",
+      "spaced-comment":"off",
+      "import/prefer-default-export":"off"
+
     }
    
   }

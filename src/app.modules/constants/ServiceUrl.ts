@@ -1,0 +1,16 @@
+export const SERVICE_URL = {
+	home: '/',
+	login: '/login',
+	signUp: '/sign-up',
+	certifications: '/certifications',
+	announcements: '/announcements',
+	announcementsDetail: '/announcementsDetail',
+	moneyCharge: '/money/charge',
+	moneyTransfer: '/money/transfer',
+	myGoals: '/mypage',
+	pushNotice: '/mypage/push-notice',
+	goalRegister: '/goals/register',
+	inspection: '/admin/inspection',
+	adminAnnouncements: '/admin/announcements',
+	setting: '/setting',
+};
