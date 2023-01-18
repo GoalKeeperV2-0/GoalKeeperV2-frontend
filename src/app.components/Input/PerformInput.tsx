@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-// import { confirmOverlapEmail } from 'api/memberAPI';
 import { validateEmail, validatePassword } from 'app.modules/utils/common';
+
+// import { confirmOverlapEmail } from 'api/memberAPI';
 
 enum Color {
 	primaryBlack100 = 'primaryBlack-100',

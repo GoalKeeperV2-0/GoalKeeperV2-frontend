@@ -1,9 +1,10 @@
 import React from 'react';
+import AuthLayout from 'app.components/AuthLayout';
+import BaseTemplate from 'app.components/BaseTemplate';
 import SubmitButton, { BtnStates } from 'app.components/Button/SubmitButton';
 import PerformInput from 'app.components/Input/PerformInput';
-import Select, { Option } from 'app.components/Select';
-import BaseTemplate from 'app.components/BaseTemplate';
-import AuthLayout from 'app.components/AuthLayout';
+import Select from 'app.components/Select';
+
 import { IForm, Action, signUpFormState } from '../states/signUpForm';
 
 interface Props {
@@ -17,7 +18,7 @@ export const GenderOption = [
 	{ id: 1, value: '남자' },
 	{ id: 2, value: '여자' },
 	{ id: 3, value: '없음' },
-] as Option[];
+];
 export const AgeOption = [
 	{ id: 10, value: '10대' },
 	{ id: 20, value: '20대' },
@@ -25,7 +26,7 @@ export const AgeOption = [
 	{ id: 40, value: '40대' },
 	{ id: 50, value: '50대' },
 	{ id: 60, value: '60대' },
-] as Option[];
+];
 
 function SignUpView({ error, onSubmit }: Props) {
 	const getBtnState = (): BtnStates => {

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
-import Header from 'app.components/Header';
-import ModalSection from 'app.components/Modal/ModalSection';
+import Header from './Header';
+import ModalSection from './Modal/ModalSection';
 
 interface TemplateProps {
 	isAdmin?: string | null;

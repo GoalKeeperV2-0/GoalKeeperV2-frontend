@@ -26,7 +26,8 @@
       "import/newline-after-import":"off",
       "react/button-has-type":"off",
       "spaced-comment":"off",
-      "import/prefer-default-export":"off"
+      "import/prefer-default-export":"off",
+      "import/extensions":"off"
 
     }
    

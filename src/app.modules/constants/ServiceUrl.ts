@@ -1,6 +1,7 @@
 export const SERVICE_URL = {
 	home: '/',
 	login: '/login',
+	oauthRegister: '/register',
 	signUp: '/sign-up',
 	certifications: '/certifications',
 	announcements: '/announcements',

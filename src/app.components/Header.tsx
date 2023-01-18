@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import RouteModal from 'app.components/Modal/RouteModal';
-// import useDetectClose from 'hooks/useDetectClose';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
-import SideMenu from 'app.components/Sidemenu';
+import RouteModal from './Modal/RouteModal';
+import SideMenu from './Sidemenu';
+
+// import useDetectClose from 'hooks/useDetectClose';
 
 type Menu = {
 	id: string;

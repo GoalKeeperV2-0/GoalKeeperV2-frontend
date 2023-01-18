@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import SubmitButton, { BtnStates } from 'app.components/Button/SubmitButton';
-import TextInput from 'app.components/Input/TextInput';
+
 import { Link } from 'react-router-dom';
-import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
+
+import SubmitButton, { BtnStates } from 'app.components/Button/SubmitButton';
 import BaseTemplate from 'app.components/BaseTemplate';
 import AuthLayout from 'app.components/AuthLayout';
-import { IForm, Action, loginFormState } from '../states/loginForm';
+import TextInput from 'app.components/Input/TextInput';
+import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import { GOOGLE_AUTH_URL } from '../constants';
+import { IForm, Action, loginFormState } from '../states/loginForm';
 
 interface Props {
 	onSubmit: (event: React.SyntheticEvent) => void;

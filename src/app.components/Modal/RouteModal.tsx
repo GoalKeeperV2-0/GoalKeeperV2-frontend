@@ -3,7 +3,7 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 //import { RootState } from 'store/slices';
 //import handleLogout, { handleAdminLogout } from 'utils/handleLogout';
-import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
+
 //import AlarmPopup from './PushNoticeModal';
 //import UserProfilePopUp from './UserProfileModal';
 
