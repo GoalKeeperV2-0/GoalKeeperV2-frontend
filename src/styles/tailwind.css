@@ -3,6 +3,27 @@
 @import "tailwindcss/utilities";
 
 
+@layer components {
+    .body1{
+       @apply font-medium text-[1.6rem] leading-[1.9rem];
+    }
+    .body2{
+        @apply font-semibold text-[1.6rem] leading-[1.9rem];
+     }
+    .body3{
+        @apply font-normal text-[1.8rem] leading-[2.2rem];
+     }
+    .body4{
+        @apply font-medium text-[1.8rem] leading-[2.2rem];
+     }
+    .body5{
+        @apply font-bold text-[1.8rem] leading-[2.2rem];
+     }
+    .body6{
+        @apply font-semibold text-[2.2rem] leading-[3rem];
+     }
+}
+
 @layer utilities {
     .scrollbar::-webkit-scrollbar {
       width: 40px;
