@@ -1,10 +1,20 @@
 import client from './client';
 
-export const getTokens = async (code: string) => {
+export const oauth2 = async (code: string) => {
 	const {
 		data: { accessToken, newbie, refreshToken },
 	} = await client.get(`/oauth2/google?code=${code}`);
 	return { accessToken, newbie, refreshToken };
+};
+
+export interface Oauth2RegisterBody {
+	age: number;
+	description: string;
+	sex: 'MAN' | 'WAMAN' | null;
+}
+export const oauth2Register = async (body: Oauth2RegisterBody) => {
+	const res = await client.patch(`/oauth2/additionalUserInfo`, { ...body });
+	return res;
 };
 
 export interface WithdrawUser {

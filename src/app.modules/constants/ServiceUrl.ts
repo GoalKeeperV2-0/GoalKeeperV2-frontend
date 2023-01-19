@@ -1,7 +1,8 @@
 export const SERVICE_URL = {
 	home: '/',
 	login: '/login',
-	oauthRegister: '/register',
+	oauth2Register: '/oauth2/register',
+	oauth2Callback: '/oauth2/callback',
 	signUp: '/sign-up',
 	certifications: '/certifications',
 	announcements: '/announcements',

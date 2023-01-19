@@ -3,13 +3,13 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
-import { getTokens } from 'app.modules/api/auth';
+import { oauth2 } from 'app.modules/api/auth';
 import { setCookie } from 'app.modules/cookie';
-function OauthCallback() {
+function Oauth2Callback() {
 	const navigate = useNavigate();
 	const { data } = useQuery(
 		['oauth2', 'google'],
-		() => getTokens(new URL(document.location.toString()).searchParams.get('code') as string),
+		() => oauth2(new URL(document.location.toString()).searchParams.get('code') as string),
 		{
 			onSuccess: (res) => {
 				const { accessToken, refreshToken, newbie } = res;
@@ -18,7 +18,7 @@ function OauthCallback() {
 				localStorage.setItem('ACCESS_TOKEN', accessToken);
 				// TODO: 필수 입력 정보 입력안했을때 보내는페이지
 				if (newbie) {
-					navigate(`${SERVICE_URL.oauthRegister}`);
+					navigate(`${SERVICE_URL.oauth2Register}`);
 					return;
 				}
 				navigate(SERVICE_URL.home); // TODO: 로그인 이전 페이지로 보내기
@@ -37,4 +37,4 @@ function OauthCallback() {
 	return <div>OauthCallback</div>;
 }
 
-export default OauthCallback;
+export default Oauth2Callback;
