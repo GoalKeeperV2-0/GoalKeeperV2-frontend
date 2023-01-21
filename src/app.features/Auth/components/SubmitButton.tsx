@@ -3,17 +3,22 @@ import React from 'react';
 
 interface Props {
 	disabled: boolean;
+	children: React.ReactNode;
+	isLoading: boolean;
+	onClick: () => void;
 }
-function SubmitButton({ disabled }: Props) {
+function SubmitButton({ disabled, children, isLoading, onClick }: Props) {
 	return (
 		<Button
+			onClick={onClick}
 			variant="solid"
 			size="lg"
 			bgColor={`${disabled ? 'buttonGray-300' : 'primaryOrange-200'}`}
 			textColor={`${disabled ? 'buttonGray-400' : 'primaryWhite'}`}
 			disabled={disabled}
+			isLoading={isLoading}
 		>
-			이메일 인증
+			{children}
 		</Button>
 	);
 }

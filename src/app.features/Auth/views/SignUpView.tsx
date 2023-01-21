@@ -1,11 +1,12 @@
 import React from 'react';
 import AuthLayout from 'app.components/AuthLayout';
 import BaseTemplate from 'app.components/BaseTemplate';
-import SubmitButton, { BtnStates } from 'app.components/Button/SubmitButton';
+
 import PerformInput from 'app.components/Input/PerformInput';
 import Select from 'app.components/Select';
 
 import { IForm, Action, signUpFormState } from '../states/signUpForm';
+import SubmitButton from '../components/SubmitButton';
 
 interface Props {
 	onSubmit: (event: React.SyntheticEvent) => void;
@@ -29,11 +30,11 @@ export const AgeOption = [
 ];
 
 function SignUpView({ error, onSubmit }: Props) {
-	const getBtnState = (): BtnStates => {
+	const getBtnState = () => {
 		const { email, password, passwordCheck, nickName } = signUpFormState;
-		if (!email.trim() || !password.trim() || !passwordCheck.trim() || !nickName.trim()) return 'inactive';
+		if (!email.trim() || !password.trim() || !passwordCheck.trim() || !nickName.trim()) return false;
 
-		return 'active';
+		return true;
 	};
 	return (
 		<BaseTemplate>
@@ -84,7 +85,9 @@ function SignUpView({ error, onSubmit }: Props) {
 					<div className="mt-[7px]">
 						<span className={` ${error ? 'text-red-400' : 'text-white'}`}>{error || 'errorZone'}</span>
 					</div>
-					<SubmitButton label="회원가입" btnState={getBtnState()} />
+					<SubmitButton onClick={() => null} isLoading={false} disabled={getBtnState()}>
+						회원가입
+					</SubmitButton>
 				</form>
 			</AuthLayout>
 		</BaseTemplate>
