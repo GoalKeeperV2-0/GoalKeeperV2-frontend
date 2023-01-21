@@ -38,6 +38,7 @@ module.exports = {
 					100: '#FAFAFA',
 					200: '#F3F3F3',
 					300: '#E6E6E6',
+					400: '#898989',
 				},
 				borderGray: '#E7E7E7',
 				borderOrange: '#FF8A00',

@@ -9,15 +9,15 @@ type Color =
 	| 'buttonGray-100'
 	| 'buttonGray-200'
 	| 'buttonGray-300'
+	| 'buttonGray-400'
 	| 'buttonRed-200'
 	| 'buttonRed-100';
 export interface Props {
 	variant: 'text' | 'solid' | 'outline';
 	size: 'lg' | 'base' | 'sm' | 'xs';
 	bgColor: Color;
-	disabledBgColor?: Color;
-	borderColor?: Color;
 	textColor?: Color;
+	borderColor?: Color;
 	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	disabled?: boolean;
 	isLoading?: boolean;
@@ -28,7 +28,6 @@ function SubmitButton({
 	size,
 	onClick,
 	bgColor,
-	disabledBgColor,
 	borderColor,
 	textColor,
 	disabled,
@@ -49,7 +48,7 @@ function SubmitButton({
 		return 'h-[2.6rem] pc:h-[3.5rem]';
 	};
 	const getBgColor = () => {
-		return `bg-${bgColor} ${disabledBgColor ? `bg-${disabledBgColor}` : ''}`;
+		return `bg-${bgColor}`;
 	};
 	const getBorderStyle = () => {
 		if (!borderColor) return '';
@@ -57,7 +56,7 @@ function SubmitButton({
 	};
 	const getTextColor = () => {
 		if (!textColor) return '';
-		return `text-${textColor}`;
+		return `text-${textColor} disabled:text-${'red-500'} `;
 	};
 	if (isLoading) {
 		return (
@@ -70,10 +69,11 @@ function SubmitButton({
 	return (
 		<button
 			type="submit"
+			disabled={disabled}
 			onClick={onClick}
 			className={`${
 				variant === 'outline' ? getBorderStyle() : ''
-			} ${getBgColor()} ${getHeight()} ${getTextColor()}  text-body4-mo pc:text-body4-pc text-center  leading-[100%] w-full rounded-[0.8rem]  `}
+			} ${getBgColor()} ${getHeight()} ${getTextColor()}   text-body4-mo pc:text-body4-pc text-center  leading-[100%] w-full rounded-[0.8rem]  `}
 		>
 			{children}
 		</button>
