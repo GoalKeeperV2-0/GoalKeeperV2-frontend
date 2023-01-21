@@ -1,8 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import './index.css';
-import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import Oauth2Register from 'pages/login/oauth2/register';
 import { SERVICE_URL } from './app.modules/constants/ServiceUrl';
 import Home from './pages/Home';

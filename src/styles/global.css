@@ -8,10 +8,11 @@
    
  }
 
-  html,
+
   body{
      width:100vw;
      height:100vh;
+     font-size:1.6rem;
   }
 
   h1 {
