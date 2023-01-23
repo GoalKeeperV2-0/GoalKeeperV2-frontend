@@ -7,13 +7,7 @@ function Home() {
 	console.log(process.env.REACT_APP_GOOGLE_REDIRECT_URI);
 
 	return (
-		<TextInput
-			placeholder="이메일을 입력해주세요"
-			type="email"
-			onChange={() => null}
-			value=""
-			focusColor="primaryRed-300"
-		/>
+		<TextInput placeholder="이메일을 입력해주세요" type="email" onChange={() => null} value="" color="primaryRed-300" />
 	);
 }
 

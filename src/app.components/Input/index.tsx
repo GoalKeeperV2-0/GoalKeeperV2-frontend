@@ -7,18 +7,27 @@ interface Props {
 	type: 'text' | 'email' | 'password';
 	onChange: () => void;
 	value: string;
-	defaultValue?: string;
 	placeholder: string;
+	isSubmitted?: boolean;
+	isValid?: boolean;
 	disabled?: boolean;
-	focusColor: FocusColor;
+	color: FocusColor;
 }
-function TextInput({ type, focusColor, onChange, value, defaultValue, placeholder, disabled }: Props) {
+function TextInput({ type, color, onChange, value, isValid, isSubmitted, placeholder, disabled }: Props) {
 	const getFocusColor = () => {
-		if (focusColor.includes('primaryOrange-200')) {
+		if (color.includes('primaryOrange-200')) {
 			return 'focus:border-primaryOrange-200';
 		}
-		return 'focus:border-buttonRed-200';
+		return 'focus:border-primaryRed-300';
 	};
+	const getTextColor = () => {
+		if (isSubmitted) {
+			if (isValid) return 'text-primaryOrange-200';
+			return 'text-primaryRed-300';
+		}
+		return '';
+	};
+
 	return (
 		<input
 			type={type}
@@ -26,7 +35,7 @@ function TextInput({ type, focusColor, onChange, value, defaultValue, placeholde
 			value={value}
 			placeholder={placeholder}
 			disabled={disabled}
-			className={`${getFocusColor()} w-full min-h-[4.6rem] h-[4.6rem] pc:min-h-[7rem] pc:h-[7rem]  pc:border-[2px] border-[0.1rem] rounded-[0.8rem] focus:outline-none `}
+			className={`${getFocusColor()} ${getTextColor()} w-full px-[1.6rem] min-h-[4.6rem] h-[4.6rem] pc:px-[2.4rem] pc:min-h-[7rem] pc:h-[7rem]  pc:border-[2px] border-[0.1rem] rounded-[0.8rem] focus:outline-none `}
 		/>
 	);
 }
