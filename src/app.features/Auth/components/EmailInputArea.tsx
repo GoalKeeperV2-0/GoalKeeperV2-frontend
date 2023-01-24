@@ -2,28 +2,21 @@ import ErrorMessage from 'app.components/Input/ErrorMessage';
 import Label from 'app.components/Input/Label';
 import TextInput from 'app.components/Input/TextInput';
 import React from 'react';
+import { INVALID_COLOR, VALID_COLOR } from '../constants';
+import { getFocusColor } from '../utils/getFocusColor';
 
 interface Props {
 	onChange: () => void;
 	value: string;
-	isValidEmail: boolean | null;
+	isValid: boolean | null;
 	errorContent?: string;
 }
-function EmailInputArea({ onChange, value, isValidEmail, errorContent }: Props) {
-	const VALID_COLOR = 'primaryOrange-200';
-	const INVALID_COLOR = 'primaryRed-300';
-	const getFocusColor = () => {
-		if (isValidEmail === null) {
-			return null;
-		}
-		if (isValidEmail) return VALID_COLOR;
-		return INVALID_COLOR;
-	};
+function EmailInputArea({ onChange, value, isValid, errorContent }: Props) {
 	const getButtonColor = (): string => {
-		if (isValidEmail === null) {
+		if (isValid === null) {
 			return 'text-[#351A1A] bg-[#F7F7F7]';
 		}
-		if (isValidEmail) return `text-${VALID_COLOR} bg-${VALID_COLOR}`;
+		if (isValid) return `text-${VALID_COLOR} bg-${VALID_COLOR}`;
 		return `text-${INVALID_COLOR} bg-${INVALID_COLOR}`;
 	};
 	// input 타입에 따라 다른 메세지를 반환
@@ -36,9 +29,6 @@ function EmailInputArea({ onChange, value, isValidEmail, errorContent }: Props) 
 
 		return '';
 	};
-	const getGuideColor = () => {
-		return isValidEmail ? `text-${VALID_COLOR}` : `text-${INVALID_COLOR}`;
-	};
 
 	return (
 		<div className="space-y-[0.8rem] relative">
@@ -50,7 +40,7 @@ function EmailInputArea({ onChange, value, isValidEmail, errorContent }: Props) 
 					onChange={onChange}
 					value={value}
 					placeholder="이메일"
-					focusColor={getFocusColor()}
+					focusColor={getFocusColor(isValid)}
 					required
 				/>
 				<button
@@ -60,7 +50,7 @@ function EmailInputArea({ onChange, value, isValidEmail, errorContent }: Props) 
 					중복확인
 				</button>
 			</div>
-			{true && <ErrorMessage color="inherit" content={errorContent ?? ' '} />}
+			{true && <ErrorMessage color={getFocusColor(isValid)} content={errorContent ?? ' '} />}
 		</div>
 	);
 }

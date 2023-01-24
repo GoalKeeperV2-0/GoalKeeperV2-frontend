@@ -1,6 +1,7 @@
 import Button from 'app.components/Button';
 import TextInput from 'app.components/Input/TextInput';
 import EmailInputArea from 'app.features/Auth/components/EmailInputArea';
+import PasswordInputArea from 'app.features/Auth/components/PasswordInputArea';
 import React, { useEffect } from 'react';
 
 function Home() {
@@ -9,8 +10,8 @@ function Home() {
 
 	return (
 		<>
-			<EmailInputArea onChange={() => null} value="" isValidEmail={null} />
-			<EmailInputArea onChange={() => null} value="" isValidEmail={null} errorContent="asdf" />
+			<EmailInputArea onChange={() => null} value="" isValid={null} />
+			<PasswordInputArea onChange={() => null} value="" isValid={null} errorContent="asdf" />
 		</>
 	);
 }
