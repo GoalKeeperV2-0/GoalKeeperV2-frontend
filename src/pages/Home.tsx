@@ -1,5 +1,6 @@
 import Button from 'app.components/Button';
-import TextInput from 'app.components/Input';
+import TextInput from 'app.components/Input/TextInput';
+import EmailInputArea from 'app.features/Auth/components/EmailInputArea';
 import React, { useEffect } from 'react';
 
 function Home() {
@@ -7,7 +8,10 @@ function Home() {
 	console.log(process.env.REACT_APP_GOOGLE_REDIRECT_URI);
 
 	return (
-		<TextInput placeholder="이메일을 입력해주세요" type="email" onChange={() => null} value="" color="primaryRed-300" />
+		<>
+			<EmailInputArea onChange={() => null} value="" isValidEmail={null} />
+			<EmailInputArea onChange={() => null} value="" isValidEmail={null} errorContent="asdf" />
+		</>
 	);
 }
 

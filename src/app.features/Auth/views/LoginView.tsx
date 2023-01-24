@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import BaseTemplate from 'app.components/BaseTemplate';
 import AuthLayout from 'app.components/AuthLayout';
-import TextInput from 'app.components/Input/TextInput';
+import TextInput from 'app.components/Input/TextInputRev';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import { GOOGLE_AUTH_URL } from '../constants';
 import { IForm, Action, loginFormState } from '../states/loginForm';

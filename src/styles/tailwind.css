@@ -36,7 +36,7 @@
        @apply font-semibold text-[1.2rem] leading-[1.4rem];
     }
     .text-body5-mo{
-       @apply font-bold text-[1.8rem] leading-[2.2rem];
+       @apply font-medium text-[1.4rem] leading-[2rem];
     }
     .text-body6-mo{
        @apply font-semibold text-[2.2rem] leading-[3rem];
