@@ -2,41 +2,42 @@ import ErrorMessage from 'app.components/Input/ErrorMessage';
 import Label from 'app.components/Input/Label';
 import TextInput from 'app.components/Input/TextInput';
 import React from 'react';
+import { INVALID_COLOR, VALID_COLOR } from '../constants';
 import { getFocusColor } from '../utils/getFocusColor';
+
 interface Props {
 	onChange: () => void;
 	value: string;
 	isValid: boolean | null;
 	errorContent?: string;
 }
-function PasswordInputArea({ onChange, value, isValid, errorContent }: Props) {
+function NicknameInputArea({ onChange, value, isValid, errorContent }: Props) {
+	// input 타입에 따라 다른 메세지를 반환
+	const renderGuideMessage = () => {
+		if (false) return '';
+		if (true) {
+			if (true) return '사용 가능한 이메일입니다.';
+			return '잘못된 형식의 이메일입니다.';
+		}
+
+		return '';
+	};
+
 	return (
 		<div className="space-y-[0.8rem]">
-			<Label required htmlFor="password" content="비밀번호" />
+			<Label required htmlFor="nickname" content="닉네임" />
 			<TextInput
-				id="password"
-				type="password"
+				id="nickname"
+				type="text"
 				onChange={onChange}
 				value={value}
-				placeholder="비밀번호 (8자리 이상)"
+				placeholder="닉네임을 작성해주세요"
 				focusColor={getFocusColor(isValid)}
 				required
-				minLength={8}
 			/>
-			<TextInput
-				id="password-check"
-				type="password"
-				onChange={onChange}
-				value={value}
-				placeholder="비밀번호 확인"
-				focusColor={getFocusColor(isValid)}
-				required
-				minLength={8}
-			/>
-
 			{true && <ErrorMessage color={getFocusColor(isValid)} content={errorContent ?? ' '} />}
 		</div>
 	);
 }
 
-export default PasswordInputArea;
+export default NicknameInputArea;
