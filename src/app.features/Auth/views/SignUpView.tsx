@@ -78,10 +78,7 @@ function SignUpView({ error, onSubmit }: Props) {
 					<div className="flex pc:space-x-[8px] space-x-[4px] pc:mb-[10px] mb-[8px]">
 						<span className="font-semibold text-[20px]">선택사항</span>
 					</div>
-					<div className="flex justify-between w-full space-x-[2%]">
-						<Select options={GenderOption} value={signUpFormState.sex} onChange={(curVar: string) => '수정필요'} />
-						<Select options={AgeOption} value={signUpFormState.age} onChange={(curVar: string) => '수정필요'} />
-					</div>
+					<div className="flex justify-between w-full space-x-[2%]" />
 					<div className="mt-[7px]">
 						<span className={` ${error ? 'text-red-400' : 'text-white'}`}>{error || 'errorZone'}</span>
 					</div>

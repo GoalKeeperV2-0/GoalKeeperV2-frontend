@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Props {
-	required: boolean;
+	required?: boolean;
 	htmlFor: string;
 	content: string;
 }

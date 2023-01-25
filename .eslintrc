@@ -27,7 +27,8 @@
       "react/button-has-type":"off",
       "spaced-comment":"off",
       "import/prefer-default-export":"off",
-      "import/extensions":"off"
+      "import/extensions":"off",
+      "react/no-array-index-key":"off"
 
     }
    
