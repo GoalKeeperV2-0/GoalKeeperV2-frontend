@@ -14,8 +14,8 @@ function Home() {
 			<EmailInputArea onChange={() => null} value="" isValid={null} />
 			<PasswordInputArea onChange={() => null} value="" isValid={null} errorContent="asdf" />
 			<div className="w-full flex justify-between items-center space-x-[20px]">
-				<Select options={['감자', '고구마', '바나나']} value={null} onChange={() => null} />{' '}
-				<Select options={ageOptions} value={null} onChange={() => null} />
+				<Select options={['감자', '고구마', '바나나']} value={null} onChange={() => null} placeholder="성별" />{' '}
+				<Select options={ageOptions} value={null} onChange={() => null} placeholder="나이" />
 			</div>
 		</>
 	);

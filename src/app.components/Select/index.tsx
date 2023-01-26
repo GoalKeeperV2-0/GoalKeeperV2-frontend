@@ -1,101 +1,70 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState, useRef, MouseEvent, useEffect, BaseSyntheticEvent, useMemo } from 'react';
-// import { ReactComponent as Polygon } from 'assets/icons/polygon.svg';
+import { ReactComponent as CaretIcon } from 'app.modules/assets/icons/caret.svg';
 
 // export type DefaultValue = string | number | readonly string[] | undefined;
 
-interface SelectProps {
+interface Props {
 	options: string[];
 	value: string | null;
+	placeholder: string;
 	// defaultValue: DefaultValue;
 	onChange: (curVar: string) => void;
 }
-// export default function Select({ options, value, defaultValue, onChange }: SelectProps) {
-export default function Select({ options, value, onChange }: SelectProps) {
+
+export default function Select({ options, value, onChange, placeholder }: Props) {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const optionRef = useRef<HTMLDivElement>(null);
-
-	const optionListPC = useMemo(
-		() =>
-			options.map((option, index) => (
-				<li
-					key={index}
-					className=" overflow-hidden text-left whitespace-nowrap text-ellipsis hover:text-primaryOrange-200"
-				>
-					{option}
-				</li>
-			)),
-		[options]
-	);
-
-	// const optionListMobile = useMemo(
-	// 	() =>
-	// 		options.map((option: Option) => (
-	// 			<option
-	// 				key={option.id}
-	// 				value={option.value}
-	// 				onChange={(e: React.BaseSyntheticEvent | MouseEvent) => onChange(e.target.innerText)}
-	// 			>
-	// 				{option.value}
-	// 			</option>
-	// 		)),
-	// 	[onChange, options]
-	// );
+	const optionRef = useRef<HTMLButtonElement>(null);
 
 	// isOpen 이 변경이 되면 return 된 함수가 실행이 된다.
-	const onClick = (e: Event | BaseSyntheticEvent) => {
+	const closeOptionList = (e: Event | BaseSyntheticEvent) => {
 		if (optionRef !== null && !optionRef.current?.contains(e.target)) {
 			setIsOpen(false);
 		}
 	};
 	useEffect(() => {
-		if (isOpen) window.addEventListener('click', onClick);
-		return () => window.removeEventListener('click', onClick);
+		if (isOpen) window.addEventListener('click', closeOptionList);
+		return () => window.removeEventListener('click', closeOptionList);
 	}, [isOpen]);
 
-	const handleClick = () => {
-		setIsOpen(!isOpen);
+	const openOptionList = () => {
+		setIsOpen(true);
+	};
+	const stopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
 	};
 
-	const handleMouseDown = (e: React.BaseSyntheticEvent | MouseEvent) => {
-		console.log('hello');
-		console.log(e.target.dataset.id);
-		const { id } = e.target.dataset;
-		if (id === 'wrap-button') return;
-
-		setIsOpen(false);
-		onChange(e.target.innerText);
-	};
-	useEffect(() => {
-		console.log(isOpen);
-	}, [isOpen]);
 	return (
-		<div className=" w-full relative">
-			<div className="relative w-full" ref={optionRef}>
-				<button
-					type="button"
-					className="select w-full pc:h-[70px] h-[46px] pc:border-2 border-[1px] border-primaryBlack-100 rounded-xl "
-					onClick={handleClick}
-				>
-					<span className="arrow-icon-wrap">{/* <Polygon className="max-w-[13px] max-h-[13px]" /> */}</span>
-					<span className="selected w-full pl-[16px] whitespace-nowrap text-ellipsis overflow-hidden text-left flex items-center pc:leading-[70px] leading-[46px]">
-						{/* {!value ? defaultValue : value} */}
-						{value}
-					</span>
-				</button>
-			</div>
-			{options && (
+		<div className=" w-full relative ">
+			<button
+				className="relative w-full space-x-[1.6rem] p-[1.6rem] pc:p-[2.4rem] flex items-end rounded-[0.8rem] whitespace-nowrap  border-[0.1rem] border-primaryBlack-100"
+				type="button"
+				ref={optionRef}
+				onClick={openOptionList}
+			>
+				<CaretIcon className="w-[1.0rem] pc:w-[1.6rem] arrow-icon-wrap" />
+
+				<span className="leading-[100%] text-primaryBlack-300">{placeholder}</span>
+			</button>
+			{isOpen && (
+				// eslint-disable-next-line jsx-a11y/click-events-have-key-events
 				<div
-					className={`absolute top-0 options py-[2.4rem] pl-[2.4rem] pr-[0.8rem]  w-full pc:border-2 border-[1px] border-primaryBlack-100 bg-primaryWhite rounded-xl  ${
-						isOpen ? '' : 'hidden'
-					} z-50`}
+					onClick={stopPropagation}
+					className="absolute top-0 options py-[2.4rem] pl-[2.4rem] pr-[0.8rem]  w-full border-[0.1rem] border-primaryBlack-100 bg-primaryWhite rounded-[0.8rem]"
 				>
-					<button
-						type="button"
-						className=" w-full max-h-[162px] h-[162px] overflow-y-auto scrollbar "
-						data-id="wrap-button"
-						onMouseDown={handleMouseDown}
-					>
-						<ul className="text-body3-mo pc:text-body3-pc space-y-[1.2rem] pc:space-y-[2.4rem]">{optionListPC}</ul>
+					<button type="button" className=" w-full max-h-[16.2rem] overflow-y-auto scrollbar ">
+						<ul className="text-body3-mo pc:text-body3-pc space-y-[1.2rem] pc:space-y-[2.4rem]">
+							{options.map((option, index) => (
+								// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+								<li
+									key={index}
+									onClick={() => setIsOpen(false)}
+									className=" overflow-hidden text-left whitespace-nowrap text-ellipsis hover:text-primaryOrange-200"
+								>
+									{option}
+								</li>
+							))}
+						</ul>
 					</button>
 				</div>
 			)}
