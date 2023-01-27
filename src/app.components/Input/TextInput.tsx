@@ -1,38 +1,58 @@
-import React, { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import React from 'react';
+
+// TODO: 상태별로 색 mapping 시키기
+type FocusColor = 'primaryOrange-200' | 'primaryRed-300';
 
 interface Props {
+	type: 'text' | 'email' | 'password';
+	onChange: () => void;
+	value: string;
 	placeholder: string;
-	label?: string;
-	isRequired?: boolean;
-	value?: string;
-	isPassword?: boolean;
-	// 	onChange: Dispatch<SetStateAction<string>> | (curVar:string)=>void ;
-	onChange: (curVar: string) => void;
+	id: string;
+	focusColor?: FocusColor | null;
+	textColor?: FocusColor;
+	disabled?: boolean;
+	required?: boolean;
+	minLength?: number;
 }
-
-export default function TextInput({ isPassword, placeholder, label, isRequired = false, value, onChange }: Props) {
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		onChange(event?.currentTarget.value);
+function TextInput({
+	type,
+	id,
+	onChange,
+	value,
+	focusColor,
+	textColor,
+	placeholder,
+	disabled,
+	required,
+	minLength,
+}: Props) {
+	const getFocusColor = () => {
+		if (focusColor?.includes('primaryOrange-200')) {
+			return 'focus:border-primaryOrange-200';
+		}
+		return 'focus:border-primaryRed-300';
+	};
+	const getTextColor = () => {
+		if (textColor !== undefined) {
+			return `text-${textColor}`;
+		}
+		return '';
 	};
 
 	return (
-		<div className="w-full">
-			{label && (
-				<div className="flex pc:space-x-[8px] space-x-[4px] pc:mb-[16px] mb-[4px] pc:mt-[30px] mt-[20px]">
-					<label htmlFor={label} className="font-semibold pc:text-[20px] text-[14px]">
-						{label}
-					</label>
-					{isRequired && <span className="font-semibold text-primaryOrange-200 ">*</span>}
-				</div>
-			)}
-			<input
-				className="w-full pc:p-[24px] p-[16px] pc:max-h-[95px] max-h-[46px] pc:my-2 my-1 pc:border-[2px] border-[1px] rounded-xl focus:outline-none focus:border-primaryOrange-200"
-				id={label}
-				placeholder={placeholder}
-				value={value}
-				onChange={handleChange}
-				type={isPassword ? 'password' : 'text'}
-			/>
-		</div>
+		<input
+			id={id}
+			type={type}
+			onChange={onChange}
+			value={value}
+			placeholder={placeholder}
+			disabled={disabled}
+			required={required}
+			minLength={minLength}
+			className={`${getFocusColor()} ${getTextColor()} w-full px-[1.6rem] min-h-[4.6rem] h-[4.6rem] pc:px-[2.4rem] pc:min-h-[7rem] pc:h-[7rem]  pc:border-[2px] border-[0.1rem] rounded-[0.8rem] focus:outline-none `}
+		/>
 	);
 }
+
+export default TextInput;

@@ -1,119 +1,73 @@
-import React, { useState, useRef, MouseEvent, useEffect, BaseSyntheticEvent, useMemo } from 'react';
-// import { ReactComponent as Polygon } from 'assets/icons/polygon.svg';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import React, { useState, useRef, useEffect, BaseSyntheticEvent } from 'react';
+import { ReactComponent as CaretIcon } from 'app.modules/assets/icons/caret.svg';
 
-export interface Option {
-	id: number;
-	value: string;
-}
 // export type DefaultValue = string | number | readonly string[] | undefined;
 
-interface SelectProps {
-	options: Option[];
+interface Props {
+	options: string[];
 	value: string | null;
+	placeholder: string;
 	// defaultValue: DefaultValue;
 	onChange: (curVar: string) => void;
 }
-// export default function Select({ options, value, defaultValue, onChange }: SelectProps) {
-export default function Select({ options, value, onChange }: SelectProps) {
+
+export default function Select({ options, value, onChange, placeholder }: Props) {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const optionRef = useRef<HTMLDivElement>(null);
-
-	const optionListPC = useMemo(
-		() =>
-			options.map((option: Option) => (
-				<li key={option.id} className="px-6 py-4 overflow-hidden text-left whitespace-nowrap text-ellipsis">
-					{option.value}
-				</li>
-			)),
-		[options]
-	);
-
-	// const optionListMobile = useMemo(
-	// 	() =>
-	// 		options.map((option: Option) => (
-	// 			<option
-	// 				key={option.id}
-	// 				value={option.value}
-	// 				onChange={(e: React.BaseSyntheticEvent | MouseEvent) => onChange(e.target.innerText)}
-	// 			>
-	// 				{option.value}
-	// 			</option>
-	// 		)),
-	// 	[onChange, options]
-	// );
+	const optionRef = useRef<HTMLButtonElement>(null);
 
 	// isOpen 이 변경이 되면 return 된 함수가 실행이 된다.
+	const closeOptionList = (e: Event | BaseSyntheticEvent) => {
+		if (optionRef !== null && !optionRef.current?.contains(e.target)) {
+			setIsOpen(false);
+		}
+	};
 	useEffect(() => {
-		const onClick = (e: Event | BaseSyntheticEvent) => {
-			if (optionRef !== null && !optionRef.current?.contains(e.target)) {
-				setIsOpen(false);
-			}
-		};
-
-		if (isOpen) window.addEventListener('click', onClick);
-		return () => window.removeEventListener('click', onClick);
+		if (isOpen) window.addEventListener('click', closeOptionList);
+		return () => window.removeEventListener('click', closeOptionList);
 	}, [isOpen]);
 
-	const handleClick = () => {
-		setIsOpen(!isOpen);
+	const openOptionList = () => {
+		setIsOpen(true);
 	};
-
-	const handleMouseDown = (e: React.BaseSyntheticEvent | MouseEvent) => {
-		const { id } = e.target.dataset;
-		if (id === 'wrap-button') return;
-
-		setIsOpen(false);
-		onChange(e.target.innerText);
+	const stopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
+		e.stopPropagation();
 	};
 
 	return (
-		<>
-			<div className=" w-full">
-				<div className="dropdown relative pc:w-[100%]" ref={optionRef}>
-					<div className="select w-full pc:h-[70px] h-[46px] pc:border-2 border-[1px] border-primaryBlack-100 rounded-xl ">
-						<button
-							type="button"
-							className="flex items-center justify-start w-full h-full pc:px-[24px] px-[12px] text-center flex-grow"
-							onClick={handleClick}
-						>
-							<div className="arrow-icon-wrap">{/* <Polygon className="max-w-[13px] max-h-[13px]" /> */}</div>
-							<div className="selected w-full pl-[16px] whitespace-nowrap text-ellipsis overflow-hidden text-left flex items-center pc:leading-[70px] leading-[46px]">
-								{/* {!value ? defaultValue : value} */}
-								{value}
-							</div>
-						</button>
-					</div>
-					{options && (
-						<div
-							className={`absolute options w-[100%] pc:border-2 border-[1px] border-primaryBlack-100 bg-primaryWhite rounded-xl mt-1 ${
-								isOpen ? '' : 'hidden'
-							} z-50`}
-						>
-							<button
-								type="button"
-								className=" w-full max-h-[162px] overflow-y-auto scrollbar"
-								data-id="wrap-button"
-								onMouseDown={handleMouseDown}
-							>
-								<ul>{optionListPC}</ul>
-							</button>
-						</div>
-					)}
-				</div>
-			</div>
-			{/* <div className="relative w-[48%] flex items-center pc:hidden">
-				<Polygon className="absolute left-[16px]" />
-				<select
-					className="scrollbar appearance-none profile-option w-full pc:h-[70px] h-[46px] pc:border-2 border-primaryBlack-100 rounded-xl cursor-pointer text-center"
-					name="profile-option"
-					defaultValue={defaultValue}
+		<div className=" w-full relative ">
+			<button
+				className="relative w-full space-x-[1.6rem] p-[1.6rem] pc:p-[2.4rem] flex items-end rounded-[0.8rem] whitespace-nowrap  border-[0.1rem] border-primaryBlack-100"
+				type="button"
+				ref={optionRef}
+				onClick={openOptionList}
+			>
+				<CaretIcon className="w-[1.0rem] pc:w-[1.6rem] arrow-icon-wrap" />
+
+				<span className="leading-[100%] text-primaryBlack-300">{placeholder}</span>
+			</button>
+			{isOpen && (
+				// eslint-disable-next-line jsx-a11y/click-events-have-key-events
+				<div
+					onClick={stopPropagation}
+					className="absolute top-0 options py-[2.4rem] pl-[2.4rem] pr-[0.8rem]  w-full border-[0.1rem] border-primaryBlack-100 bg-primaryWhite rounded-[0.8rem]"
 				>
-					<option className="hidden" defaultValue={defaultValue} disabled>
-						{defaultValue}
-					</option>
-					{optionListMobile}
-				</select>
-			</div> */}
-		</>
+					<button type="button" className=" w-full max-h-[16.2rem] overflow-y-auto scrollbar ">
+						<ul className="text-body3-mo pc:text-body3-pc space-y-[1.2rem] pc:space-y-[2.4rem]">
+							{options.map((option, index) => (
+								// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+								<li
+									key={index}
+									onClick={() => setIsOpen(false)}
+									className=" overflow-hidden text-left whitespace-nowrap text-ellipsis hover:text-primaryOrange-200"
+								>
+									{option}
+								</li>
+							))}
+						</ul>
+					</button>
+				</div>
+			)}
+		</div>
 	);
 }

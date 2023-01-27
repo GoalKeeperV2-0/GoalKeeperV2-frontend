@@ -30,13 +30,13 @@
        @apply font-semibold text-[1.6rem] leading-[1.9rem];
     }
     .text-body3-mo{
-       @apply font-normal text-[1.8rem] leading-[2.2rem];
+       @apply font-normal text-[1.2rem] leading-[1.44rem];
     }
     .text-body4-mo{
        @apply font-semibold text-[1.2rem] leading-[1.4rem];
     }
     .text-body5-mo{
-       @apply font-bold text-[1.8rem] leading-[2.2rem];
+       @apply font-medium text-[1.4rem] leading-[2rem];
     }
     .text-body6-mo{
        @apply font-semibold text-[2.2rem] leading-[3rem];
@@ -46,28 +46,26 @@
 
 @layer utilities {
     .scrollbar::-webkit-scrollbar {
-      width: 40px;
+      width: 0.4rem;
     }
   
-    .scrollbar::-webkit-scrollbar-track {
-      margin: 1px 0;
-      border-radius: 100vh;
-      
+   .scrollbar::-webkit-scrollbar-track {
+     
+      border-radius: 2rem;
       background: #E7E7E7;
-      background-clip: padding-box;
-      border: 17px solid rgba(0, 0, 0, 0);
+    
+   
     }
   
     .scrollbar::-webkit-scrollbar-thumb {
       background: #000000;
-      border-radius: 100vh;
-      background-clip: padding-box;
-      border: 17px solid rgba(0, 0, 0, 0);
+      border-radius: 6rem;
+     
+     
     }
   
     .scrollbar::-webkit-scrollbar-thumb:hover {
       background: #8B8B8B;
-      background-clip: padding-box;
-      border: 17px solid rgba(0, 0, 0, 0);
+
     }
   }

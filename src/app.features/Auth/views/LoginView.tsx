@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import SubmitButton, { BtnStates } from 'app.components/Button/SubmitButton';
 import BaseTemplate from 'app.components/BaseTemplate';
 import AuthLayout from 'app.components/AuthLayout';
-import TextInput from 'app.components/Input/TextInput';
+import TextInput from 'app.components/Input/TextInputRev';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import { GOOGLE_AUTH_URL } from '../constants';
 import { IForm, Action, loginFormState } from '../states/loginForm';
+import SubmitButton from '../components/SubmitButton';
 
 interface Props {
 	onSubmit: (event: React.SyntheticEvent) => void;
@@ -19,10 +19,10 @@ interface Props {
 }
 
 function LoginView({ error, onSubmit }: Props) {
-	const getBtnState = (): BtnStates => {
+	const getBtnState = () => {
 		const { email, password } = loginFormState;
-		if (!email.trim() || !password.trim()) return 'inactive';
-		return 'active';
+		if (!email.trim() || !password.trim()) return false;
+		return true;
 	};
 	const [userLogin, setUserLogin] = useState<boolean>(true); // TODO: 관리자 로그인인지 판단하는 로직 필요
 	return (
@@ -36,9 +36,9 @@ function LoginView({ error, onSubmit }: Props) {
 						</button>
 					</div>
 					{/* TODO:tailwind config 수정되면 배경색,텍스트색 바꾸기 */}
-					<div className="rounded-[8px] flex p-[25px] space-x-[10px] w-full bg-[#FAFAFA] text-primaryGray-200 font-bold text-[18px] text-start ">
+					<div className="rounded-[8px] flex p-[25px] space-x-[10px] w-full bg-[#FAFAFA]  font-bold text-[1.8rem] text-start ">
 						<img src="/images/login/icons/google.svg" alt="google_icon" />
-						<a href={GOOGLE_AUTH_URL} className="">
+						<a href={GOOGLE_AUTH_URL} className="text-primaryGray-200">
 							구글계정으로 로그인
 						</a>
 					</div>
@@ -74,7 +74,9 @@ function LoginView({ error, onSubmit }: Props) {
 						</>
 					)}
 
-					<SubmitButton label="로그인" btnState={getBtnState()} />
+					<SubmitButton onClick={() => null} isLoading={false} disabled={getBtnState()}>
+						로그인
+					</SubmitButton>
 					{userLogin && (
 						<div className="visible w-full space-y-[16px] items-center  mt-[60px] flex flex-col pc:mt-0 pc:w-0 pc:h-0 pc:invisible  ">
 							<span className="text-[12px]  text-primaryOrange-200">

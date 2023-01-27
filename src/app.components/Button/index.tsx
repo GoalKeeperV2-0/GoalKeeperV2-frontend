@@ -5,7 +5,7 @@ type Color =
 	| 'primaryOrange-100'
 	| 'primaryBlack-500'
 	| 'primaryBlack-100'
-	| 'primaryWhite'
+	| 'white'
 	| 'buttonGray-100'
 	| 'buttonGray-200'
 	| 'buttonGray-300'
@@ -23,7 +23,7 @@ export interface Props {
 	isLoading?: boolean;
 	children?: React.ReactNode;
 }
-function SubmitButton({
+export default function SubmitButton({
 	variant,
 	size,
 	onClick,
@@ -36,16 +36,16 @@ function SubmitButton({
 }: Props) {
 	const getHeight = () => {
 		if (size === 'lg') {
-			return 'h-[4.6rem] pc:h-[7rem]';
+			return 'min-h-[4.6rem] h-[4.6rem] pc:h-[7rem] pc:min-h-[7rem]';
 		}
 		if (size === 'base') {
-			return 'h-[6rem]';
+			return 'min-h-[6rem] h-[6rem]';
 		}
 		if (size === 'sm') {
-			return 'h-[3.4rem] pc:h-[5.1rem]';
+			return 'min-h-[3.4rem] h-[3.4rem] pc:h-[5.1rem] pc:min-h-[5.1rem]';
 		}
 
-		return 'h-[2.6rem] pc:h-[3.5rem]';
+		return 'h-[2.6rem] min-h-[2.6rem] pc:h-[3.5rem] pc:min-h-[3.5rem]';
 	};
 	const getBgColor = () => {
 		return `bg-${bgColor}`;
@@ -56,7 +56,7 @@ function SubmitButton({
 	};
 	const getTextColor = () => {
 		if (!textColor) return '';
-		return `text-${textColor} disabled:text-${'red-500'} `;
+		return `text-${textColor} `;
 	};
 	if (isLoading) {
 		return (
@@ -79,5 +79,3 @@ function SubmitButton({
 		</button>
 	);
 }
-
-export default React.memo(SubmitButton);
