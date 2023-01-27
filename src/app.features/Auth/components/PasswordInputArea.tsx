@@ -11,7 +11,7 @@ interface Props {
 }
 function PasswordInputArea({ onChange, value, isValid, errorContent }: Props) {
 	return (
-		<div className="space-y-[0.8rem]">
+		<div className="space-y-[0.8rem] w-full">
 			<Label required htmlFor="password" content="비밀번호" />
 			<TextInput
 				id="password"

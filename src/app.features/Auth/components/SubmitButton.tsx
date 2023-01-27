@@ -2,7 +2,7 @@ import Button from 'app.components/Button';
 import React from 'react';
 
 interface Props {
-	disabled: boolean;
+	disabled?: boolean;
 	children: React.ReactNode;
 	isLoading: boolean;
 	onClick: () => void;
@@ -13,8 +13,8 @@ function SubmitButton({ disabled, children, isLoading, onClick }: Props) {
 			onClick={onClick}
 			variant="solid"
 			size="lg"
-			bgColor={`${disabled ? 'buttonGray-300' : 'primaryOrange-200'}`}
-			textColor={`${disabled ? 'buttonGray-400' : 'primaryWhite'}`}
+			bgColor={`${!disabled ? 'primaryOrange-200' : 'buttonGray-300'}`}
+			textColor={`${!disabled ? 'white' : 'buttonGray-400'}`}
 			disabled={disabled}
 			isLoading={isLoading}
 		>

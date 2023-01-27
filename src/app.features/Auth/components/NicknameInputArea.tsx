@@ -24,7 +24,7 @@ function NicknameInputArea({ onChange, value, isValid, errorContent }: Props) {
 	};
 
 	return (
-		<div className="space-y-[0.8rem]">
+		<div className="space-y-[0.8rem] w-full">
 			<Label required htmlFor="nickname" content="닉네임" />
 			<TextInput
 				id="nickname"

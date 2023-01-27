@@ -36,9 +36,9 @@ function LoginView({ error, onSubmit }: Props) {
 						</button>
 					</div>
 					{/* TODO:tailwind config 수정되면 배경색,텍스트색 바꾸기 */}
-					<div className="rounded-[8px] flex p-[25px] space-x-[10px] w-full bg-[#FAFAFA] text-primaryGray-200 font-bold text-[18px] text-start ">
+					<div className="rounded-[8px] flex p-[25px] space-x-[10px] w-full bg-[#FAFAFA]  font-bold text-[1.8rem] text-start ">
 						<img src="/images/login/icons/google.svg" alt="google_icon" />
-						<a href={GOOGLE_AUTH_URL} className="">
+						<a href={GOOGLE_AUTH_URL} className="text-primaryGray-200">
 							구글계정으로 로그인
 						</a>
 					</div>

@@ -31,7 +31,7 @@ function EmailInputArea({ onChange, value, isValid, errorContent }: Props) {
 	};
 
 	return (
-		<div className="space-y-[0.8rem] relative">
+		<div className="space-y-[0.8rem] relative w-full">
 			<Label required htmlFor="email" content="이메일" />
 			<div className="relative">
 				<TextInput

@@ -11,12 +11,12 @@ module.exports = {
 			colors: {
 				primaryOrange: {
 					100: '#FFEEDB',
-					200: '#FF6A00',
+					200: '#FF8A00',
 					300: '#E47B00',
 				},
 				primaryRed: {
 					100: '#FFEEDB',
-					200: '#FF8A00',
+					200: '#FF6B6B',
 					300: '#FF1523',
 				},
 				primaryBlack: {

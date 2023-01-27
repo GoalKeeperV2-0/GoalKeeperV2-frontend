@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useState, useRef, MouseEvent, useEffect, BaseSyntheticEvent, useMemo } from 'react';
+import React, { useState, useRef, useEffect, BaseSyntheticEvent } from 'react';
 import { ReactComponent as CaretIcon } from 'app.modules/assets/icons/caret.svg';
 
 // export type DefaultValue = string | number | readonly string[] | undefined;

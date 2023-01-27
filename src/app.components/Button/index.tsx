@@ -5,7 +5,7 @@ type Color =
 	| 'primaryOrange-100'
 	| 'primaryBlack-500'
 	| 'primaryBlack-100'
-	| 'primaryWhite'
+	| 'white'
 	| 'buttonGray-100'
 	| 'buttonGray-200'
 	| 'buttonGray-300'
@@ -23,7 +23,7 @@ export interface Props {
 	isLoading?: boolean;
 	children?: React.ReactNode;
 }
-function SubmitButton({
+export default function SubmitButton({
 	variant,
 	size,
 	onClick,
@@ -56,7 +56,7 @@ function SubmitButton({
 	};
 	const getTextColor = () => {
 		if (!textColor) return '';
-		return `text-${textColor} disabled:text-${'red-500'} `;
+		return `text-${textColor} `;
 	};
 	if (isLoading) {
 		return (
@@ -79,5 +79,3 @@ function SubmitButton({
 		</button>
 	);
 }
-
-export default React.memo(SubmitButton);
