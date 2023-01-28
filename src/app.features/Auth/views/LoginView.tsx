@@ -3,12 +3,16 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import BaseTemplate from 'app.components/BaseTemplate';
-import AuthLayout from 'app.components/AuthLayout';
 import TextInput from 'app.components/Input/TextInputRev';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
+
+import { ReactComponent as LoginBanner } from 'app.modules/assets/banners/login.svg';
 import { GOOGLE_AUTH_URL } from '../constants';
 import { IForm, Action, loginFormState } from '../states/loginForm';
 import SubmitButton from '../components/SubmitButton';
+import GoogleLoginButton from '../components/GoogleLoginButton';
+import EmailInputArea from '../components/login/EmailInputArea';
+import PasswordInputArea from '../components/login/PasswordInputArea';
 
 interface Props {
 	onSubmit: (event: React.SyntheticEvent) => void;
@@ -27,21 +31,44 @@ function LoginView({ error, onSubmit }: Props) {
 	const [userLogin, setUserLogin] = useState<boolean>(true); // TODO: 관리자 로그인인지 판단하는 로직 필요
 	return (
 		<BaseTemplate>
-			<AuthLayout>
-				<form onSubmit={onSubmit} className="pc:w-[585px] pc:h-full flex flex-col items-start justify-end">
-					<div className="flex justify-between pc:my-[76px] w-[100%]">
-						<h1 className="text-[20px] font-[800] pc:text-[36px]">{userLogin ? '로그인' : '관리자 로그인'}</h1>
+			<div className="mx-auto pc:w-[120rem]  mt-[7.7rem] flex justify-between items-end">
+				<LoginBanner className="hidden pc:flex" />
+				<form onSubmit={onSubmit} className="w-full pc:w-[58.5rem] flex flex-col ">
+					<div className="flex items-center justify-between">
+						<h3 className="h-[2.6rem]">로그인</h3>
+						<button onClick={() => setUserLogin(!userLogin)} className="text-primaryOrange-200 ml-[2rem]" type="button">
+							{userLogin ? '관리자 로그인 >' : '유저 로그인 >'}
+						</button>
+					</div>
+					<div className="space-y-[2rem] w-full mt-[2.1rem] mb-[4.6rem] pc:space-y-[3rem] pc:mt-[5.2rem] pc:mb-[15.1rem]">
+						<GoogleLoginButton />
+						<EmailInputArea onChange={() => null} value="" />
+						<PasswordInputArea onChange={() => null} value="" />
+					</div>
+					<div className="flex justify-end w-full mb-[1.2rem] pc:mb-[2.4rem]  font-medium text-[1.2rem] leading-[2rem] pc:text-[1.8rem] pc:leading-[2.16rem] text-primaryBlack-300">
+						<Link to={SERVICE_URL.signUp}>
+							<span className="text-primaryOrange-200">회원가입</span>
+						</Link>
+					</div>
+					<SubmitButton onClick={() => null} isLoading={false} disabled={false}>
+						로그인
+					</SubmitButton>
+				</form>
+			</div>
+		</BaseTemplate>
+	);
+}
+export default LoginView;
+/*
+
+<div className="flex justify-between w-[100%]">
+						<h3 className="">{userLogin ? '로그인' : '관리자 로그인'}</h3>
 						<button onClick={() => setUserLogin(!userLogin)} className="text-primaryOrange-200 ml-[20px]" type="button">
 							{userLogin ? '관리자 로그인 >' : '유저 로그인 >'}
 						</button>
 					</div>
-					{/* TODO:tailwind config 수정되면 배경색,텍스트색 바꾸기 */}
-					<div className="rounded-[8px] flex p-[25px] space-x-[10px] w-full bg-[#FAFAFA]  font-bold text-[1.8rem] text-start ">
-						<img src="/images/login/icons/google.svg" alt="google_icon" />
-						<a href={GOOGLE_AUTH_URL} className="text-primaryGray-200">
-							구글계정으로 로그인
-						</a>
-					</div>
+					
+					<GoogleLoginButton />
 					<div className={`w-[100%] pc:mb-[100px] ${!userLogin ? 'mb-[39px]' : ''}`}>
 						<TextInput
 							label="이메일"
@@ -59,6 +86,9 @@ function LoginView({ error, onSubmit }: Props) {
 							onChange={() => '다시정의'}
 						/>
 					</div>
+					<SubmitButton onClick={() => null} isLoading={false}>
+						회원가입
+					</SubmitButton>
 
 					{userLogin && (
 						<>
@@ -74,9 +104,6 @@ function LoginView({ error, onSubmit }: Props) {
 						</>
 					)}
 
-					<SubmitButton onClick={() => null} isLoading={false} disabled={getBtnState()}>
-						로그인
-					</SubmitButton>
 					{userLogin && (
 						<div className="visible w-full space-y-[16px] items-center  mt-[60px] flex flex-col pc:mt-0 pc:w-0 pc:h-0 pc:invisible  ">
 							<span className="text-[12px]  text-primaryOrange-200">
@@ -85,9 +112,8 @@ function LoginView({ error, onSubmit }: Props) {
 							<span className="text-[12px]  text-primaryGray-200">비밀번호를 잊으셨나요?</span>
 						</div>
 					)}
-				</form>
-			</AuthLayout>
-		</BaseTemplate>
-	);
-}
-export default LoginView;
+
+
+
+
+*/

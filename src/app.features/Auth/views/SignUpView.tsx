@@ -1,19 +1,14 @@
 import React from 'react';
-import AuthLayout from 'app.components/AuthLayout';
 import BaseTemplate from 'app.components/BaseTemplate';
-
-import PerformInput from 'app.components/Input/PerformInput';
-import Select from 'app.components/Select';
-
 import { ReactComponent as BackIcon } from 'app.modules/assets/icons/chevron-left.svg';
 import { Link } from 'react-router-dom';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import { IForm, Action, signUpFormState } from '../states/signUpForm';
 import SubmitButton from '../components/SubmitButton';
-import EmailInputArea from '../components/EmailInputArea';
-import PasswordInputArea from '../components/PasswordInputArea';
-import NicknameInputArea from '../components/NicknameInputArea';
-import OptionalInputArea from '../components/OptionalInputArea';
+import EmailInputArea from '../components/signUp/EmailInputArea';
+import PasswordInputArea from '../components/signUp/PasswordInputArea';
+import NicknameInputArea from '../components/signUp/NicknameInputArea';
+import OptionalInputArea from '../components/signUp/OptionalInputArea';
 import GoogleLoginButton from '../components/GoogleLoginButton';
 
 interface Props {
@@ -47,7 +42,10 @@ function SignUpView({ error, onSubmit }: Props) {
 	};
 	return (
 		<BaseTemplate>
-			<form onSubmit={onSubmit} className="mx-auto pc:w-[58.5rem]  flex flex-col items-start">
+			<form
+				onSubmit={onSubmit}
+				className="mt-[3.3rem] mx-auto pc:mt-[10.2rem] pc:w-[58.5rem]  flex flex-col items-start"
+			>
 				<div className="flex items-center  mb-[30px]   pc:mb-[36px]">
 					<BackIcon className="pc:hidden pc:w-0 mr-[1.2rem]" />
 					<h3 className="h-[2.6rem]">회원가입</h3>
@@ -74,42 +72,3 @@ function SignUpView({ error, onSubmit }: Props) {
 }
 
 export default SignUpView;
-// eslint-disable-next-line no-lone-blocks
-{
-	/*
-	<PerformInput
-					label="비밀번호"
-					isRequired
-					value={signUpFormState.password}
-					type="password"
-					placeholder="비밀번호 (8자리 이상)"
-					onChange={(curVar: string) => '수정필요'}
-				/>
-				<div className="mb-[10px]" />
-				<PerformInput
-					type="password"
-					isRequired
-					value={signUpFormState.passwordCheck}
-					placeholder="비밀번호 확인"
-					onChange={(curVar: string) => '수정필요'}
-				/>
-				<div className="mb-[22px] pc:mb-[30px]" />
-				<PerformInput
-					label="닉네임"
-					isRequired
-					type="nickName"
-					placeholder="닉네임을 작성해 주세요"
-					onChange={(curVar: string) => '수정필요'}
-				/>
-			
-				<div className="flex pc:space-x-[8px] space-x-[4px] pc:mb-[10px] mb-[8px]">
-					<span className="font-semibold text-[20px]">선택사항</span>
-				</div>
-				<div className="flex justify-between w-full space-x-[2%]" />
-				<div className="mt-[7px]">
-					<span className={` ${error ? 'text-red-400' : 'text-white'}`}>
-					{error || 'errorZone'}</span>
-				</div>
-	
-	*/
-}

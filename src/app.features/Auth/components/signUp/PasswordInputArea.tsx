@@ -2,7 +2,7 @@ import ErrorMessage from 'app.components/Input/ErrorMessage';
 import Label from 'app.components/Input/Label';
 import TextInput from 'app.components/Input/TextInput';
 import React from 'react';
-import { getFocusColor } from '../utils/getFocusColor';
+import { getFocusColor } from '../../utils/getFocusColor';
 interface Props {
 	onChange: () => void;
 	value: string;
