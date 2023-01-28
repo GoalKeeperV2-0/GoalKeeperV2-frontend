@@ -1,7 +1,7 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Oauth2Register from 'pages/Login/oauth2/register';
 import Oauth2Callback from 'pages/Login/oauth2/callback';
+import Oauth2Register from 'pages/Login/oauth2/register';
 import { SERVICE_URL } from './app.modules/constants/ServiceUrl';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
