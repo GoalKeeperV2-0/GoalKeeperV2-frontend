@@ -19,7 +19,6 @@ function App() {
 						<Route path={SERVICE_URL.login} element={<Login />} />
 						<Route path={SERVICE_URL.signUp} element={<SignUp />} />
 						<Route path={SERVICE_URL.oauth2Callback} element={<Oauth2Callback />} />
-
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 				</Suspense>
