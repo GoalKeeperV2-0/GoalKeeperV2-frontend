@@ -1,6 +1,5 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-
-import React, { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import { oauth2 } from 'app.modules/api/auth';
@@ -23,8 +22,8 @@ function Oauth2Callback() {
 				}
 				navigate(SERVICE_URL.home); // TODO: 로그인 이전 페이지로 보내기
 			},
-			onError: (error) => {
-				console.log(error);
+			onError: () => {
+				alert('오류 발생');
 			},
 			retry: false,
 			refetchOnMount: false,
@@ -32,8 +31,7 @@ function Oauth2Callback() {
 			refetchOnWindowFocus: false,
 		}
 	);
-
-	useEffect(() => {}, [data]);
+	console.log(data);
 	return <div>OauthCallback</div>;
 }
 

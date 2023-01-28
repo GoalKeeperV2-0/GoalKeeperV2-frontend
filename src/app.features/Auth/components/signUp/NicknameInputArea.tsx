@@ -2,8 +2,8 @@ import ErrorMessage from 'app.components/Input/ErrorMessage';
 import Label from 'app.components/Input/Label';
 import TextInput from 'app.components/Input/TextInput';
 import React from 'react';
-import { INVALID_COLOR, VALID_COLOR } from '../constants';
-import { getFocusColor } from '../utils/getFocusColor';
+import { INVALID_COLOR, VALID_COLOR } from '../../constants';
+import { getFocusColor } from '../../utils/getFocusColor';
 
 interface Props {
 	onChange: () => void;
