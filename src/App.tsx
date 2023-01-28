@@ -1,13 +1,13 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Oauth2Callback from 'pages/Login/Oauth2/Callback';
 import { SERVICE_URL } from './app.modules/constants/ServiceUrl';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 // import Login from './pages/login';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
+import Oauth2Callback from './pages/Oauth2Callback';
 
 function App() {
 	return (
