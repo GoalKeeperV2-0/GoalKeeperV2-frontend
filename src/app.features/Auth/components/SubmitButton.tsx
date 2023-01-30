@@ -10,6 +10,7 @@ interface Props {
 function SubmitButton({ disabled, children, isLoading, onClick }: Props) {
 	return (
 		<Button
+			type="submit"
 			onClick={onClick}
 			variant="solid"
 			size="lg"
