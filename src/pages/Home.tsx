@@ -3,6 +3,7 @@ import TextInput from 'app.components/Input/TextInput';
 import Select from 'app.components/Select';
 import EmailInputArea from 'app.features/Auth/components/signUp/EmailInputArea';
 import PasswordInputArea from 'app.features/Auth/components/signUp/PasswordInputArea';
+import SubmitButton from 'app.features/Auth/components/SubmitButton';
 import React, { useEffect } from 'react';
 
 function Home() {
@@ -16,6 +17,9 @@ function Home() {
 			<div className="w-full flex justify-between items-center space-x-[20px]">
 				<Select options={['감자', '고구마', '바나나']} value={null} onChange={() => null} placeholder="성별" />{' '}
 			</div>
+			<SubmitButton onClick={() => null} isLoading={false} disabled={false}>
+				로그인
+			</SubmitButton>
 		</>
 	);
 }
