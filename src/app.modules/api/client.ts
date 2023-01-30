@@ -1,7 +1,7 @@
 import axios, { AxiosHeaders } from 'axios';
 
 const client = axios.create({
-	baseURL: 'http://api.goalkeeper.co.kr/api', // TODO: https?
+	baseURL: 'https://api.goalkeeper.co.kr/api', // TODO: https?
 	withCredentials: true,
 	headers: {
 		'Access-Control-Allow-Credentials': true,
