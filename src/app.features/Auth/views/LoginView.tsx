@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import BaseTemplate from 'app.components/BaseTemplate';
+import BaseTemplate from 'app.components/BaseLayout';
 import TextInput from 'app.components/Input/TextInputRev';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 
@@ -30,32 +30,30 @@ function LoginView({ error, onSubmit }: Props) {
 	};
 	const [userLogin, setUserLogin] = useState<boolean>(true); // TODO: 관리자 로그인인지 판단하는 로직 필요
 	return (
-		<BaseTemplate>
-			<div className="mx-auto pc:w-[120rem]  mt-[7.7rem] flex justify-between items-end">
-				<LoginBanner className="hidden pc:flex" />
-				<form onSubmit={onSubmit} className="w-full pc:w-[58.5rem] flex flex-col ">
-					<div className="flex items-center justify-between">
-						<h3 className="h-[2.6rem]">로그인</h3>
-						<button onClick={() => setUserLogin(!userLogin)} className="text-primaryOrange-200 ml-[2rem]" type="button">
-							{userLogin ? '관리자 로그인 >' : '유저 로그인 >'}
-						</button>
-					</div>
-					<div className="space-y-[2rem] w-full mt-[2.1rem] mb-[4.6rem] pc:space-y-[3rem] pc:mt-[5.2rem] pc:mb-[15.1rem]">
-						<GoogleLoginButton />
-						<EmailInputArea onChange={() => null} value="" />
-						<PasswordInputArea onChange={() => null} value="" />
-					</div>
-					<div className="flex justify-end w-full mb-[1.2rem] pc:mb-[2.4rem]  font-medium text-[1.2rem] leading-[2rem] pc:text-[1.8rem] pc:leading-[2.16rem] text-primaryBlack-300">
-						<Link to={SERVICE_URL.signUp}>
-							<span className="text-primaryOrange-200">회원가입</span>
-						</Link>
-					</div>
-					<SubmitButton onClick={() => null} isLoading={false} disabled={false}>
-						로그인
-					</SubmitButton>
-				</form>
-			</div>
-		</BaseTemplate>
+		<div className="mx-auto pc:w-[120rem]  mt-[7.7rem] flex justify-between items-end">
+			<LoginBanner className="hidden pc:flex" />
+			<form onSubmit={onSubmit} className="w-full pc:w-[58.5rem] flex flex-col ">
+				<div className="flex items-center justify-between">
+					<h3 className="h-[2.6rem]">로그인</h3>
+					<button onClick={() => setUserLogin(!userLogin)} className="text-primaryOrange-200 ml-[2rem]" type="button">
+						{userLogin ? '관리자 로그인 >' : '유저 로그인 >'}
+					</button>
+				</div>
+				<div className="space-y-[2rem] w-full mt-[2.1rem] mb-[4.6rem] pc:space-y-[3rem] pc:mt-[5.2rem] pc:mb-[15.1rem]">
+					<GoogleLoginButton />
+					<EmailInputArea onChange={() => null} value="" />
+					<PasswordInputArea onChange={() => null} value="" />
+				</div>
+				<div className="flex justify-end w-full mb-[1.2rem] pc:mb-[2.4rem]  font-medium text-[1.2rem] leading-[2rem] pc:text-[1.8rem] pc:leading-[2.16rem] text-primaryBlack-300">
+					<Link to={SERVICE_URL.signUp}>
+						<span className="text-primaryOrange-200">회원가입</span>
+					</Link>
+				</div>
+				<SubmitButton onClick={() => null} isLoading={false} disabled={false}>
+					로그인
+				</SubmitButton>
+			</form>
+		</div>
 	);
 }
 export default LoginView;

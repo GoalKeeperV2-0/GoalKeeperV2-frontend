@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import { SERVICE_URL } from './app.modules/constants/ServiceUrl';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
