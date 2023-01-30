@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+import BaseTemplate from 'app.components/BaseTemplate';
 import { SERVICE_URL } from './app.modules/constants/ServiceUrl';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
@@ -14,13 +15,15 @@ function App() {
 		<div className="App">
 			<Router>
 				<Suspense fallback={<div>Loading..</div>}>
-					<Routes>
-						<Route path={SERVICE_URL.home} element={<Home />} />
-						<Route path={SERVICE_URL.login} element={<Login />} />
-						<Route path={SERVICE_URL.signUp} element={<SignUp />} />
-						<Route path={SERVICE_URL.oauth2Callback} element={<Oauth2Callback />} />
-						<Route path="*" element={<NotFound />} />
-					</Routes>
+					<BaseTemplate>
+						<Routes>
+							<Route path={SERVICE_URL.home} element={<Home />} />
+							<Route path={SERVICE_URL.login} element={<Login />} />
+							<Route path={SERVICE_URL.signUp} element={<SignUp />} />
+							<Route path={SERVICE_URL.oauth2Callback} element={<Oauth2Callback />} />
+							<Route path="*" element={<NotFound />} />
+						</Routes>
+					</BaseTemplate>
 				</Suspense>
 			</Router>
 		</div>

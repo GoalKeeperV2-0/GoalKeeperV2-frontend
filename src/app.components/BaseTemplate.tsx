@@ -10,9 +10,9 @@ interface TemplateProps {
 
 export default function BaseTemplate({ isAdmin, children }: TemplateProps) {
 	return (
-		<div className="main pc:max-w-[1200px] mx-auto px-[20px] pb-[20px] pc:px-[0]">
+		<div className="main pc:max-w-[120rem] mx-auto  pb-[2rem] px-[2rem]">
 			<Header />
-			{children}
+			<main>{children}</main>
 			<ModalSection />
 		</div>
 	);

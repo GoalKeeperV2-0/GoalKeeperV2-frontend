@@ -41,33 +41,28 @@ function SignUpView({ error, onSubmit }: Props) {
 		return true;
 	};
 	return (
-		<BaseTemplate>
-			<form
-				onSubmit={onSubmit}
-				className="mt-[3.3rem] mx-auto pc:mt-[10.2rem] pc:w-[58.5rem]  flex flex-col items-start"
-			>
-				<div className="flex items-center  mb-[30px]   pc:mb-[36px]">
-					<BackIcon className="pc:hidden pc:w-0 mr-[1.2rem]" />
-					<h3 className="h-[2.6rem]">회원가입</h3>
-				</div>
-				<GoogleLoginButton />
-				<div className="space-y-[1.6rem] w-full mt-[2rem] mb-[4.1rem] pc:space-y-[4.5rem] pc:mt-[6.2rem] pc:mb-[5.2rem]">
-					<EmailInputArea onChange={() => null} value="" isValid={null} />
-					<PasswordInputArea onChange={() => null} value="" isValid={null} errorContent="" />
-					<NicknameInputArea onChange={() => null} value="" isValid={null} />
-					<OptionalInputArea />
-				</div>
-				<div className="hidden pc:flex space-x-[0.5rem] justify-end w-full mb-[2.4rem]  font-medium text-[1.8rem] leading-[2.16rem] text-primaryBlack-300">
-					<span>이미 골키퍼에 가입하셨나요?</span>
-					<Link to={SERVICE_URL.login}>
-						<span className="text-primaryOrange-200">로그인</span>
-					</Link>
-				</div>
-				<SubmitButton onClick={() => null} isLoading={false} disabled={getBtnState()}>
-					회원가입
-				</SubmitButton>
-			</form>
-		</BaseTemplate>
+		<form onSubmit={onSubmit} className="mt-[3.3rem] mx-auto pc:mt-[10.2rem] pc:w-[58.5rem]  flex flex-col items-start">
+			<div className="flex items-center  mb-[30px]   pc:mb-[36px]">
+				<BackIcon className="pc:hidden pc:w-0 mr-[1.2rem]" />
+				<h3 className="h-[2.6rem]">회원가입</h3>
+			</div>
+			<GoogleLoginButton />
+			<div className="space-y-[1.6rem] w-full mt-[2rem] mb-[4.1rem] pc:space-y-[4.5rem] pc:mt-[6.2rem] pc:mb-[5.2rem]">
+				<EmailInputArea onChange={() => null} value="" isValid={null} />
+				<PasswordInputArea onChange={() => null} value="" isValid={null} errorContent="" />
+				<NicknameInputArea onChange={() => null} value="" isValid={null} />
+				<OptionalInputArea />
+			</div>
+			<div className="hidden pc:flex space-x-[0.5rem] justify-end w-full mb-[2.4rem]  font-medium text-[1.8rem] leading-[2.16rem] text-primaryBlack-300">
+				<span>이미 골키퍼에 가입하셨나요?</span>
+				<Link to={SERVICE_URL.login}>
+					<span className="text-primaryOrange-200">로그인</span>
+				</Link>
+			</div>
+			<SubmitButton onClick={() => null} isLoading={false} disabled={getBtnState()}>
+				회원가입
+			</SubmitButton>
+		</form>
 	);
 }
 
