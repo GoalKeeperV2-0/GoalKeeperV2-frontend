@@ -30,7 +30,7 @@ function LoginView({ error, onSubmit }: Props) {
 	};
 	const [userLogin, setUserLogin] = useState<boolean>(true); // TODO: 관리자 로그인인지 판단하는 로직 필요
 	return (
-		<div className="mx-auto   mt-[7.7rem] flex  items-end w-full  pc:space-x-[13.2rem]">
+		<div className="mx-auto  flex  items-end w-full  pc:space-x-[13.2rem]">
 			<LoginBanner className="hidden pc:flex w-[48.1rem] min-w-[48.1rem]" />
 			<form onSubmit={onSubmit} className="w-full pc:w-[58.5rem] pc:min-w-[58.5rem] flex flex-col ">
 				<div className="flex items-center justify-between">

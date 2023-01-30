@@ -56,10 +56,10 @@ export default function Header() {
 			</div>
 			<div className="flex items-center justify-between space-x-[53.5rem] ">
 				<nav className="hidden pc:block ">
-					<ul className="flex space-x-[35px]">
+					<ul className="flex space-x-[3.5rem]">
 						{MENU_LIST.map((menu, index): React.ReactElement => {
 							return (
-								<li key={index} className="font-[600] pc:min-w-[65px]">
+								<li key={index} className="font-[600] pc:min-w-[6.5rem]">
 									<Link to={menu.path}>{menu.title}</Link>
 								</li>
 							);
@@ -79,7 +79,7 @@ export default function Header() {
 				</div>
 			</div>
 
-			<div className="block pc:hidden min-w-[16px] min-h-[12px] ">
+			<div className="block pc:hidden min-w-[1.6rem] min-h-[1.2rem] ">
 				<button type="button" onClick={handleClickOfSideMenu} aria-label={isOpenSideMenu ? '메뉴 닫기' : '메뉴 열기'}>
 					<MenuIcon />
 				</button>
