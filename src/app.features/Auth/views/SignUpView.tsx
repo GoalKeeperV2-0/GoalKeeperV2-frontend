@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseTemplate from 'app.components/BaseTemplate';
+import BaseTemplate from 'app.components/BaseLayout';
 import { ReactComponent as BackIcon } from 'app.modules/assets/icons/chevron-left.svg';
 import { Link } from 'react-router-dom';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';

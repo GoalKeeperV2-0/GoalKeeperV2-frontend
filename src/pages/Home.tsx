@@ -1,3 +1,4 @@
+import BaseLayout from 'app.components/BaseLayout';
 import Button from 'app.components/Button';
 import TextInput from 'app.components/Input/TextInput';
 import Select from 'app.components/Select';
@@ -7,7 +8,11 @@ import SubmitButton from 'app.features/Auth/components/SubmitButton';
 import React, { useEffect } from 'react';
 
 function Home() {
-	return <div>골키퍼 홈!</div>;
+	return (
+		<BaseLayout>
+			<div>골키퍼 홈!</div>
+		</BaseLayout>
+	);
 }
 
 export default Home;

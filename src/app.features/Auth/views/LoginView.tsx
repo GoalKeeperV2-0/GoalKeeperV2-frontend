@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import BaseTemplate from 'app.components/BaseTemplate';
+import BaseTemplate from 'app.components/BaseLayout';
 import TextInput from 'app.components/Input/TextInputRev';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 
