@@ -48,6 +48,7 @@ export default function SubmitButton({
 		return 'h-[2.6rem] min-h-[2.6rem] pc:h-[3.5rem] pc:min-h-[3.5rem]';
 	};
 	const getBgColor = () => {
+		console.log(bgColor);
 		return `bg-${bgColor}`;
 	};
 	const getBorderStyle = () => {
@@ -73,7 +74,7 @@ export default function SubmitButton({
 			onClick={onClick}
 			className={`${
 				variant === 'outline' ? getBorderStyle() : ''
-			} ${getBgColor()} ${getHeight()} ${getTextColor()}   text-body4-mo pc:text-body4-pc text-center  leading-[100%] w-full rounded-[0.8rem]  `}
+			} ${getBgColor()} ${getHeight()} ${getTextColor()}    text-body4-mo pc:text-body4-pc text-center  leading-[100%] w-full rounded-[0.8rem]  `}
 		>
 			{children}
 		</button>
