@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import { ReactComponent as ServiceLogo } from 'app.modules/assets/header/serviceLogo.svg';
 import { ReactComponent as AlarmIcon } from 'app.modules/assets/header/alarm.svg';
@@ -11,40 +11,28 @@ import SideMenu from './Sidemenu';
 // import useDetectClose from 'hooks/useDetectClose';
 
 type Menu = {
-	id: string;
 	title: string;
 	path: string;
 };
 
 export default function Header() {
-	const navigate = useNavigate();
 	const dropDownRef = useRef<HTMLImageElement>(null);
 	// const [isOpen, setIsOpen] = useDetectClose(dropDownRef, [false, false]);
 	const [isOpenSideMenu, setIsOpenSideMenu] = useState<boolean>(false);
-	const menuList = [
+	const MENU_LIST: Menu[] = [
 		{
-			id: 'notice',
 			title: '공지사항',
 			path: SERVICE_URL.announcements,
 		},
 		{
-			id: 'certifications',
 			title: '목표인증',
 			path: SERVICE_URL.certifications,
 		},
 		{
-			id: 'profile',
 			title: '내정보',
 			path: SERVICE_URL.myGoals,
 		},
 	];
-	const menus = menuList.map((menu: Menu): React.ReactElement => {
-		return (
-			<li key={menu.id} className="font-[600] pc:min-w-[65px]">
-				<Link to={menu.path}>{menu.title}</Link>
-			</li>
-		);
-	});
 
 	const handleClick = (e: React.MouseEvent<HTMLImageElement>, index: number) => {
 		if (e.target === e.currentTarget) {
@@ -68,7 +56,15 @@ export default function Header() {
 			</div>
 			<div className="flex items-center justify-between w-full">
 				<nav className="hidden mr-auto pc:block ">
-					<ul className="flex space-x-[35px]">{menus}</ul>
+					<ul className="flex space-x-[35px]">
+						{MENU_LIST.map((menu, index): React.ReactElement => {
+							return (
+								<li key={index} className="font-[600] pc:min-w-[65px]">
+									<Link to={menu.path}>{menu.title}</Link>
+								</li>
+							);
+						})}
+					</ul>
 				</nav>
 				<div className="hidden  pc:flex space-x-[3.5rem] items-center  z-[1]" aria-hidden ref={dropDownRef}>
 					<div className="relative">
