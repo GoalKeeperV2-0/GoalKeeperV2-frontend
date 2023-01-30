@@ -14,8 +14,8 @@ function SubmitButton({ disabled, children, isLoading, onClick }: Props) {
 			onClick={onClick}
 			variant="solid"
 			size="lg"
-			bgColor={`${disabled ? 'buttonGray-300' : 'primaryOrange-200'}`}
-			textColor={`${disabled ? 'buttonGray-400' : 'white'}`}
+			bgColor={`${disabled ? 'bg-buttonGray-300' : 'bg-primaryOrange-200'}`}
+			textColor={`${disabled ? 'text-buttonGray-400' : 'text-white'}`}
 			disabled={disabled}
 			isLoading={isLoading}
 		>
