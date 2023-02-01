@@ -42,7 +42,7 @@ function SignUpView({ error, onSubmit }: Props) {
 	};
 	return (
 		<form onSubmit={onSubmit} className=" mx-auto pc:mt-[2.8rem] pc:w-[58.5rem]  flex flex-col items-start">
-			<div className="flex items-center  mb-[30px]   pc:mb-[36px]">
+			<div className="flex items-center  mb-[3rem]   pc:mb-[3.6rem]">
 				<BackIcon className="pc:hidden pc:w-0 mr-[1.2rem]" />
 				<h3 className="h-[2.6rem]">회원가입</h3>
 			</div>

@@ -1,9 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
+import BaseLayout from 'app.components/BaseLayout';
+import Oauth2RegisterView from 'app.features/Auth/views/Oauth2RegisterView';
 import { oauth2Register } from 'app.modules/api/auth';
 import React, { useEffect } from 'react';
 
 function Oauth2Register() {
-	const { mutate, isLoading: isPatchLoading } = useMutation(oauth2Register, {
+	/*const { mutate, isLoading: isPatchLoading } = useMutation(oauth2Register, {
 		onSuccess: (res) => {
 			console.log(res);
 			alert('계정정보수정완료');
@@ -19,8 +21,12 @@ function Oauth2Register() {
 			description: '',
 			sex: 'MAN',
 		});
-	}, []);
-	return <div>register</div>;
+	}, []);*/
+	return (
+		<BaseLayout>
+			<Oauth2RegisterView />
+		</BaseLayout>
+	);
 }
 
 export default Oauth2Register;

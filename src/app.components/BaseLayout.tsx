@@ -10,7 +10,7 @@ interface TemplateProps {
 	isAdmin?: string | null;
 	children: React.ReactNode;
 }
-const ASIDE_NOT_INCLUDE = [SERVICE_URL.login, SERVICE_URL.signUp];
+const ASIDE_NOT_INCLUDE = [SERVICE_URL.login, SERVICE_URL.signUp, SERVICE_URL.oauth2Register];
 export default function BaseTemplate({ isAdmin, children }: TemplateProps) {
 	console.log(window.location.pathname);
 	return (

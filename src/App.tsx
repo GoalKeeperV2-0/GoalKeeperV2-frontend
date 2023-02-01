@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Oauth2Callback from './pages/Oauth2Callback';
+import Oauth2Register from './pages/Oauth2Register';
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 						<Route path={SERVICE_URL.login} element={<Login />} />
 						<Route path={SERVICE_URL.signUp} element={<SignUp />} />
 						<Route path={SERVICE_URL.oauth2Callback} element={<Oauth2Callback />} />
+						<Route path={SERVICE_URL.oauth2Register} element={<Oauth2Register />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
 				</Suspense>
