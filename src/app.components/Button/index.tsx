@@ -11,7 +11,8 @@ type BgColor =
 	| 'bg-buttonGray-300'
 	| 'bg-buttonGray-400'
 	| 'bg-buttonRed-200'
-	| 'bg-buttonRed-100';
+	| 'bg-buttonRed-100'
+	| 'bg-primaryBlack-500';
 type TextColor =
 	| 'text-primaryOrange-200'
 	| 'text-primaryOrange-100'
