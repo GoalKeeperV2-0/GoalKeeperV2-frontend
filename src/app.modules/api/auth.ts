@@ -1,3 +1,4 @@
+import { AgeType, SexType } from 'app.features/Auth/components/signUp/OptionalInputArea';
 import client from './client';
 
 export const oauth2 = async (code: string) => {
@@ -6,11 +7,11 @@ export const oauth2 = async (code: string) => {
 	} = await client.get(`/oauth2/google?code=${code}`);
 	return { accessToken, newbie, refreshToken };
 };
-
+// TODO: 닉네임 필드가 없음
 export interface Oauth2RegisterBody {
-	age: number;
+	age: AgeType; // TODO: Type 따로 선언해둔 파일 만들기
 	description: string;
-	sex: 'MAN' | 'WAMAN' | null;
+	sex: SexType;
 }
 export const oauth2Register = async (body: Oauth2RegisterBody) => {
 	const res = await client.patch(`/oauth2/additionalUserInfo`, { ...body });

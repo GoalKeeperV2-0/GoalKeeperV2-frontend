@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BaseTemplate from 'app.components/BaseLayout';
 import { ReactComponent as BackIcon } from 'app.modules/assets/icons/chevron-left.svg';
 import { Link } from 'react-router-dom';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
+import { Oauth2RegisterBody } from 'app.modules/api/auth';
 import { IForm, Action, signUpFormState } from '../states/signUpForm';
 import SubmitButton from '../components/SubmitButton';
 import EmailInputArea from '../components/signUp/EmailInputArea';
@@ -40,6 +41,17 @@ function SignUpView({ error, onSubmit }: Props) {
 
 		return true;
 	};
+	const [body, setBody] = useState<Oauth2RegisterBody>({ description: '', age: null, sex: null });
+
+	const onNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		// TODO: 백엔드에 지금 이 필드 없음
+	};
+	const onOptionSelect = (e: React.BaseSyntheticEvent) => {
+		const {
+			target: { name, value },
+		} = e;
+		setBody((prev) => ({ ...prev, [name]: value }));
+	};
 	return (
 		<form onSubmit={onSubmit} className=" mx-auto pc:mt-[2.8rem] pc:w-[58.5rem]  flex flex-col items-start">
 			<div className="flex items-center  mb-[3rem]   pc:mb-[3.6rem]">
@@ -51,7 +63,7 @@ function SignUpView({ error, onSubmit }: Props) {
 				<EmailInputArea onChange={() => null} value="" isValid={null} />
 				<PasswordInputArea onChange={() => null} value="" isValid={null} errorContent="" />
 				<NicknameInputArea onChange={() => null} value="" isValid={null} />
-				<OptionalInputArea />
+				<OptionalInputArea onSelect={onOptionSelect} sex={body?.sex ?? null} age={body?.age ?? null} />
 			</div>
 			<div className="hidden pc:flex space-x-[0.5rem] justify-end w-full mb-[2.4rem]  font-medium text-[1.8rem] leading-[2.16rem] text-primaryBlack-300">
 				<span>이미 골키퍼에 가입하셨나요?</span>
@@ -59,7 +71,7 @@ function SignUpView({ error, onSubmit }: Props) {
 					<span className="text-primaryOrange-200">로그인</span>
 				</Link>
 			</div>
-			<SubmitButton onClick={() => null} isLoading={false} disabled={getBtnState()}>
+			<SubmitButton isLoading={false} disabled={getBtnState()}>
 				회원가입
 			</SubmitButton>
 		</form>

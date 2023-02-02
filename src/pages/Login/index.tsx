@@ -5,7 +5,7 @@ import BaseLayout from 'app.components/BaseLayout';
 function Login() {
 	return (
 		<BaseLayout>
-			<LoginView onSubmit={() => null} error="" />
+			<LoginView onSubmit={() => ''} error="" />
 		</BaseLayout>
 	);
 }

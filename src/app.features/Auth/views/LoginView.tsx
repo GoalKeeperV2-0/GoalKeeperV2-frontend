@@ -49,7 +49,7 @@ function LoginView({ error, onSubmit }: Props) {
 						<span className="text-primaryOrange-200">회원가입</span>
 					</Link>
 				</div>
-				<SubmitButton onClick={() => null} isLoading={false} disabled={false}>
+				<SubmitButton isLoading={false} disabled={false}>
 					로그인
 				</SubmitButton>
 			</form>

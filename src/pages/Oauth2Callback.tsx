@@ -6,7 +6,7 @@ import { oauth2 } from 'app.modules/api/auth';
 import { setCookie } from 'app.modules/cookie';
 function Oauth2Callback() {
 	const navigate = useNavigate();
-	/*const { data } = useQuery(
+	const { data } = useQuery(
 		['oauth2', 'google'],
 		() => oauth2(new URL(document.location.toString()).searchParams.get('code') as string),
 		{
@@ -30,7 +30,7 @@ function Oauth2Callback() {
 			refetchOnReconnect: false,
 			refetchOnWindowFocus: false,
 		}
-	);*/
+	);
 
 	useEffect(() => {
 		console.log('인가코드 : ', new URL(document.location.toString()).searchParams.get('code') as string);

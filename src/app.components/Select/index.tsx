@@ -4,15 +4,16 @@ import { ReactComponent as CaretIcon } from 'app.modules/assets/icons/caret.svg'
 
 // export type DefaultValue = string | number | readonly string[] | undefined;
 
-interface Props {
-	options: string[];
-	value: string | null;
+interface Props<T> {
+	options: Map<string, string>;
+	name: string;
+	value: T | null;
 	placeholder: string;
 	// defaultValue: DefaultValue;
-	onChange: (curVar: string) => void;
+	onSelect: (e: React.BaseSyntheticEvent) => void;
 }
 
-export default function Select({ options, value, onChange, placeholder }: Props) {
+export default function Select<T>({ options, name, value, onSelect, placeholder }: Props<T>) {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const optionRef = useRef<HTMLButtonElement>(null);
 
@@ -34,6 +35,11 @@ export default function Select({ options, value, onChange, placeholder }: Props)
 		e.stopPropagation();
 	};
 
+	const optionSelectHandler = (e: React.BaseSyntheticEvent) => {
+		onSelect(e);
+		setIsOpen(false);
+	};
+
 	return (
 		<div className=" w-full relative ">
 			<button
@@ -42,9 +48,13 @@ export default function Select({ options, value, onChange, placeholder }: Props)
 				ref={optionRef}
 				onClick={openOptionList}
 			>
-				<CaretIcon className="w-[1.0rem] pc:w-[1.6rem] arrow-icon-wrap" />
+				<>
+					<CaretIcon className="w-[1.0rem] pc:w-[1.6rem] arrow-icon-wrap" />
 
-				<span className="leading-[100%] text-primaryBlack-300">{placeholder}</span>
+					<span className={`leading-[100%] ${value ? 'text-black' : 'text-primaryBlack-300'} `}>
+						<>{options.get(value as string) || placeholder}</>
+					</span>
+				</>
 			</button>
 			{isOpen && (
 				// eslint-disable-next-line jsx-a11y/click-events-have-key-events
@@ -54,14 +64,19 @@ export default function Select({ options, value, onChange, placeholder }: Props)
 				>
 					<button type="button" className=" w-full max-h-[16.2rem] overflow-y-auto scrollbar ">
 						<ul className="text-body3-mo pc:text-body3-pc space-y-[1.2rem] pc:space-y-[2.4rem]">
-							{options.map((option, index) => (
-								// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+							{Array.from(options.keys()).map((optionKey, index) => (
 								<li
 									key={index}
-									onClick={() => setIsOpen(false)}
-									className=" overflow-hidden text-left whitespace-nowrap text-ellipsis hover:text-primaryOrange-200"
+									className=" overflow-hidden  whitespace-nowrap text-ellipsis hover:text-primaryOrange-200"
 								>
-									{option}
+									<button
+										value={optionKey}
+										name={name}
+										onClick={optionSelectHandler}
+										className="w-full h-full text-left"
+									>
+										{options.get(optionKey)}
+									</button>
 								</li>
 							))}
 						</ul>
