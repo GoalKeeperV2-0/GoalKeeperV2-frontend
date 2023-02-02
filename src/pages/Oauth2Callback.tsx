@@ -31,6 +31,7 @@ function Oauth2Callback() {
 			refetchOnWindowFocus: false,
 		}
 	);*/
+
 	useEffect(() => {
 		console.log('인가코드 : ', new URL(document.location.toString()).searchParams.get('code') as string);
 	}, []);
