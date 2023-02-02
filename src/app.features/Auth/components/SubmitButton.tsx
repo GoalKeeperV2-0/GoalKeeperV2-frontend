@@ -5,13 +5,11 @@ interface Props {
 	disabled?: boolean;
 	children: React.ReactNode;
 	isLoading: boolean;
-	onClick: () => void;
 }
-function SubmitButton({ disabled, children, isLoading, onClick }: Props) {
+function SubmitButton({ disabled, children, isLoading }: Props) {
 	return (
 		<Button
 			type="submit"
-			onClick={onClick}
 			variant="solid"
 			size="lg"
 			bgColor={`${disabled ? 'bg-buttonGray-300' : 'bg-primaryOrange-200'}`}
