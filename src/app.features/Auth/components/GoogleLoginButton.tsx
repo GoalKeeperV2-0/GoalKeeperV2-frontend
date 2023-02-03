@@ -1,4 +1,4 @@
-import Button from 'app.components/Button';
+import Button from 'app.components/App.base/Button';
 import React from 'react';
 
 import { GOOGLE_AUTH_URL } from '../constants';

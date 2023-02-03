@@ -1,4 +1,4 @@
-import Button from 'app.components/Button';
+import Button from 'app.components/App.base/Button';
 import React, { useEffect } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';

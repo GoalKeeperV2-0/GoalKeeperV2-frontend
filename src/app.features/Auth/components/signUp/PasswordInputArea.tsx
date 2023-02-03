@@ -1,6 +1,6 @@
-import ErrorMessage from 'app.components/Input/ErrorMessage';
-import Label from 'app.components/Input/Label';
-import TextInput from 'app.components/Input/TextInput';
+import ErrorMessage from 'app.components/App.base/Input/ErrorMessage';
+import Label from 'app.components/App.base/Input/Label';
+import TextInput from 'app.components/App.base/Input/TextInput';
 import React from 'react';
 import { getFocusColor } from '../../utils/getFocusColor';
 interface Props {

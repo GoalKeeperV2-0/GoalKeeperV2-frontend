@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import BaseTemplate from 'app.components/BaseLayout';
-import TextInput from 'app.components/Input/TextInputRev';
+import TextInput from 'app.components/App.base/Input/TextInputRev';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 
 import { ReactComponent as LoginBanner } from 'app.modules/assets/banners/login.svg';
