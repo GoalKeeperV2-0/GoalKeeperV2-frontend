@@ -1,3 +1,4 @@
+import { getCookie, setCookie } from 'app.modules/cookie';
 import axios, { AxiosHeaders } from 'axios';
 
 const client = axios.create({
@@ -10,8 +11,8 @@ const client = axios.create({
 
 client.interceptors.request.use((config) => {
 	const accessToken = localStorage.getItem('ACCESS_TOKEN');
-	if (accessToken && config?.headers !== undefined) {
-		client.defaults.headers.common.Authorization = accessToken;
+	if (accessToken) {
+		client.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`;
 	}
 
 	return config;
@@ -25,25 +26,28 @@ client.interceptors.response.use(
 			config,
 			response: { status },
 		} = error;
-		console.log(config);
-		if (status === 401 && config.url !== '/auth/token/refresh') {
+
+		if (status === 401 && config.url !== '/api/login/') {
 			try {
 				const originalRequest = config;
 
 				// token refresh 요청
-
-				const { data } = await client.get(
-					'/auth/token/refresh' // token refresh api
+				const refreshToken = getCookie('REFRESH_TOKEN');
+				const res = await client.get(
+					'/oauth/token/refresh', // token refresh api
+					{ headers: { refreshToken } }
 				);
-				// console.log(data.accessToken, data.refreshToken);
-				// 토큰 갱신
-
-				localStorage.setItem('ACCESS_TOKEN', data.accessToken);
-				originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
-
-				// 401로 요청 실패했던 요청 새로운 accessToken으로 재요청
+				console.log(res);
+				/*const newAccessToken = res?.headers['authorization']?.split(' ')[1]; // TODO: 토큰 발췌 방식 바꾸기
+				const newRefreshToken = res?.headers['refresh']?.split(' ')[1];
+				if (newAccessToken && newRefreshToken) {
+					localStorage.setItem('ACCESS_TOKEN', newAccessToken);
+					client.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
+					setCookie('REFRESH_TOKEN', refreshToken, { path: '/', secure: true, sameSite: 'none' });
+				}*/
 				return await client(originalRequest);
 			} catch (refreshError) {
+				// TODO: 로그아웃
 				localStorage.removeItem('ACCESS_TOKEN');
 				return Promise.reject(refreshError);
 			}
