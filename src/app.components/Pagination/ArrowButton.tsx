@@ -9,7 +9,7 @@ interface Props {
 }
 function ArrowButton({ direction, disabled, onClick }: Props) {
 	return (
-		<Button variant="solid" size="xs" bgColor="bg-buttonGray-200">
+		<Button variant="solid" size="xs" bgColor="bg-buttonGray-200" onClick={onClick}>
 			{direction === 'left' ? <ArrowLeftIcon className="mx-auto" /> : <ArrowRightIcon className="mx-auto" />}
 		</Button>
 	);
