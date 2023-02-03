@@ -46,24 +46,44 @@ type DateStates = {
 function Calander() {
 	const { year, month, day } = getKoreaToday();
 	const [searchMonth, setSearchMonth] = useState<number>(month);
+	const [searchYear, setSearchYear] = useState<number>(year);
 	const [lastDates, setLastDates] = useState<DateStates>({
 		...getPrevMonthLastDayInfo(year, month),
 		...getCurMonthLastDayInfo(year, month),
 	});
-
+	const changeMonth = (e: React.BaseSyntheticEvent) => {
+		let newMonth;
+		console.log(e.target.name);
+		if (e.target.name === 'decrease-month') {
+			newMonth = searchMonth - 1;
+			console.log('d', newMonth, month);
+			if (newMonth === 0) {
+				newMonth = 12;
+				setSearchYear((prev) => prev - 1);
+			}
+		} else {
+			newMonth = searchMonth + 1;
+			if (newMonth === 13) {
+				newMonth = 1;
+				setSearchYear((prev) => prev + 1);
+			}
+		}
+		console.log(newMonth);
+		setSearchMonth(newMonth);
+	};
 	useEffect(() => {
-		const { prevMonthLastDay, prevMonthLastDate } = getPrevMonthLastDayInfo(year, searchMonth);
-		const { curMonthLastDay, curMonthLastDate } = getCurMonthLastDayInfo(year, searchMonth);
+		const { prevMonthLastDay, prevMonthLastDate } = getPrevMonthLastDayInfo(searchYear, searchMonth);
+		const { curMonthLastDay, curMonthLastDate } = getCurMonthLastDayInfo(searchYear, searchMonth);
 		setLastDates({ prevMonthLastDay, prevMonthLastDate, curMonthLastDay, curMonthLastDate });
 	}, [searchMonth]);
 	return (
 		<div className="w-[32.7rem] h-[34rem] p-[2.2rem] space-y-[2.2rem] flex flex-col items-center border-[0.1rem] border-primaryBlack-100 rounded-[0.8rem] ">
 			<div className="flex items-center space-x-[1.2rem]">
-				<ArrowButton direction="left" onClick={() => setSearchMonth((prev) => prev - 1)} disabled={false} />
-				<span className="text-body5-mo pc:text-body5-pc">
-					{year}년 {searchMonth}월
-				</span>
-				<ArrowButton direction="right" onClick={() => setSearchMonth((prev) => prev + 1)} disabled={false} />
+				<ArrowButton direction="left" name="decrease-month" onClick={changeMonth} disabled={false} />
+				<div className="text-body5-mo pc:text-body5-pc">
+					{searchYear}년 {searchMonth}월
+				</div>
+				<ArrowButton direction="right" name="increase-month" onClick={changeMonth} disabled={false} />
 			</div>
 			<div className="w-full pc:text-body1-pc">
 				<div className="grid grid-cols-7 text-center leading-[100%]">

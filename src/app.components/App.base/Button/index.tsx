@@ -48,6 +48,7 @@ export interface Props {
 	isLoading?: boolean;
 	children?: React.ReactNode;
 	type?: 'button' | 'submit';
+	name?: string;
 }
 export default function SubmitButton({
 	variant,
@@ -60,6 +61,7 @@ export default function SubmitButton({
 	isLoading,
 	children,
 	type = 'button',
+	name,
 }: Props) {
 	const getHeight = () => {
 		if (size === 'lg') {
@@ -91,6 +93,7 @@ export default function SubmitButton({
 	return (
 		<button
 			type={type}
+			name={name}
 			disabled={disabled}
 			onClick={onClick}
 			className={`${variant === 'outline' ? getBorderStyle() : ''} ${bgColor ?? ''} ${getHeight()} ${
