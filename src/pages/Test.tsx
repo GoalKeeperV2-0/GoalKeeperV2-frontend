@@ -1,3 +1,4 @@
+import ArrowButton from 'app.components/Pagination/ArrowButton';
 import React, { useEffect } from 'react';
 
 const getKoreaToday = () => {
@@ -40,18 +41,40 @@ function Calander() {
 	const { prevMonthLastDay, prevMonthLastDate } = getPrevMonthLastDayInfo(year, month);
 	const { curMonthLastDay, curMonthLastDate } = getCurMonthLastDayInfo(year, month);
 	return (
-		<div className="grid grid-cols-7">
-			{Array.from({ length: prevMonthLastDay + 1 }).map((_, idx) => (
-				<div key={idx} className="text-gray-500">
-					{prevMonthLastDate - (prevMonthLastDay - idx)}
+		<div className="w-[32.7rem] h-[31.6rem] p-[2.2rem] space-y-[2.2rem] flex flex-col items-center border-[0.1rem] border-primaryBlack-100 rounded-[0.8rem] ">
+			<div className="flex items-center space-x-[1.2rem]">
+				<ArrowButton direction="left" onClick={() => null} disabled={false} />
+				<span className="text-body5-mo pc:text-body5-pc">
+					{year}년 {month}월
+				</span>
+				<ArrowButton direction="right" onClick={() => null} disabled={false} />
+			</div>
+			<div className="w-full pc:text-body1-pc">
+				<div className="grid grid-cols-7 text-center leading-[100%]">
+					{['일', '월', '화', '수', '목', '금', '토'].map((DAY, idx) => (
+						<div key={idx} className="pc:text-body1-pc text-primaryBlack-300 h-[3.6rem]">
+							<span>{DAY}</span>
+						</div>
+					))}
 				</div>
-			))}
-			{Array.from({ length: curMonthLastDate }).map((_, idx) => (
-				<div key={idx}>{idx + 1}</div>
-			))}
-			{Array.from({ length: 7 - curMonthLastDay - 1 }).map((_, idx) => (
-				<div key={idx}>{idx + 1}</div>
-			))}
+				<div className="grid grid-cols-7 text-center leading-[100%]">
+					{Array.from({ length: prevMonthLastDay + 1 }).map((_, idx) => (
+						<div key={idx} className="text-primaryBlack-300 h-[3.6rem]">
+							<button>{prevMonthLastDate - (prevMonthLastDay - idx)}</button>
+						</div>
+					))}
+					{Array.from({ length: curMonthLastDate }).map((_, idx) => (
+						<div key={idx} className="h-[3.6rem]">
+							<button>{idx + 1}</button>
+						</div>
+					))}
+					{Array.from({ length: 7 - curMonthLastDay - 1 }).map((_, idx) => (
+						<div key={idx} className="text-primaryBlack-300 h-[3.6rem]">
+							<button>{idx + 1}</button>
+						</div>
+					))}
+				</div>
+			</div>
 		</div>
 	);
 }
