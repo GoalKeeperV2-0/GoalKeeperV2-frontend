@@ -10,7 +10,7 @@ function SelectGoalTypeArea() {
 		['manytime', '지속목표'],
 	]);
 	return (
-		<div className="space-y-[0.8rem] relative w-full">
+		<div className="space-y-[0.8rem] w-full">
 			<Label required htmlFor="goal-type" content="등록할 목표를 설정해주세요" />
 			<div className="flex space-x-[2.3rem]">
 				{['onetime', 'manytime'].map((type) => (
