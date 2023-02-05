@@ -42,13 +42,16 @@ export interface Props {
 	size: 'lg' | 'base' | 'sm' | 'xs';
 	bgColor: BgColor;
 	textColor?: TextColor;
-	borderColor?: BorderColor;
+	borderColor?: BorderColor | null;
 	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	disabled?: boolean;
 	isLoading?: boolean;
 	children?: React.ReactNode;
 	type?: 'button' | 'submit';
 	name?: string;
+	value?: string;
+	className?: string;
+	ariaPressed?: boolean;
 }
 export default function SubmitButton({
 	variant,
@@ -58,10 +61,13 @@ export default function SubmitButton({
 	borderColor,
 	textColor,
 	disabled,
+	value,
 	isLoading,
 	children,
 	type = 'button',
 	name,
+	className,
+	ariaPressed,
 }: Props) {
 	const getHeight = () => {
 		if (size === 'lg') {
@@ -94,11 +100,13 @@ export default function SubmitButton({
 		<button
 			type={type}
 			name={name}
+			value={value}
 			disabled={disabled}
 			onClick={onClick}
+			aria-pressed={ariaPressed}
 			className={`${variant === 'outline' ? getBorderStyle() : ''} ${bgColor ?? ''} ${getHeight()} ${
 				textColor ?? ''
-			}    text-body4-mo pc:text-body4-pc text-center  leading-[100%] w-full rounded-[0.8rem]  `}
+			}    text-body4-mo pc:text-body4-pc text-center  leading-[100%] w-full rounded-[0.8rem] ${className} `}
 		>
 			{children}
 		</button>

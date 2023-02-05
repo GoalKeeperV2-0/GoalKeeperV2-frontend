@@ -1,14 +1,17 @@
 import Button from 'app.components/App.base/Button';
+import UploadOnetimeGoal from 'app.features/OneTimeGoal/modalContents/UploadOnetimeGoal';
+import { modalState } from 'app.modules/store/modal';
 import React, { useEffect } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import OverviewTemplate from './OverviewTemplate';
 
 import SideBarButton from './SideBarButton';
 // TODO: field & value mapping 시키기
 function Aside() {
 	const navigate = useNavigate();
-
+	const [modal, setModal] = useRecoilState(modalState);
 	/*
 
 	if (memberInfoLoading || menuInfoLoading)
@@ -59,7 +62,12 @@ function Aside() {
 								</span>
 							</div>
 						</Button>
-						<Button size="sm" variant="solid" bgColor="bg-buttonGray-200" onClick={() => {}}>
+						<Button
+							size="sm"
+							variant="solid"
+							bgColor="bg-buttonGray-200"
+							onClick={() => setModal({ render: <UploadOnetimeGoal />, isOpen: true })}
+						>
 							<span className="text-center  truncate text-[1.6rem] leading-[1.92rem]">목표등록 추가</span>
 						</Button>
 					</div>

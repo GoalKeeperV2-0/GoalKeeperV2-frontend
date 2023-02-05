@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState, useRef, useEffect, BaseSyntheticEvent } from 'react';
 import { ReactComponent as CaretIcon } from 'app.modules/assets/icons/caret.svg';
+import { stopPropagation } from 'app.modules/utils/stopPropagation';
 
 // export type DefaultValue = string | number | readonly string[] | undefined;
 
@@ -30,9 +31,6 @@ export default function Select<T>({ options, name, value, onSelect, placeholder 
 
 	const openOptionList = () => {
 		setIsOpen(true);
-	};
-	const stopPropagation = (e: React.MouseEvent<HTMLDivElement>) => {
-		e.stopPropagation();
 	};
 
 	const optionSelectHandler = (e: React.BaseSyntheticEvent) => {
