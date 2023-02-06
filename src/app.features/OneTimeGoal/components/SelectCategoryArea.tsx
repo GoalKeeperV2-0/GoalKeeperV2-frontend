@@ -7,7 +7,7 @@ interface Props {
 
 function SelectCategoryArea({ value }: Props) {
 	return (
-		<div className="space-y-[0.8rem]  w-full">
+		<div className="space-y-[2.4rem]  w-full">
 			<Label required htmlFor="select-goal-category" content="카테고리 선택" />
 			<ul className="flex flex-wrap space-x-[1.6rem]">
 				{['운동', '공부', '습관', '취미', '기타'].map((category) => (

@@ -4,7 +4,7 @@ import React from 'react';
 
 function SetGoalContentArea() {
 	return (
-		<div className="space-y-[0.8rem]  w-full">
+		<div className="space-y-[2.4rem]  w-full">
 			<Label required htmlFor="goal-title" content="일반목표 제목" />
 			<TextInput
 				id="goal-title"

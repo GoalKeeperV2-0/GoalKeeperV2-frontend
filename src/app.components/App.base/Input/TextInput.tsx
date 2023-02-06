@@ -5,8 +5,8 @@ type FocusColor = 'primaryOrange-200' | 'primaryRed-300';
 
 interface Props {
 	type: 'text' | 'email' | 'password';
-	onChange: () => void;
-	value: string;
+	onChange?: () => void;
+	value?: string;
 	placeholder: string;
 	id: string;
 	focusColor?: FocusColor | null;
@@ -15,6 +15,7 @@ interface Props {
 	required?: boolean;
 	minLength?: number;
 	className?: string;
+	name?: string;
 }
 function TextInput({
 	type,
@@ -28,6 +29,7 @@ function TextInput({
 	required,
 	minLength,
 	className,
+	name,
 }: Props) {
 	const getFocusColor = () => {
 		if (focusColor?.includes('primaryOrange-200')) {
@@ -48,6 +50,7 @@ function TextInput({
 			type={type}
 			onChange={onChange}
 			value={value}
+			name={name}
 			placeholder={placeholder}
 			disabled={disabled}
 			required={required}
