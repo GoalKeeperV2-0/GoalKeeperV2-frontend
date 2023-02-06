@@ -2,7 +2,7 @@ import Label from 'app.components/App.base/Input/Label';
 import TextInput from 'app.components/App.base/Input/TextInput';
 import React from 'react';
 import { ReactComponent as RedBallIcon } from 'app.modules/assets/icons/ball/redBall.svg';
-
+// TODO: ErrorMessage Component 사용하기
 function SetBallArea() {
 	return (
 		<div className="space-y-[0.8rem]  w-full">

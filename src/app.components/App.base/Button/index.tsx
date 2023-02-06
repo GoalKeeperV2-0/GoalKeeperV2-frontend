@@ -80,7 +80,7 @@ export default function SubmitButton({
 			return 'min-h-[3.4rem] h-[3.4rem] pc:h-[5.1rem] pc:min-h-[5.1rem]';
 		}
 
-		return 'h-[2rem] min-h-[2rem] pc:h-[3.4rem] pc:min-h-[3.4rem] w-[2rem] min-w-[2rem] pc:w-[3.4rem] pc:min-w-[3.4rem]';
+		return 'h-[2rem] min-h-[2rem] pc:h-[3.4rem] pc:min-h-[3.4rem] ';
 	};
 
 	const getBorderStyle = () => {

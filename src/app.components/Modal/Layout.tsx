@@ -7,12 +7,12 @@ import { useRecoilState } from 'recoil';
 function ModalLayout() {
 	const [modal, setModal] = useRecoilState(modalState);
 
-	useEffect(() => {
+	/*useEffect(() => {
 		document.body.style.overflow = 'hidden';
 		return () => {
 			document.body.style.overflow = 'scroll';
 		};
-	}, []);
+	}, []);*/
 	return (
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
 		<div
