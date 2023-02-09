@@ -14,15 +14,19 @@ function ModalLayout() {
 		};
 	}, []);*/
 	return (
+		// TODO:모달 backdrop 화면 꽉채워야 함
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
 		<div
 			onClick={() => setModal({ ...modal, isOpen: false })}
-			aria-modal
-			className="bg-primaryBlack-500 bg-opacity-20 absolute  inset-0 h-full w-full grid place-content-center z-50 "
+			className="bg-primaryBlack-500 bg-opacity-20 absolute inset-0 min-h-[150vh] w-[100%]   z-50 "
 		>
 			{/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-			<div onClick={stopPropagation} className="mx-auto w-[75rem] bg-buttonGray-100 rounded-[0.8rem] pc:p-[4rem]">
-				{modal.render}
+			<div
+				aria-modal
+				onClick={stopPropagation}
+				className="pc:px-[2rem] rounded-[1.6rem] py-[4rem] w-[75rem] bg-buttonGray-100 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+			>
+				<div className="max-h-[80vh] overflow-y-auto scrollbar pc:px-[2rem]">{modal.render}</div>
 			</div>
 		</div>
 	);

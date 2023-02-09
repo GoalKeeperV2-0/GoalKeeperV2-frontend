@@ -77,7 +77,7 @@ function Calander() {
 		setLastDates({ prevMonthLastDay, prevMonthLastDate, curMonthLastDay, curMonthLastDate });
 	}, [searchMonth]);
 	return (
-		<div className=" w-[32.7rem] h-[34rem] p-[2.2rem] space-y-[2.2rem] flex flex-col items-center border-[0.1rem] border-primaryBlack-100 rounded-[0.8rem] ">
+		<div className=" w-[32.7rem] h-[33rem] p-[2.2rem] space-y-[2.2rem] flex flex-col items-center border-[0.1rem] border-primaryBlack-100 rounded-[0.8rem] ">
 			<div className="flex items-center space-x-[1.2rem]">
 				<ArrowButton direction="left" name="decrease-month" onClick={changeMonth} disabled={false} />
 				<div className="text-body5-mo pc:text-body5-pc whitespace-nowrap">
