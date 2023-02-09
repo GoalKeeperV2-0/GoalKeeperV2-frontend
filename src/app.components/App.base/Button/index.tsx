@@ -12,7 +12,9 @@ type BgColor =
 	| 'bg-buttonGray-400'
 	| 'bg-buttonRed-200'
 	| 'bg-buttonRed-100'
-	| 'bg-primaryBlack-500';
+	| 'bg-primaryBlack-500'
+	| null;
+
 type TextColor =
 	| 'text-primaryOrange-200'
 	| 'text-primaryOrange-100'
@@ -40,7 +42,7 @@ type BorderColor =
 export interface Props {
 	variant: 'text' | 'solid' | 'outline';
 	size: 'lg' | 'base' | 'sm' | 'xs';
-	bgColor: BgColor;
+	bgColor?: BgColor;
 	textColor?: TextColor;
 	borderColor?: BorderColor | null;
 	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;

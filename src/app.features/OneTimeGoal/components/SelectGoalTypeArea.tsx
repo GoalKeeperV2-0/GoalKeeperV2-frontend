@@ -2,18 +2,19 @@ import Button from 'app.components/App.base/Button';
 import Label from 'app.components/App.base/Input/Label';
 import React, { useState } from 'react';
 type GoalType = 'onetime' | 'manytime';
+type MappedGoal = { [K in GoalType]: string };
 function SelectGoalTypeArea() {
 	const [goalType, setGoalType] = useState<GoalType>('onetime');
 	// TODO: 초기화 방법 더 알아보기
-	const goalTypeMap = new Map<string, string>([
-		['onetime', '일반목표'],
-		['manytime', '지속목표'],
-	]);
+	const goal: MappedGoal = {
+		onetime: '일반목표',
+		manytime: '지속목표',
+	};
 	return (
 		<div className="space-y-[2.4rem] w-full">
 			<Label required htmlFor="goal-type" content="등록할 목표를 설정해주세요" />
 			<div className="flex space-x-[2.3rem]">
-				{['onetime', 'manytime'].map((type) => (
+				{Object.entries(goal).map(([type, content]) => (
 					<Button
 						key={type}
 						onClick={() => setGoalType(type as GoalType)}
@@ -26,7 +27,7 @@ function SelectGoalTypeArea() {
 						ariaPressed={goalType === type}
 						className="text-start pl-[2.4rem]"
 					>
-						{goalTypeMap.get(type)}
+						{content}
 					</Button>
 				))}
 			</div>

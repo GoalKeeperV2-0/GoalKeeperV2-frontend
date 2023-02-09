@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import { Oauth2RegisterBody } from 'app.modules/api/auth';
 import { IForm, Action, signUpFormState } from '../states/signUpForm';
-import SubmitButton from '../components/SubmitButton';
+import SubmitButton from '../../../app.components/SubmitButton';
 import EmailInputArea from '../components/signUp/EmailInputArea';
 import PasswordInputArea from '../components/signUp/PasswordInputArea';
 import NicknameInputArea from '../components/signUp/NicknameInputArea';

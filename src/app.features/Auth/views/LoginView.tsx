@@ -9,7 +9,7 @@ import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import { ReactComponent as LoginBanner } from 'app.modules/assets/banners/login.svg';
 import { GOOGLE_AUTH_URL } from '../constants';
 import { IForm, Action, loginFormState } from '../states/loginForm';
-import SubmitButton from '../components/SubmitButton';
+import SubmitButton from '../../../app.components/SubmitButton';
 import GoogleLoginButton from '../components/GoogleLoginButton';
 import EmailInputArea from '../components/login/EmailInputArea';
 import PasswordInputArea from '../components/login/PasswordInputArea';
