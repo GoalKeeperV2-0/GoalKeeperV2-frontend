@@ -67,13 +67,19 @@ function UploadGoal() {
 			payload: +value > 100 ? '100' : value,
 		});
 	};
+	const onetimeGoalTermHandler = (date: string) => {
+		formDispatch({
+			type: 'endDate',
+			payload: date,
+		});
+	};
 	return (
 		<form onSubmit={onSubmit} className="space-y-[3rem]">
 			<SelectGoalTypeArea value={formState.goalType} valueHandler={valueHandler} />
 			<SelectCategoryArea value={formState.categoryType} valueHandler={valueHandler} />
 			<SetGoalContentArea />
 			<SetBallArea value={formState.point} valueHandler={pointHandler} />
-			<SetTermArea />
+			<SetTermArea valueHandler={onetimeGoalTermHandler} endDate={formState.endDate} />
 			<SelectReturnTypeArea />
 			<SubmitButton isLoading={false} disabled={false}>
 				등록하기

@@ -2,13 +2,16 @@ import Button from 'app.components/App.base/Button';
 import Label from 'app.components/App.base/Input/Label';
 import Calendar from 'app.components/Calendar';
 import React from 'react';
-
-function SetTermArea() {
+interface Props {
+	valueHandler: (date: string) => void;
+	endDate: string;
+}
+function SetTermArea({ valueHandler, endDate }: Props) {
 	return (
 		<div className="space-y-[2.4rem] w-full">
 			<Label required htmlFor="goal-term" content="목표기간 선택" />
 			<div className="flex space-x-[1.6rem]">
-				<Calendar />
+				<Calendar onetimeGoalTermHandler={valueHandler} endDate={endDate} />
 				<Button
 					variant="solid"
 					size="xs"
