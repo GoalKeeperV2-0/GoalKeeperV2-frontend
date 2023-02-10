@@ -5,7 +5,7 @@ type FocusColor = 'primaryOrange-200' | 'primaryRed-300';
 
 interface Props {
 	type: 'text' | 'email' | 'password';
-	onChange?: () => void;
+	onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	value?: string;
 	placeholder: string;
 	id: string;

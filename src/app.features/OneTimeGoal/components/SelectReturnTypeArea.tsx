@@ -15,18 +15,18 @@ function SelectReturnTypeArea() {
 		<div className="space-y-[2.4rem] w-full">
 			<Label required htmlFor="return-type" content="달성시 추가금 방식" />
 			<div className="flex space-x-[2.3rem]">
-				{Object.entries(reward).map(([type, content]) => (
+				{Object.entries(reward).map(([item, content]) => (
 					<Button
-						key={type}
-						onClick={() => setRewardType(type as RewardType)}
+						key={item}
+						onClick={() => setRewardType(item as RewardType)}
 						name="selectReturnType"
-						value={`${type}Goal`}
-						variant={rewardType === type ? 'solid' : 'outline'}
+						value={item}
+						variant={rewardType === item ? 'solid' : 'outline'}
 						size="lg"
-						bgColor={rewardType === type ? 'bg-primaryOrange-200' : null}
-						textColor={rewardType === type ? 'text-white' : 'text-primaryOrange-200'}
-						borderColor={rewardType === type ? null : 'border-primaryOrange-200'}
-						ariaPressed={rewardType === type}
+						bgColor={rewardType === item ? 'bg-primaryOrange-200' : null}
+						textColor={rewardType === item ? 'text-white' : 'text-primaryOrange-200'}
+						borderColor={rewardType === item ? null : 'border-primaryOrange-200'}
+						ariaPressed={rewardType === item}
 						className="text-start pl-[2.4rem]"
 					>
 						{content}

@@ -6,17 +6,10 @@ const client = axios.create({
 	withCredentials: true,
 	headers: {
 		'Access-Control-Allow-Credentials': true,
+		Authorization: `Bearer ${getCookie('GAT')}`,
 	},
 });
 
-client.interceptors.request.use((config) => {
-	const accessToken = localStorage.getItem('ACCESS_TOKEN');
-	if (accessToken) {
-		client.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('ACCESS_TOKEN')}`;
-	}
-
-	return config;
-});
 client.interceptors.response.use(
 	(res) => {
 		return res;
@@ -32,9 +25,9 @@ client.interceptors.response.use(
 				const originalRequest = config;
 
 				// token refresh 요청
-				const refreshToken = getCookie('REFRESH_TOKEN');
+				const refreshToken = getCookie('GRT');
 				const res = await client.get(
-					'/oauth/token/refresh', // token refresh api
+					'/api/login/', // token refresh api
 					{ headers: { refreshToken } }
 				);
 				console.log(res);
@@ -48,7 +41,6 @@ client.interceptors.response.use(
 				return await client(originalRequest);
 			} catch (refreshError) {
 				// TODO: 로그아웃
-				localStorage.removeItem('ACCESS_TOKEN');
 				return Promise.reject(refreshError);
 			}
 		}

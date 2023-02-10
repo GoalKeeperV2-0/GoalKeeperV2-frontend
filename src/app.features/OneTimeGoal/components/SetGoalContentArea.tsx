@@ -12,15 +12,13 @@ function SetGoalContentArea() {
 				placeholder="제목을 작성해주세요."
 				focusColor="primaryOrange-200"
 				required
-				onChange={() => null}
-				value=""
+				name="title"
 			/>
 			<textarea
 				id="goal-content"
 				placeholder="목표 달성 게시글에 올릴 상세 내용을 작성하세요."
 				required
-				onChange={() => null}
-				value=""
+				name="content"
 				className="resize-none w-full h-[9.4rem] outline-none focus:border-primaryOrange-200 pc:border-[0.2rem] border-[0.1rem] rounded-[0.8rem] p-[2.4rem]"
 			/>
 		</div>

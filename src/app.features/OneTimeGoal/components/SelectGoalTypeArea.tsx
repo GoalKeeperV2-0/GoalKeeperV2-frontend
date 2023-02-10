@@ -1,10 +1,15 @@
 import Button from 'app.components/App.base/Button';
 import Label from 'app.components/App.base/Input/Label';
 import React, { useState } from 'react';
-type GoalType = 'onetime' | 'manytime';
+
+export type GoalType = 'onetime' | 'manytime';
 type MappedGoal = { [K in GoalType]: string };
-function SelectGoalTypeArea() {
-	const [goalType, setGoalType] = useState<GoalType>('onetime');
+
+interface Props {
+	value: GoalType;
+	valueHandler: (e: React.BaseSyntheticEvent) => void;
+}
+function SelectGoalTypeArea({ value, valueHandler }: Props) {
 	// TODO: 초기화 방법 더 알아보기
 	const goal: MappedGoal = {
 		onetime: '일반목표',
@@ -14,17 +19,17 @@ function SelectGoalTypeArea() {
 		<div className="space-y-[2.4rem] w-full">
 			<Label required htmlFor="goal-type" content="등록할 목표를 설정해주세요" />
 			<div className="flex space-x-[2.3rem]">
-				{Object.entries(goal).map(([type, content]) => (
+				{Object.entries(goal).map(([item, content]) => (
 					<Button
-						key={type}
-						onClick={() => setGoalType(type as GoalType)}
-						name="selectGoalType"
-						value={`${type}Goal`}
+						key={item}
+						onClick={valueHandler}
+						name="goalType"
+						value={item}
 						variant="outline"
 						size="lg"
 						bgColor="bg-white"
-						borderColor={goalType === type ? 'border-primaryBlack-500' : null}
-						ariaPressed={goalType === type}
+						borderColor={value === item ? 'border-primaryBlack-500' : null}
+						ariaPressed={value === item}
 						className="text-start pl-[2.4rem]"
 					>
 						{content}

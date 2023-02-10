@@ -53,10 +53,8 @@ function Calander() {
 	});
 	const changeMonth = (e: React.BaseSyntheticEvent) => {
 		let newMonth;
-		console.log(e.target.name);
 		if (e.target.name === 'decrease-month') {
 			newMonth = searchMonth - 1;
-			console.log('d', newMonth, month);
 			if (newMonth === 0) {
 				newMonth = 12;
 				setSearchYear((prev) => prev - 1);
@@ -68,7 +66,6 @@ function Calander() {
 				setSearchYear((prev) => prev + 1);
 			}
 		}
-		console.log(newMonth);
 		setSearchMonth(newMonth);
 	};
 	useEffect(() => {
