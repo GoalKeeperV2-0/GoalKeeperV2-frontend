@@ -12,7 +12,9 @@ type BgColor =
 	| 'bg-buttonGray-400'
 	| 'bg-buttonRed-200'
 	| 'bg-buttonRed-100'
-	| 'bg-primaryBlack-500';
+	| 'bg-primaryBlack-500'
+	| null;
+
 type TextColor =
 	| 'text-primaryOrange-200'
 	| 'text-primaryOrange-100'
@@ -40,14 +42,18 @@ type BorderColor =
 export interface Props {
 	variant: 'text' | 'solid' | 'outline';
 	size: 'lg' | 'base' | 'sm' | 'xs';
-	bgColor: BgColor;
+	bgColor?: BgColor;
 	textColor?: TextColor;
-	borderColor?: BorderColor;
+	borderColor?: BorderColor | null;
 	onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	disabled?: boolean;
 	isLoading?: boolean;
 	children?: React.ReactNode;
 	type?: 'button' | 'submit';
+	name?: string;
+	value?: string;
+	className?: string;
+	ariaPressed?: boolean;
 }
 export default function SubmitButton({
 	variant,
@@ -57,9 +63,13 @@ export default function SubmitButton({
 	borderColor,
 	textColor,
 	disabled,
+	value,
 	isLoading,
 	children,
 	type = 'button',
+	name,
+	className,
+	ariaPressed,
 }: Props) {
 	const getHeight = () => {
 		if (size === 'lg') {
@@ -72,7 +82,7 @@ export default function SubmitButton({
 			return 'min-h-[3.4rem] h-[3.4rem] pc:h-[5.1rem] pc:min-h-[5.1rem]';
 		}
 
-		return 'h-[2rem] min-h-[2rem] pc:h-[3.4rem] pc:min-h-[3.4rem] w-[2rem] min-w-[2rem] pc:w-[3.4rem] pc:min-w-[3.4rem]';
+		return 'h-[2rem] min-h-[2rem] pc:h-[3.4rem] pc:min-h-[3.4rem] ';
 	};
 
 	const getBorderStyle = () => {
@@ -91,11 +101,14 @@ export default function SubmitButton({
 	return (
 		<button
 			type={type}
+			name={name}
+			value={value}
 			disabled={disabled}
 			onClick={onClick}
+			aria-pressed={ariaPressed}
 			className={`${variant === 'outline' ? getBorderStyle() : ''} ${bgColor ?? ''} ${getHeight()} ${
 				textColor ?? ''
-			}    text-body4-mo pc:text-body4-pc text-center  leading-[100%] w-full rounded-[0.8rem]  `}
+			}    text-body4-mo pc:text-body4-pc text-center  leading-[100%] w-full rounded-[0.8rem] ${className} `}
 		>
 			{children}
 		</button>

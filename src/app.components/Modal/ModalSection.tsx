@@ -5,6 +5,8 @@
 import React, { useEffect, useRef, Suspense } from 'react';
 // import modalList from 'utils/importModal';
 import { Router, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import ModalLayout from './Layout';
 // import Path from 'utils/path';
 
 export default function ModalSection() {
@@ -15,7 +17,7 @@ export default function ModalSection() {
 	const navigate = useNavigate();
 	const { pathname } = useLocation();
 	const [searchParams] = useSearchParams();
-
+	console.log('모달오픈');
 	/*	useEffect(() => {
 		if (isOpenModal) {
 			document.body.style.cssText = `
@@ -46,10 +48,7 @@ export default function ModalSection() {
 */
 	return (
 		<Suspense fallback={<div>정보를 불러오는 중이에요.</div>}>
-			<div className={`absolute top-0 left-0 z-50 w-full h-full ${false ? '' : 'hidden'}`} aria-hidden>
-				<div className="absolute w-full h-full z-999 bg-primaryBlack-500 bg-opacity-20" ref={bodyRef} />
-				<div className="relative top-1/2 left-1/2" ref={modalRef} />
-			</div>
+			<ModalLayout />
 		</Suspense>
 	);
 }

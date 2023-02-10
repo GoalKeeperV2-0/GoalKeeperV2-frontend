@@ -5,11 +5,19 @@ import { ReactComponent as ArrowLeftIcon } from 'app.modules/assets/icons/arrow-
 interface Props {
 	direction: 'left' | 'right';
 	disabled?: boolean;
-	onClick: () => void;
+	onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+	name: string;
 }
-function ArrowButton({ direction, disabled, onClick }: Props) {
+function ArrowButton({ direction, disabled, onClick, name }: Props) {
 	return (
-		<Button variant="solid" size="xs" bgColor="bg-buttonGray-200">
+		<Button
+			variant="solid"
+			size="xs"
+			bgColor="bg-buttonGray-200"
+			onClick={onClick}
+			name={name}
+			className="min-w-[3.4rem]"
+		>
 			{direction === 'left' ? <ArrowLeftIcon className="mx-auto" /> : <ArrowRightIcon className="mx-auto" />}
 		</Button>
 	);

@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
+import { modalState } from 'app.modules/store/modal';
 import React from 'react';
+import { useRecoilState } from 'recoil';
 import Aside from './Aside';
 // import Aside from './Aside';
 import Header from './Header';
@@ -12,7 +14,7 @@ interface TemplateProps {
 }
 const ASIDE_NOT_INCLUDE = [SERVICE_URL.login, SERVICE_URL.signUp, SERVICE_URL.oauth2Register];
 export default function BaseTemplate({ isAdmin, children }: TemplateProps) {
-	console.log(window.location.pathname);
+	const [modal, setModal] = useRecoilState(modalState);
 	return (
 		<div className="main pc:max-w-[120rem] mx-auto  pb-[2rem] px-[2rem] pc:px-0 ">
 			<Header />
@@ -21,7 +23,7 @@ export default function BaseTemplate({ isAdmin, children }: TemplateProps) {
 				{!ASIDE_NOT_INCLUDE.includes(window.location.pathname) && <Aside />}
 				<div className="w-full">{children}</div>
 			</main>
-			<ModalSection />
+			{modal.isOpen && <ModalSection />}
 		</div>
 	);
 }
