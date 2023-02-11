@@ -76,18 +76,17 @@ function Calander({ onetimeGoalTermHandler, endDate }: Props) {
 	const isTodayButton = (idx: number) => {
 		return idx + 1 === date && searchYear === year && searchMonth === month;
 	};
-	const isInTerm = (termDate: number) => {
-		const term = new Date(searchYear, searchMonth, termDate);
-
+	const isInTerm = (selectedDate: number) => {
+		// TODO: 변수명 바꾸기
+		const term = new Date(searchYear, searchMonth, selectedDate);
 		const endDateYear = endDate.split('-')[0];
 		const endDateMonth = endDate.split('-')[1];
 		const endDateDate = endDate.split('-')[2];
-		const endDateTrans = new Date(+endDateYear, +endDateMonth, +endDateDate);
 		const today = new Date(year, month, date);
-		console.log(term <= endDateTrans);
-		return term <= endDateTrans && today <= term;
+
+		return +selectedDate <= +endDateDate && searchMonth <= +endDateMonth && searchYear <= +endDateYear && term >= today;
 	};
-	console.log(endDate);
+
 	const termHandler = (e: React.BaseSyntheticEvent) => {
 		const {
 			target: { value },
