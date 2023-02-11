@@ -6,7 +6,7 @@ import SelectReturnTypeArea from '../components/SelectReturnTypeArea';
 import SetBallArea from '../components/SetBallArea';
 import SetGoalContentArea from '../components/SetGoalContentArea';
 import SetTermArea from '../components/SetTermArea';
-
+// TODO: 리코일 방식이 나을듯
 type UploadGoalFormType = {
 	goalType: GoalType;
 	// 오늘 날짜가 '4일'인 경우 4일 disable 최소 내일부터 시작하게 D-1
@@ -79,7 +79,7 @@ function UploadGoal() {
 			<SelectCategoryArea value={formState.categoryType} valueHandler={valueHandler} />
 			<SetGoalContentArea />
 			<SetBallArea value={formState.point} valueHandler={pointHandler} />
-			<SetTermArea valueHandler={onetimeGoalTermHandler} endDate={formState.endDate} />
+			<SetTermArea valueHandler={onetimeGoalTermHandler} endDate={formState.endDate} goalType={formState.goalType} />
 			<SelectReturnTypeArea />
 			<SubmitButton isLoading={false} disabled={false}>
 				등록하기
