@@ -6,7 +6,7 @@ import SelectReturnTypeArea from '../components/SelectReturnTypeArea';
 import SetBallArea from '../components/SetBallArea';
 import SetGoalContentArea from '../components/SetGoalContentArea';
 import SetTermArea from '../components/SetTermArea';
-// TODO: 리코일 방식이 나을듯
+// TODO: 리코일 방식이 나을듯-> 리코일 방식으로 바꾸자
 type UploadGoalFormType = {
 	goalType: GoalType;
 	// 오늘 날짜가 '4일'인 경우 4일 disable 최소 내일부터 시작하게 D-1
@@ -41,9 +41,10 @@ function UploadGoal() {
 	console.log('upload-one-time-goal');
 
 	const [formState, formDispatch] = useReducer(formReducer, initialFormState);
+	const [submitButtonDisabled, setSubmitButtonDisabled] = useState<boolean>(true);
 	const onSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log('submit');
+		console.log('submit', formState);
 	};
 
 	const valueHandler = (e: React.BaseSyntheticEvent) => {
@@ -73,15 +74,20 @@ function UploadGoal() {
 			payload: date,
 		});
 	};
+	useEffect(() => {
+		const { content, point, title, endDate } = formState;
+		if (!content.trim() || !point.trim() || !title.trim() || !endDate.trim()) return;
+		setSubmitButtonDisabled(false);
+	}, [formState]);
 	return (
 		<form onSubmit={onSubmit} className="space-y-[3rem]">
 			<SelectGoalTypeArea value={formState.goalType} valueHandler={valueHandler} />
 			<SelectCategoryArea value={formState.categoryType} valueHandler={valueHandler} />
-			<SetGoalContentArea />
+			<SetGoalContentArea valueHandler={valueHandler} />
 			<SetBallArea value={formState.point} valueHandler={pointHandler} />
 			<SetTermArea valueHandler={onetimeGoalTermHandler} endDate={formState.endDate} goalType={formState.goalType} />
-			<SelectReturnTypeArea />
-			<SubmitButton isLoading={false} disabled={false}>
+			<SelectReturnTypeArea value={formState.reward} valueHandler={valueHandler} />
+			<SubmitButton isLoading={false} disabled={submitButtonDisabled}>
 				등록하기
 			</SubmitButton>
 		</form>

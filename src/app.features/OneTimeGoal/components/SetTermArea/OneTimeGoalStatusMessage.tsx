@@ -13,7 +13,7 @@ function StatusMessage({ status }: Props) {
 			textColor={status === 'init' ? 'text-buttonRed-200' : 'text-primaryOrange-200'}
 			className=" w-fit px-[0.8rem]"
 		>
-			{status === 'init' ? '왼쪽 달력에서 목표 기간을 선택해주세요' : '목표 기간 중 하루만 인증하면 돼요 👍🏻'}
+			{status === 'init' ? '왼쪽 달력에서 목표 마감일을 선택해주세요' : '목표 기간 중 하루만 인증하면 돼요 👍🏻'}
 		</Button>
 	);
 }
