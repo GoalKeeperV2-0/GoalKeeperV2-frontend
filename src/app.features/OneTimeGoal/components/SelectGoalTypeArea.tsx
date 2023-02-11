@@ -1,8 +1,8 @@
 import Button from 'app.components/App.base/Button';
 import Label from 'app.components/App.base/Input/Label';
+import { GoalType } from 'app.modules/api/onetimeGoal';
 import React, { useState } from 'react';
 
-export type GoalType = 'onetime' | 'manytime';
 type MappedGoal = { [K in GoalType]: string };
 
 interface Props {

@@ -1,8 +1,8 @@
 import Button from 'app.components/App.base/Button';
 import Label from 'app.components/App.base/Input/Label';
 import Calendar from 'app.components/Calendar';
+import { GoalType } from 'app.modules/api/onetimeGoal';
 import React from 'react';
-import { GoalType } from '../SelectGoalTypeArea';
 import OnetimeGoalStatusMessage from './OneTimeGoalStatusMessage';
 interface Props {
 	valueHandler: (date: string) => void;
