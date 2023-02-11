@@ -1,7 +1,8 @@
 import Button from 'app.components/App.base/Button';
 import Label from 'app.components/App.base/Input/Label';
+import { CategoryType } from 'app.modules/api/onetimeGoal';
 import React from 'react';
-export type CategoryType = 'EXERCISE' | 'STUDY' | 'HOBBY' | 'HABIT' | 'ETC';
+
 type MappedCategory = { [K in CategoryType]: string };
 interface Props {
 	value: string;

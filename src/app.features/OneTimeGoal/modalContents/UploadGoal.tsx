@@ -1,27 +1,20 @@
+import { useMutation } from '@tanstack/react-query';
 import SubmitButton from 'app.components/SubmitButton';
+import { postOnetimeGoal, PostOnetimeGoal } from 'app.modules/api/onetimeGoal';
 import React, { useEffect, useReducer, useState } from 'react';
-import SelectCategoryArea, { CategoryType } from '../components/SelectCategoryArea';
-import SelectGoalTypeArea, { GoalType } from '../components/SelectGoalTypeArea';
+import SelectCategoryArea from '../components/SelectCategoryArea';
+import SelectGoalTypeArea from '../components/SelectGoalTypeArea';
 import SelectReturnTypeArea from '../components/SelectReturnTypeArea';
 import SetBallArea from '../components/SetBallArea';
 import SetGoalContentArea from '../components/SetGoalContentArea';
 import SetTermArea from '../components/SetTermArea';
+// TODO: 리코일 방식이 나을듯-> 리코일 방식으로 바꾸자
 
-type UploadGoalFormType = {
-	goalType: GoalType;
-	// 오늘 날짜가 '4일'인 경우 4일 disable 최소 내일부터 시작하게 D-1
-	endDate: string; // '2023-02-13'
-	title: string;
-	categoryType: CategoryType;
-	content: string;
-	point: string;
-	reward: 'HIGH_RETURN' | 'LOW_RETURN';
-};
 type FormAction = {
-	type: keyof UploadGoalFormType | 'init';
+	type: keyof PostOnetimeGoal | 'init';
 	payload?: unknown;
 };
-const initialFormState: UploadGoalFormType = {
+const initialFormState: PostOnetimeGoal = {
 	goalType: 'onetime',
 	endDate: '', // '2023-02-13'
 	title: '',
@@ -30,7 +23,7 @@ const initialFormState: UploadGoalFormType = {
 	point: '',
 	reward: 'HIGH_RETURN',
 };
-function formReducer(state: UploadGoalFormType, action: FormAction) {
+function formReducer(state: PostOnetimeGoal, action: FormAction) {
 	if (action.type === 'init') {
 		return initialFormState;
 	}
@@ -39,11 +32,31 @@ function formReducer(state: UploadGoalFormType, action: FormAction) {
 
 function UploadGoal() {
 	console.log('upload-one-time-goal');
-
 	const [formState, formDispatch] = useReducer(formReducer, initialFormState);
+	const { mutate: postOnetimeGoalMutate, isLoading: isPostOnetimeGoalLoading } = useMutation(postOnetimeGoal, {
+		onSuccess: (res) => {
+			console.log(res);
+
+			alert('일반목표등록완료');
+			formDispatch({
+				type: 'init',
+			});
+		},
+		onError: (error) => alert('오류 발생.'),
+	});
+
+	const [submitButtonDisabled, setSubmitButtonDisabled] = useState<boolean>(true);
+
 	const onSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log('submit');
+		if (isPostOnetimeGoalLoading) return;
+		console.log('submit', formState);
+		const body = {
+			...formState,
+			point: `${+formState.point * 100}`,
+		};
+		console.log(body);
+		postOnetimeGoalMutate(body);
 	};
 
 	const valueHandler = (e: React.BaseSyntheticEvent) => {
@@ -73,15 +86,20 @@ function UploadGoal() {
 			payload: date,
 		});
 	};
+	useEffect(() => {
+		const { content, point, title, endDate } = formState;
+		if (!content.trim() || !point.trim() || !title.trim() || !endDate.trim()) return;
+		setSubmitButtonDisabled(false);
+	}, [formState]);
 	return (
 		<form onSubmit={onSubmit} className="space-y-[3rem]">
 			<SelectGoalTypeArea value={formState.goalType} valueHandler={valueHandler} />
 			<SelectCategoryArea value={formState.categoryType} valueHandler={valueHandler} />
-			<SetGoalContentArea />
+			<SetGoalContentArea valueHandler={valueHandler} />
 			<SetBallArea value={formState.point} valueHandler={pointHandler} />
-			<SetTermArea valueHandler={onetimeGoalTermHandler} endDate={formState.endDate} />
-			<SelectReturnTypeArea />
-			<SubmitButton isLoading={false} disabled={false}>
+			<SetTermArea valueHandler={onetimeGoalTermHandler} endDate={formState.endDate} goalType={formState.goalType} />
+			<SelectReturnTypeArea value={formState.reward} valueHandler={valueHandler} />
+			<SubmitButton isLoading={false} disabled={submitButtonDisabled}>
 				등록하기
 			</SubmitButton>
 		</form>

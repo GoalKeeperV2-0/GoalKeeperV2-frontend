@@ -12,7 +12,7 @@ export interface Oauth2RegisterBody {
 	sex: SexType;
 }
 export const oauth2Register = async (body: Oauth2RegisterBody) => {
-	const res = await client.patch(`/oauth2/additionalUserInfo`, { ...body });
+	const res = await client.patch(`/login/oauth2/additionalUserInfo`, { ...body });
 	return res;
 };
 

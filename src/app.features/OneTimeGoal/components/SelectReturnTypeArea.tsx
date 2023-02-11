@@ -1,11 +1,14 @@
 import Button from 'app.components/App.base/Button';
 import Label from 'app.components/App.base/Input/Label';
 import React, { useState } from 'react';
-type RewardType = 'HIGH_RETURN' | 'LOW_RETURN';
+export type RewardType = 'HIGH_RETURN' | 'LOW_RETURN';
 type MappedReward = { [K in RewardType]: string };
-
-function SelectReturnTypeArea() {
-	const [rewardType, setRewardType] = useState<RewardType>('HIGH_RETURN');
+// TODO: 통일성을 주는게 맞나?
+interface Props {
+	value: RewardType;
+	valueHandler: (e: React.BaseSyntheticEvent) => void;
+}
+function SelectReturnTypeArea({ value, valueHandler }: Props) {
 	// TODO: 초기화 방법 더 알아보기
 	const reward: MappedReward = {
 		HIGH_RETURN: '하이리스크 하이리턴',
@@ -18,15 +21,15 @@ function SelectReturnTypeArea() {
 				{Object.entries(reward).map(([item, content]) => (
 					<Button
 						key={item}
-						onClick={() => setRewardType(item as RewardType)}
-						name="selectReturnType"
+						onClick={valueHandler}
+						name="reward"
 						value={item}
-						variant={rewardType === item ? 'solid' : 'outline'}
+						variant={value === item ? 'solid' : 'outline'}
 						size="lg"
-						bgColor={rewardType === item ? 'bg-primaryOrange-200' : null}
-						textColor={rewardType === item ? 'text-white' : 'text-primaryOrange-200'}
-						borderColor={rewardType === item ? null : 'border-primaryOrange-200'}
-						ariaPressed={rewardType === item}
+						bgColor={value === item ? 'bg-primaryOrange-200' : null}
+						textColor={value === item ? 'text-white' : 'text-primaryOrange-200'}
+						borderColor={value === item ? null : 'border-primaryOrange-200'}
+						ariaPressed={value === item}
 						className="text-start pl-[2.4rem]"
 					>
 						{content}
