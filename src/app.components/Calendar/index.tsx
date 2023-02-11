@@ -76,29 +76,30 @@ function Calander({ onetimeGoalTermHandler, endDate }: Props) {
 	const isTodayButton = (idx: number) => {
 		return idx + 1 === date && searchYear === year && searchMonth === month;
 	};
-	const isInTerm = (termYear: number, termMonth: number, termDate: number) => {
-		const term = new Date(termYear, termMonth, termDate);
+	const isInTerm = (termDate: number) => {
+		const term = new Date(searchYear, searchMonth, termDate);
+
 		const endDateYear = endDate.split('-')[0];
 		const endDateMonth = endDate.split('-')[1];
 		const endDateDate = endDate.split('-')[2];
 		const endDateTrans = new Date(+endDateYear, +endDateMonth, +endDateDate);
 		const today = new Date(year, month, date);
-
+		console.log(term <= endDateTrans);
 		return term <= endDateTrans && today <= term;
 	};
+	console.log(endDate);
 	const termHandler = (e: React.BaseSyntheticEvent) => {
 		const {
-			target: {
-				dataset: { year: selectedYear, month: selectedMonth, date: selectedDate },
-			},
+			target: { value },
 		} = e;
+		console.log(value);
 		//console.log(selectedYear, selectedMonth, selectedDate);
-		const term = new Date(selectedYear, selectedMonth, selectedDate);
+		const term = new Date(searchYear, searchMonth, value);
 		const today = new Date(year, month, date);
 
 		if (term < today) return;
 
-		onetimeGoalTermHandler(formatDate(selectedYear, selectedMonth, selectedDate));
+		onetimeGoalTermHandler(formatDate(searchYear, searchMonth, value));
 	};
 	useEffect(() => {
 		const { prevMonthLastDay, prevMonthLastDate } = getPrevMonthLastDayInfo(searchYear, searchMonth);
@@ -125,31 +126,19 @@ function Calander({ onetimeGoalTermHandler, endDate }: Props) {
 				<div className="grid grid-cols-7 text-center leading-[100%]">
 					{lastDates.prevMonthLastDay !== 6 &&
 						Array.from({ length: lastDates.prevMonthLastDay + 1 }).map((_, idx) => (
-							<div key={idx} className="term-select-area text-primaryBlack-300 h-[3.6rem] grid place-content-center">
-								<button
-									type="button"
-									onClick={termHandler}
-									data-month={searchMonth === 1 ? 12 : searchMonth - 1}
-									data-year={searchMonth === 1 ? searchYear - 1 : searchYear}
-									data-date={lastDates.prevMonthLastDate - (lastDates.prevMonthLastDay - idx)}
-								>
-									{lastDates.prevMonthLastDate - (lastDates.prevMonthLastDay - idx)}
-								</button>
-							</div>
+							<div key={idx} className=" text-primaryBlack-300 h-[3.6rem] grid place-content-center" />
 						))}
 					{Array.from({ length: lastDates.curMonthLastDate }).map((_, idx) => (
 						<div
 							key={idx}
 							className={`${
-								isInTerm(searchYear, searchMonth, idx + 1) ? 'bg-primaryOrange-100 text-primaryOrange-200' : ''
+								isInTerm(idx + 1) ? 'bg-primaryOrange-100 text-primaryOrange-200' : ''
 							} min-h-[3.6rem] grid place-content-center`}
 						>
 							<button
 								type="button"
 								onClick={termHandler}
-								data-month={searchMonth}
-								data-year={searchYear}
-								data-date={idx + 1}
+								value={idx + 1}
 								className={`${
 									isTodayButton(idx) ? 'bg-primaryOrange-200 text-white rounded-[0.8rem] h-[2.6rem] w-[2.6rem]' : ''
 								}`}
@@ -158,20 +147,6 @@ function Calander({ onetimeGoalTermHandler, endDate }: Props) {
 							</button>
 						</div>
 					))}
-					{lastDates.curMonthLastDay !== 6 &&
-						Array.from({ length: 7 - lastDates.curMonthLastDay - 1 }).map((_, idx) => (
-							<div key={idx} className={` text-primaryBlack-300 h-[3.6rem] grid place-content-center `}>
-								<button
-									type="button"
-									onClick={termHandler}
-									data-month={searchMonth === 12 ? 1 : searchMonth + 1}
-									data-year={searchMonth === 12 ? searchYear + 1 : searchYear}
-									data-date={idx + 1}
-								>
-									{idx + 1}
-								</button>
-							</div>
-						))}
 				</div>
 			</div>
 		</div>
