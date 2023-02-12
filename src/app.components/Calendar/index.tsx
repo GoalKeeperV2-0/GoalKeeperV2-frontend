@@ -76,6 +76,10 @@ function Calander({ onetimeGoalTermHandler, endDate }: Props) {
 	const isTodayButton = (idx: number) => {
 		return idx + 1 === date && searchYear === year && searchMonth === month;
 	};
+	const isEndDate = (idx: number) => {
+		console.log(idx + 1, +endDate.split('-')[2]);
+		return idx + 1 === +endDate.split('-')[2] && +endDate.split('-')[0] === year && +endDate.split('-')[1] === month;
+	};
 	const isInTerm = (selectedDate: number) => {
 		// TODO: 변수명 바꾸기
 		const term = new Date(searchYear, searchMonth, selectedDate);
@@ -139,8 +143,10 @@ function Calander({ onetimeGoalTermHandler, endDate }: Props) {
 								onClick={termHandler}
 								value={idx + 1}
 								className={`${
-									isTodayButton(idx) ? 'bg-primaryOrange-200 text-white rounded-[0.8rem] h-[2.6rem] w-[2.6rem]' : ''
-								}`}
+									isTodayButton(idx) && !isInTerm(idx + 1)
+										? 'bg-primaryOrange-200 text-white rounded-[0.8rem] h-[2.6rem] w-[2.6rem]'
+										: ''
+								} ${isEndDate(idx) ? 'bg-[#FFE8CC]  rounded-[0.8rem] h-[2.6rem] w-[2.6rem]' : ''}`}
 							>
 								{idx + 1}
 							</button>
