@@ -2,6 +2,7 @@ import Label from 'app.components/App.base/Input/Label';
 import TextInput from 'app.components/App.base/Input/TextInput';
 import React from 'react';
 import { ReactComponent as RedBallIcon } from 'app.modules/assets/icons/ball/redBall.svg';
+import { ReactComponent as BlackBallIcon } from 'app.modules/assets/icons/ball/blackBall.svg';
 
 interface Props {
 	value: string;
@@ -13,7 +14,7 @@ function SetBallArea({ value, valueHandler }: Props) {
 		<div className="space-y-[0.8rem]  w-full">
 			<div className="space-y-[2.4rem]">
 				<Label required htmlFor="point" content="포인트 설정" />
-				<div className="flex items-center space-x-2 whitespace-nowrap">
+				<div className="flex items-center w-[32.3rem] space-x-[0.8rem] whitespace-nowrap">
 					<TextInput
 						id="point"
 						name="point"
@@ -24,7 +25,8 @@ function SetBallArea({ value, valueHandler }: Props) {
 						focusColor="primaryOrange-200"
 						required
 					/>
-					<span>00볼</span>
+					<span className="text-body3-pc">00</span>
+					<BlackBallIcon className="w-[2.2rem] h-[2.2rem]" />
 				</div>
 			</div>
 			<div className="mt-[10.6rem] flex items-center text-buttonRed-200 text-[1.4rem] font-semibold">
