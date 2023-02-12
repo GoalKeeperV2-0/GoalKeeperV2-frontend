@@ -1,6 +1,7 @@
 import ArrowButton from 'app.components/Pagination/ArrowButton';
 import { formatDate } from 'app.modules/utils/formatDate';
 import React, { useEffect, useState } from 'react';
+import { ReactComponent as ResetIcon } from 'app.modules/assets/icons/calendar/reset.svg';
 
 const getKoreaToday = () => {
 	const DATE = new Date(); // 현재 날짜(로컬 기준) 가져오기
@@ -47,8 +48,9 @@ type DateStates = {
 interface Props {
 	onetimeGoalTermHandler: (date: string) => void;
 	endDate: string;
+	resetEndDateHandler: () => void;
 }
-function Calander({ onetimeGoalTermHandler, endDate }: Props) {
+function Calander({ onetimeGoalTermHandler, endDate, resetEndDateHandler }: Props) {
 	const { year, month, date } = getKoreaToday();
 	const [searchMonth, setSearchMonth] = useState<number>(month);
 	const [searchYear, setSearchYear] = useState<number>(year);
@@ -111,7 +113,10 @@ function Calander({ onetimeGoalTermHandler, endDate }: Props) {
 	}, [searchMonth]);
 	return (
 		<div className=" w-[32.7rem] h-[33rem] p-[2.2rem] space-y-[1.2rem] flex flex-col items-center border-[0.1rem] border-primaryBlack-100 rounded-[0.8rem] ">
-			<div className="flex items-center space-x-[1.2rem]">
+			<div className="flex items-center justify-center space-x-[1.2rem] relative w-full">
+				<button onClick={resetEndDateHandler} type="button" className="absolute left-0">
+					<ResetIcon />
+				</button>
 				<ArrowButton direction="left" name="decrease-month" onClick={() => changeMonth('decrease')} disabled={false} />
 				<div className="text-body5-mo pc:text-body5-pc whitespace-nowrap">
 					{searchYear}년 {searchMonth}월

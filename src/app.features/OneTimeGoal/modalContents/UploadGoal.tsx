@@ -86,6 +86,12 @@ function UploadGoal() {
 			payload: date,
 		});
 	};
+	const resetEndDateHandler = () => {
+		formDispatch({
+			type: 'endDate',
+			payload: '',
+		});
+	};
 	useEffect(() => {
 		const { content, point, title, endDate } = formState;
 		if (!content.trim() || !point.trim() || !title.trim() || !endDate.trim()) return;
@@ -97,7 +103,12 @@ function UploadGoal() {
 			<SelectCategoryArea value={formState.categoryType} valueHandler={valueHandler} />
 			<SetGoalContentArea valueHandler={valueHandler} />
 			<SetBallArea value={formState.point} valueHandler={pointHandler} />
-			<SetTermArea valueHandler={onetimeGoalTermHandler} endDate={formState.endDate} goalType={formState.goalType} />
+			<SetTermArea
+				valueHandler={onetimeGoalTermHandler}
+				endDate={formState.endDate}
+				goalType={formState.goalType}
+				resetValueHandler={resetEndDateHandler}
+			/>
 			<SelectReturnTypeArea value={formState.reward} valueHandler={valueHandler} />
 			<SubmitButton isLoading={false} disabled={submitButtonDisabled}>
 				등록하기
