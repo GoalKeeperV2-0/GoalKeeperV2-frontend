@@ -1,3 +1,4 @@
+import InitGoalBox from 'app.components/Box/InitGoalBox';
 import FilterButton from 'app.components/FilterButton';
 import React, { useState } from 'react';
 
@@ -28,7 +29,11 @@ function ManageGoalScreen() {
 					</li>
 				))}
 			</ul>
-			<ul />
+			<ul>
+				<li>
+					<InitGoalBox />
+				</li>
+			</ul>
 
 			<div>페이지네이션</div>
 		</div>
