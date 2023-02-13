@@ -46,11 +46,12 @@ type DateStates = {
 };
 // TODO: 모바일 대응
 interface Props {
-	onetimeGoalTermHandler: (date: string) => void;
+	dateHandler: (dateType: 'startDate' | 'endDate', date: string) => void;
+	startDate: string;
 	endDate: string;
 	resetEndDateHandler: () => void;
 }
-function Calander({ onetimeGoalTermHandler, endDate, resetEndDateHandler }: Props) {
+function Calander({ dateHandler, endDate, startDate, resetEndDateHandler }: Props) {
 	const { year, month, date } = getKoreaToday();
 	const [searchMonth, setSearchMonth] = useState<number>(month);
 	const [searchYear, setSearchYear] = useState<number>(year);
@@ -79,7 +80,6 @@ function Calander({ onetimeGoalTermHandler, endDate, resetEndDateHandler }: Prop
 		return idx + 1 === date && searchYear === year && searchMonth === month;
 	};
 	const isEndDate = (idx: number) => {
-		console.log(idx + 1, +endDate.split('-')[2]);
 		return idx + 1 === +endDate.split('-')[2] && +endDate.split('-')[0] === year && +endDate.split('-')[1] === month;
 	};
 	const isInTerm = (selectedDate: number) => {
@@ -97,20 +97,23 @@ function Calander({ onetimeGoalTermHandler, endDate, resetEndDateHandler }: Prop
 		const {
 			target: { value },
 		} = e;
-		console.log(value);
+
 		//console.log(selectedYear, selectedMonth, selectedDate);
 		const term = new Date(searchYear, searchMonth, value);
 		const today = new Date(year, month, date);
 
 		if (term < today) return;
 
-		onetimeGoalTermHandler(formatDate(searchYear, searchMonth, value));
+		dateHandler('endDate', formatDate(searchYear, searchMonth, value));
 	};
 	useEffect(() => {
 		const { prevMonthLastDay, prevMonthLastDate } = getPrevMonthLastDayInfo(searchYear, searchMonth);
 		const { curMonthLastDay, curMonthLastDate } = getCurMonthLastDayInfo(searchYear, searchMonth);
 		setLastDates({ prevMonthLastDay, prevMonthLastDate, curMonthLastDay, curMonthLastDate });
 	}, [searchMonth]);
+	useEffect(() => {
+		dateHandler('startDate', formatDate(year, month, date));
+	}, []);
 	return (
 		<div className=" w-[32.7rem] h-[33rem] p-[2.2rem] space-y-[1.2rem] flex flex-col items-center border-[0.1rem] border-primaryBlack-100 rounded-[0.8rem] ">
 			<div className="flex items-center justify-center space-x-[1.2rem] relative w-full">
