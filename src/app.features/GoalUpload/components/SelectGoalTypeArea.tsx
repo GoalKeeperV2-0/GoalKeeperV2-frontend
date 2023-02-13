@@ -1,6 +1,6 @@
 import Button from 'app.components/App.base/Button';
 import Label from 'app.components/App.base/Input/Label';
-import { GoalType } from 'app.modules/api/onetimeGoal';
+import { GoalType } from 'app.modules/api/uploadGoal';
 import React, { useState } from 'react';
 
 type MappedGoal = { [K in GoalType]: string };

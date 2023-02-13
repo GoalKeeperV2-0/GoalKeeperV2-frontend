@@ -2,7 +2,7 @@ import Button from 'app.components/App.base/Button';
 import Label from 'app.components/App.base/Input/Label';
 import Calendar from 'app.components/Calendar';
 import { goalFormState } from 'app.features/GoalUpload/store';
-import { GoalType } from 'app.modules/api/onetimeGoal';
+import { GoalType } from 'app.modules/api/uploadGoal';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import ManytimeGoalStatusMessages from './ManytimeGoalStatusMessages';

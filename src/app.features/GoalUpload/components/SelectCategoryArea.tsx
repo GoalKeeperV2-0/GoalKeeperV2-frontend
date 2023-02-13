@@ -1,6 +1,6 @@
 import Button from 'app.components/App.base/Button';
 import Label from 'app.components/App.base/Input/Label';
-import { CategoryType } from 'app.modules/api/onetimeGoal';
+import { CategoryType } from 'app.modules/api/uploadGoal';
 import React from 'react';
 
 type MappedCategory = { [K in CategoryType]: string };

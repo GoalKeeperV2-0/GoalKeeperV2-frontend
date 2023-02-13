@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import SubmitButton from 'app.components/SubmitButton';
-import { postOnetimeGoal, PostOnetimeGoal } from 'app.modules/api/onetimeGoal';
+import { postManytimeGoal, postOnetimeGoal, PostOnetimeGoal } from 'app.modules/api/uploadGoal';
 import React, { useEffect, useReducer, useState } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import SelectCategoryArea from '../components/SelectCategoryArea';
@@ -25,14 +25,23 @@ function UploadGoal() {
 		},
 		onError: (error) => alert('오류 발생.'),
 	});
+	const { mutate: postManytimeGoalMutate, isLoading: isPostManytimeGoalLoading } = useMutation(postManytimeGoal, {
+		onSuccess: (res) => {
+			console.log(res);
+
+			alert('지속목표등록완료');
+			resetGoalForm();
+		},
+		onError: (error) => alert('오류 발생.'),
+	});
 
 	const [submitButtonDisabled, setSubmitButtonDisabled] = useState<boolean>(true);
 
 	const onSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (isPostOnetimeGoalLoading) return;
+		if (isPostOnetimeGoalLoading || isPostManytimeGoalLoading) return;
 		console.log('submit', goalForm);
-		const { endDate, title, content, categoryType, point, reward, certDates } = goalForm;
+		const { goalType, startDate, endDate, title, content, categoryType, point, reward, certDates } = goalForm;
 		const body = {
 			endDate,
 			title,
@@ -42,7 +51,11 @@ function UploadGoal() {
 			point: `${+point * 100}`,
 		};
 		console.log(body, certDates);
-		postOnetimeGoalMutate(body);
+		if (goalType === 'onetime') {
+			postOnetimeGoalMutate(body);
+		} else {
+			postManytimeGoalMutate({ ...body, certDates: [...certDates, endDate], startDate });
+		}
 	};
 
 	const valueHandler = (e: React.BaseSyntheticEvent) => {

@@ -25,8 +25,8 @@ export interface PostManyTimeGoal extends PostOnetimeGoal {
 	certDates: string[]; //["2023-01-26","2023-01-27","2023-01-28"."2023-01-29","2023-01-30","2023-01-31"]
 }
 
-export const postManytimeGoal = async (body: PostOnetimeGoal) => {
-	const res = await client.post('/goal/onetime', {
+export const postManytimeGoal = async (body: PostManyTimeGoal) => {
+	const res = await client.post('goal/manytime', {
 		...body,
 	});
 

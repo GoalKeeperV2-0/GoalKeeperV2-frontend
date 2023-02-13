@@ -1,4 +1,4 @@
-import { CategoryType, GoalType, PostManyTimeGoal } from 'app.modules/api/onetimeGoal';
+import { CategoryType, GoalType, PostManyTimeGoal } from 'app.modules/api/uploadGoal';
 import { atom } from 'recoil';
 export interface IGoalForm extends PostManyTimeGoal {
 	goalType: GoalType;
