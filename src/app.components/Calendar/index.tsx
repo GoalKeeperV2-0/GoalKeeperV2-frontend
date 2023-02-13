@@ -49,9 +49,11 @@ interface Props {
 	dateHandler: (dateType: 'startDate' | 'endDate', date: string) => void;
 	startDate: string;
 	endDate: string;
+	certDates: string[];
 	resetEndDateHandler: () => void;
+	certDatesHandler: (date: string) => void;
 }
-function Calander({ dateHandler, endDate, startDate, resetEndDateHandler }: Props) {
+function Calander({ dateHandler, endDate, startDate, certDates, resetEndDateHandler, certDatesHandler }: Props) {
 	const { year, month, date } = getKoreaToday();
 	const [searchMonth, setSearchMonth] = useState<number>(month);
 	const [searchYear, setSearchYear] = useState<number>(year);
@@ -86,6 +88,9 @@ function Calander({ dateHandler, endDate, startDate, resetEndDateHandler }: Prop
 			+endDate.split('-')[1] === searchMonth
 		);
 	};
+	const isCertDate = (idx: number) => {
+		return certDates.includes(formatDate(searchYear, searchMonth, idx + 1));
+	};
 	const isInTerm = (selectedDate: number) => {
 		// TODO: 변수명 바꾸기
 		const term = new Date(searchYear, searchMonth, selectedDate);
@@ -97,11 +102,14 @@ function Calander({ dateHandler, endDate, startDate, resetEndDateHandler }: Prop
 		return +selectedDate <= +endDateDate && searchMonth <= +endDateMonth && searchYear <= +endDateYear && term >= today;
 	};
 
-	const termHandler = (e: React.BaseSyntheticEvent) => {
+	const onDateButtonClick = (e: React.BaseSyntheticEvent) => {
 		const {
 			target: { value },
 		} = e;
-
+		if (endDate) {
+			certDatesHandler(formatDate(searchYear, searchMonth, value));
+			return;
+		}
 		//console.log(selectedYear, selectedMonth, selectedDate);
 		const term = new Date(searchYear, searchMonth, value);
 		const today = new Date(year, month, date);
@@ -119,7 +127,7 @@ function Calander({ dateHandler, endDate, startDate, resetEndDateHandler }: Prop
 		dateHandler('startDate', formatDate(year, month, date));
 	}, []);
 	return (
-		<div className=" w-[32.7rem] h-[33rem] p-[2.2rem] space-y-[1.2rem] flex flex-col items-center border-[0.1rem] border-primaryBlack-100 rounded-[0.8rem] ">
+		<div className="min-w-[32.7rem]  w-[32.7rem] h-[33rem] p-[2.2rem] space-y-[1.2rem] flex flex-col items-center border-[0.1rem] border-primaryBlack-100 rounded-[0.8rem] ">
 			<div className="flex items-center justify-center space-x-[1.2rem] relative w-full">
 				<button onClick={resetEndDateHandler} type="button" className="absolute left-0">
 					<ResetIcon />
@@ -152,13 +160,13 @@ function Calander({ dateHandler, endDate, startDate, resetEndDateHandler }: Prop
 						>
 							<button
 								type="button"
-								onClick={termHandler}
+								onClick={onDateButtonClick}
 								value={idx + 1}
 								className={`${
 									isTodayButton(idx) && !isInTerm(idx + 1)
 										? 'bg-primaryOrange-200 text-white rounded-[0.8rem] h-[2.6rem] w-[2.6rem]'
 										: ''
-								} ${isEndDate(idx) ? 'bg-[#FFE8CC]  rounded-[0.8rem] h-[2.6rem] w-[2.6rem]' : ''}`}
+								} ${isEndDate(idx) || isCertDate(idx) ? 'bg-[#FFE8CC]  rounded-[0.8rem] h-[2.6rem] w-[2.6rem]' : ''}`}
 							>
 								{idx + 1}
 							</button>

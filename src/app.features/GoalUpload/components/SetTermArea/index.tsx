@@ -10,20 +10,35 @@ import OnetimeGoalStatusMessage from './OneTimeGoalStatusMessage';
 
 function SetTermArea() {
 	const [goalForm, setGoalForm] = useRecoilState(goalFormState);
-
+	const { goalType, endDate, startDate, certDates } = goalForm;
 	const dateHandler = (dateType: 'startDate' | 'endDate', date: string) => {
+		if (endDate.trim()) return;
 		setGoalForm({
 			...goalForm,
 			[dateType]: date,
+		});
+	};
+	const certDatesHandler = (date: string) => {
+		if (goalType === 'onetime') return;
+		if (certDates.includes(date)) return;
+		setGoalForm({
+			...goalForm,
+			certDates: [...certDates, date],
 		});
 	};
 	const resetEndDateHandler = () => {
 		setGoalForm({
 			...goalForm,
 			endDate: '',
+			certDates: [],
 		});
 	};
-	const { goalType, endDate, startDate } = goalForm;
+	const deleteCertDateHandler = (date: string) => {
+		setGoalForm({
+			...goalForm,
+			certDates: certDates.filter((item) => item !== date),
+		});
+	};
 	const getStatus = () => {
 		if (!endDate.trim()) return 'init';
 		return 'selected';
@@ -45,11 +60,19 @@ function SetTermArea() {
 					startDate={startDate}
 					endDate={endDate}
 					resetEndDateHandler={resetEndDateHandler}
+					certDatesHandler={certDatesHandler}
+					certDates={certDates}
 				/>
 				{goalType === 'onetime' ? (
 					<OnetimeGoalStatusMessage status={getStatus()} />
 				) : (
-					<ManytimeGoalStatusMessages status={getStatus()} dayDiff={getDayDiff()} endDate={endDate} />
+					<ManytimeGoalStatusMessages
+						status={getStatus()}
+						dayDiff={getDayDiff()}
+						endDate={endDate}
+						certDates={certDates}
+						deleteCertDateHandler={deleteCertDateHandler}
+					/>
 				)}
 			</div>
 		</div>

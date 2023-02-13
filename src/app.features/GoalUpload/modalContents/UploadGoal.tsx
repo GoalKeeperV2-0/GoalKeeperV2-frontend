@@ -32,7 +32,7 @@ function UploadGoal() {
 		e.preventDefault();
 		if (isPostOnetimeGoalLoading) return;
 		console.log('submit', goalForm);
-		const { endDate, title, content, categoryType, point, reward } = goalForm;
+		const { endDate, title, content, categoryType, point, reward, certDates } = goalForm;
 		const body = {
 			endDate,
 			title,
@@ -41,7 +41,7 @@ function UploadGoal() {
 			reward,
 			point: `${+point * 100}`,
 		};
-		console.log(body);
+		console.log(body, certDates);
 		postOnetimeGoalMutate(body);
 	};
 
@@ -57,8 +57,9 @@ function UploadGoal() {
 	};
 
 	useEffect(() => {
-		const { content, point, title, endDate } = goalForm;
+		const { content, point, title, endDate, certDates, goalType } = goalForm;
 		if (!content.trim() || !point.trim() || !title.trim() || !endDate.trim()) return;
+		if (goalType === 'manytime' && certDates.length < 4) return;
 		setSubmitButtonDisabled(false);
 	}, [goalForm]);
 	return (
