@@ -16,9 +16,9 @@ function ArrowButton({ direction, disabled, onClick, name }: Props) {
 			bgColor="bg-buttonGray-200"
 			onClick={onClick}
 			name={name}
-			className="min-w-[3.4rem]"
+			className="max-w-[3.4rem]"
 		>
-			{direction === 'left' ? <ArrowLeftIcon className="mx-auto" /> : <ArrowRightIcon className="mx-auto" />}
+			{direction === 'left' ? <ArrowLeftIcon className="mx-auto w-[3.4rem]" /> : <ArrowRightIcon className="mx-auto" />}
 		</Button>
 	);
 }

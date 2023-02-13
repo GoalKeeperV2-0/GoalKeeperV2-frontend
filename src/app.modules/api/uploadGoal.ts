@@ -4,7 +4,6 @@ import client from './client';
 export type CategoryType = 'EXERCISE' | 'STUDY' | 'HOBBY' | 'HABIT' | 'ETC';
 export type GoalType = 'onetime' | 'manytime';
 export interface PostOnetimeGoal {
-	goalType: GoalType;
 	// 오늘 날짜가 '4일'인 경우 4일 disable 최소 내일부터 시작하게 D-1
 	endDate: string; // '2023-02-13'
 	title: string;
@@ -15,6 +14,19 @@ export interface PostOnetimeGoal {
 }
 export const postOnetimeGoal = async (body: PostOnetimeGoal) => {
 	const res = await client.post('/goal/onetime', {
+		...body,
+	});
+
+	return res;
+};
+
+export interface PostManyTimeGoal extends PostOnetimeGoal {
+	startDate: string;
+	certDates: string[]; //["2023-01-26","2023-01-27","2023-01-28"."2023-01-29","2023-01-30","2023-01-31"]
+}
+
+export const postManytimeGoal = async (body: PostManyTimeGoal) => {
+	const res = await client.post('goal/manytime', {
 		...body,
 	});
 

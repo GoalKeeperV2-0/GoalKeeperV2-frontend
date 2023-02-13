@@ -1,5 +1,5 @@
 import Button from 'app.components/App.base/Button';
-import UploadOnetimeGoal from 'app.features/OneTimeGoal/modalContents/UploadGoal';
+import UploadOnetimeGoal from 'app.features/GoalUpload/modalContents/UploadGoal';
 import { modalState } from 'app.modules/store/modal';
 import React, { useEffect } from 'react';
 
