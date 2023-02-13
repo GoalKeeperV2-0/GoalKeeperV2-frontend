@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import Oauth2Callback from './pages/Oauth2Callback';
 import Oauth2Register from './pages/Oauth2Register';
 import Test from './pages/Test';
+import ManageGoal from './pages/ManageGoal';
 
 function App() {
 	return (
@@ -21,6 +22,7 @@ function App() {
 						<Route path={SERVICE_URL.signUp} element={<SignUp />} />
 						<Route path={SERVICE_URL.oauth2Callback} element={<Oauth2Callback />} />
 						<Route path={SERVICE_URL.oauth2Register} element={<Oauth2Register />} />
+						<Route path={SERVICE_URL.manageGoal} element={<ManageGoal />} />
 						<Route path="/test" element={<Test />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>
