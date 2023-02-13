@@ -80,7 +80,11 @@ function Calander({ dateHandler, endDate, startDate, resetEndDateHandler }: Prop
 		return idx + 1 === date && searchYear === year && searchMonth === month;
 	};
 	const isEndDate = (idx: number) => {
-		return idx + 1 === +endDate.split('-')[2] && +endDate.split('-')[0] === year && +endDate.split('-')[1] === month;
+		return (
+			idx + 1 === +endDate.split('-')[2] &&
+			+endDate.split('-')[0] === searchYear &&
+			+endDate.split('-')[1] === searchMonth
+		);
 	};
 	const isInTerm = (selectedDate: number) => {
 		// TODO: 변수명 바꾸기

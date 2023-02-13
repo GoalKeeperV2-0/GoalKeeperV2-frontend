@@ -4,7 +4,7 @@ import React from 'react';
 interface Props {
 	status: 'init' | 'selected';
 }
-function StatusMessage({ status }: Props) {
+function OnetimeGoalStatusMessage({ status }: Props) {
 	return (
 		<Button
 			variant="solid"
@@ -18,4 +18,4 @@ function StatusMessage({ status }: Props) {
 	);
 }
 
-export default StatusMessage;
+export default OnetimeGoalStatusMessage;
