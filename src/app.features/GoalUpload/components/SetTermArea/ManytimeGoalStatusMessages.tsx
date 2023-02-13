@@ -3,8 +3,9 @@ import React from 'react';
 interface Props {
 	status: 'init' | 'selected';
 	dayDiff: number;
+	endDate: string;
 }
-function ManytimeGoalStatusMessages({ status, dayDiff }: Props) {
+function ManytimeGoalStatusMessages({ status, dayDiff, endDate }: Props) {
 	return (
 		<>
 			{status === 'init' ? (
@@ -38,7 +39,7 @@ function ManytimeGoalStatusMessages({ status, dayDiff }: Props) {
 						최소 인증횟수는 ?회입니다
 					</Button>
 					<Button variant="solid" size="xs" bgColor="bg-buttonGray-200" className="text-[#828282] w-fit px-[0.8rem]">
-						?월 ?일 (마지막 날은 꼭 인증해야해요)
+						{+endDate.split('-')[1]}월 {+endDate.split('-')[2]}일 (마지막 날은 꼭 인증해야해요)
 					</Button>
 				</div>
 			)}

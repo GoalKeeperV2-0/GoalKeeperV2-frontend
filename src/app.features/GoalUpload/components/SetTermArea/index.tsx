@@ -49,7 +49,7 @@ function SetTermArea() {
 				{goalType === 'onetime' ? (
 					<OnetimeGoalStatusMessage status={getStatus()} />
 				) : (
-					<ManytimeGoalStatusMessages status={getStatus()} dayDiff={getDayDiff()} />
+					<ManytimeGoalStatusMessages status={getStatus()} dayDiff={getDayDiff()} endDate={endDate} />
 				)}
 			</div>
 		</div>
