@@ -35,11 +35,17 @@ function ManytimeGoalStatusMessages({ status, dayDiff, endDate, certDates, delet
 					<Button
 						variant="solid"
 						size="xs"
-						bgColor="bg-buttonRed-100"
-						textColor="text-buttonRed-200"
+						bgColor={certDates.length < 3 ? 'bg-buttonRed-100' : 'bg-primaryOrange-100'}
+						textColor={certDates.length < 3 ? 'text-buttonRed-200' : 'text-primaryOrange-200'}
 						className=" w-fit px-[0.8rem]"
 					>
-						최소 인증횟수는 4회입니다
+						{certDates.length
+							? `${
+									certDates.length < 3
+										? `최소 인증횟수까지 ${3 - certDates.length}회 남았어요`
+										: '최소 인증횟수를 모두 달성했어요 👍🏻'
+							  }`
+							: '최소 인증횟수는 4회입니다'}
 					</Button>
 					<div className="flex flex-wrap gap-[0.8rem]  whitespace-nowrap">
 						{certDates.map((item, index) => (
