@@ -62,7 +62,7 @@ export default function Header() {
 					<ServiceLogo className="pc:max-w-[15.7rem] max-w-[11.2rem]" />
 				</Link>
 			</div>
-			<div className="flex items-center justify-between space-x-[53.5rem] ">
+			<div className="flex items-center justify-between space-x-[32.6rem] ">
 				<nav className="hidden pc:block ">
 					<ul className="flex space-x-[3.5rem]">
 						{MENU_LIST.map((menu, index): React.ReactElement => {
