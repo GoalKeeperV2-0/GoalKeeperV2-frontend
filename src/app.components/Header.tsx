@@ -7,7 +7,7 @@ import { ReactComponent as AlarmIcon } from 'app.modules/assets/header/alarm.svg
 import { ReactComponent as UserIcon } from 'app.modules/assets/header/user.svg';
 import { ReactComponent as MenuIcon } from 'app.modules/assets/header/hamburger.svg';
 import RouteModal from './Modal/RouteModal';
-import SideMenu from './Sidemenu';
+
 // import useDetectClose from 'hooks/useDetectClose';
 
 type Menu = {
@@ -29,8 +29,16 @@ export default function Header() {
 			path: SERVICE_URL.certifications,
 		},
 		{
-			title: '내정보',
-			path: SERVICE_URL.myGoals,
+			title: '커뮤니티',
+			path: SERVICE_URL.community,
+		},
+		{
+			title: '목표관리',
+			path: SERVICE_URL.manageGoal,
+		},
+		{
+			title: '내 정보',
+			path: SERVICE_URL.mypage,
 		},
 	];
 
@@ -54,7 +62,7 @@ export default function Header() {
 					<ServiceLogo className="pc:max-w-[15.7rem] max-w-[11.2rem]" />
 				</Link>
 			</div>
-			<div className="flex items-center justify-between space-x-[53.5rem] ">
+			<div className="flex items-center justify-between space-x-[32.6rem] ">
 				<nav className="hidden pc:block ">
 					<ul className="flex space-x-[3.5rem]">
 						{MENU_LIST.map((menu, index): React.ReactElement => {

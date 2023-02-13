@@ -10,14 +10,8 @@ import OverviewTemplate from './OverviewTemplate';
 import SideBarButton from './SideBarButton';
 // TODO: field & value mapping 시키기
 function Aside() {
-	const navigate = useNavigate();
 	const [modal, setModal] = useRecoilState(modalState);
-	/*
 
-	if (memberInfoLoading || menuInfoLoading)
-		return (
-			<div className="rounded-[16px] w-[278px] p-[24px] border-[1px] border-borderGray overflow-hidden bg-white h-[674px]" />
-		);*/
 	const OverviewData = [
 		{ field: '목표 등록', value: 4 },
 		{ field: '목표 인증', value: 2 },
