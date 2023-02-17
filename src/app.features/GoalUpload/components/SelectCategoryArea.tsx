@@ -5,7 +5,7 @@ import React from 'react';
 
 type MappedCategory = { [K in CategoryType]: string };
 interface Props {
-	value: string;
+	value: CategoryType | null;
 	valueHandler: (e: React.BaseSyntheticEvent) => void;
 }
 function SelectCategoryArea({ value, valueHandler }: Props) {

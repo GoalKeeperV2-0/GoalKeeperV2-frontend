@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import SubmitButton from 'app.components/SubmitButton';
-import { postManytimeGoal, postOnetimeGoal, PostOnetimeGoal } from 'app.modules/api/uploadGoal';
-import React, { useEffect, useReducer, useState } from 'react';
+import { postManytimeGoal, PostOnetimeGoal, postOnetimeGoal } from 'app.modules/api/uploadGoal';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import SelectCategoryArea from '../components/SelectCategoryArea';
 import SelectGoalTypeArea from '../components/SelectGoalTypeArea';
@@ -49,8 +49,9 @@ function UploadGoal() {
 			categoryType,
 			reward,
 			point: `${+point * 100}`,
-		};
+		} as PostOnetimeGoal;
 		console.log(body, certDates);
+
 		if (goalType === 'onetime') {
 			postOnetimeGoalMutate(body);
 		} else {
@@ -70,8 +71,8 @@ function UploadGoal() {
 	};
 
 	useEffect(() => {
-		const { content, point, title, endDate, certDates, goalType } = goalForm;
-		if (!content.trim() || !point.trim() || !title.trim() || !endDate.trim()) return;
+		const { content, point, title, endDate, certDates, goalType, categoryType, reward } = goalForm;
+		if (!content.trim() || !point.trim() || !title.trim() || !endDate.trim() || !categoryType || !reward) return;
 		if (goalType === 'manytime' && certDates.length < 4) return;
 		setSubmitButtonDisabled(false);
 	}, [goalForm]);
@@ -82,7 +83,7 @@ function UploadGoal() {
 			<SetGoalContentArea valueHandler={valueHandler} />
 			<SetBallArea />
 			<SetTermArea />
-			<SelectReturnTypeArea value={goalForm.reward} valueHandler={valueHandler} />
+			<SelectReturnTypeArea />
 			<SubmitButton isLoading={false} disabled={submitButtonDisabled}>
 				등록하기
 			</SubmitButton>

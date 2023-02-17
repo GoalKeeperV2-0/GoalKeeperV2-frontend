@@ -3,6 +3,7 @@ import client from './client';
 
 export type CategoryType = 'EXERCISE' | 'STUDY' | 'HOBBY' | 'HABIT' | 'ETC';
 export type GoalType = 'onetime' | 'manytime';
+export type RewardType = 'HIGH_RETURN' | 'LOW_RETURN';
 export interface PostOnetimeGoal {
 	// 오늘 날짜가 '4일'인 경우 4일 disable 최소 내일부터 시작하게 D-1
 	endDate: string; // '2023-02-13'
@@ -10,7 +11,7 @@ export interface PostOnetimeGoal {
 	categoryType: CategoryType;
 	content: string;
 	point: string;
-	reward: 'HIGH_RETURN' | 'LOW_RETURN';
+	reward: RewardType;
 }
 export const postOnetimeGoal = async (body: PostOnetimeGoal) => {
 	const res = await client.post('/goal/onetime', {

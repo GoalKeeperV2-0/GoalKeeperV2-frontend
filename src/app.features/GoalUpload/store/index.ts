@@ -1,7 +1,15 @@
-import { CategoryType, GoalType, PostManyTimeGoal } from 'app.modules/api/uploadGoal';
+import { GoalType, PostManyTimeGoal } from 'app.modules/api/uploadGoal';
 import { atom } from 'recoil';
-export interface IGoalForm extends PostManyTimeGoal {
+export interface IGoalForm {
 	goalType: GoalType;
+	startDate: PostManyTimeGoal['startDate'];
+	endDate: PostManyTimeGoal['endDate']; // '2023-02-13'
+	title: PostManyTimeGoal['title'];
+	content: PostManyTimeGoal['content'];
+	certDates: PostManyTimeGoal['certDates'];
+	categoryType: PostManyTimeGoal['categoryType'] | null;
+	point: PostManyTimeGoal['point'];
+	reward: PostManyTimeGoal['reward'] | null;
 }
 const initState: IGoalForm = {
 	goalType: 'onetime',
@@ -10,9 +18,9 @@ const initState: IGoalForm = {
 	title: '',
 	content: '',
 	certDates: [],
-	categoryType: 'EXERCISE',
+	categoryType: null,
 	point: '',
-	reward: 'HIGH_RETURN',
+	reward: null,
 };
 export const goalFormState = atom<IGoalForm>({
 	key: 'goalFormState',
