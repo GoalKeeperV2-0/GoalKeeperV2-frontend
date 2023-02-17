@@ -108,7 +108,7 @@ export default function SubmitButton({
 			aria-pressed={ariaPressed}
 			className={`${variant === 'outline' ? getBorderStyle() : ''} ${bgColor ?? ''} ${getHeight()} ${
 				textColor ?? ''
-			}    text-body4-mo pc:text-body4-pc text-center  leading-[100%] w-full rounded-[0.8rem] ${className} `}
+			}    text-body4-mo pc:text-body4-pc text-center   w-full rounded-[0.8rem] ${className} `}
 		>
 			{children}
 		</button>

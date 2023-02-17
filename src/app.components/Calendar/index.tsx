@@ -2,21 +2,7 @@ import ArrowButton from 'app.components/Pagination/ArrowButton';
 import { formatDate } from 'app.modules/utils/formatDate';
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as ResetIcon } from 'app.modules/assets/icons/calendar/reset.svg';
-
-const getKoreaToday = () => {
-	const DATE = new Date(); // 현재 날짜(로컬 기준) 가져오기
-	const utc = DATE.getTime() + DATE.getTimezoneOffset() * 60 * 1000; // utc 표준시 도출
-	const kstGap = 9 * 60 * 60 * 1000; // 한국 kst 기준시간 더하기
-	const today = new Date(utc + kstGap); // 한국 시간으로 date 객체 만들기(오늘)
-	const year = today.getFullYear();
-	const month = today.getMonth() + 1;
-	const date = today.getDate();
-	return {
-		year,
-		month,
-		date,
-	};
-};
+import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
 
 const getPrevMonthLastDayInfo = (curYear: number, curMonth: number) => {
 	// getDay() -> 월요일이 1번
