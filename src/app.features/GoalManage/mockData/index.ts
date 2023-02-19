@@ -23,7 +23,7 @@ export const OneTimeOngoingDday = {
 	reward: 'LOW_RETURN',
 	state: 'ONGOING',
 	startDate: '2023-02-09',
-	endDate: '2023-02-18',
+	endDate: '2023-02-19',
 	certification: null,
 };
 
@@ -41,7 +41,7 @@ export const OneTimeWaiting = {
 	certification: {
 		id: 1,
 		content: 'ddd',
-		picture: 'dddddd',
+		picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSI86f5U8eWxTGgKtSr5GHdWQ6xhU8pz4m8lA&usqp=CAU​',
 		state: 'ONGOING',
 		successCount: 1,
 		failCount: 1,
@@ -62,7 +62,7 @@ export const OneTimeSuccess = {
 	certification: {
 		id: 2,
 		content: 'GOOOD',
-		picture: 'dddddd',
+		picture: 'dddd',
 		state: 'SUCCESS',
 		successCount: 8,
 		failCount: 1,
@@ -84,7 +84,7 @@ export const OneTimeFail = {
 	certification: {
 		id: 3,
 		content: 'BAAAAD',
-		picture: 'dddddd',
+		picture: 'dddd',
 		state: 'FAIL',
 		successCount: 1,
 		failCount: 8,
@@ -140,7 +140,7 @@ export const ManyTimeDday = {
 	state: 'ONGOING',
 	startDate: '2023-01-17',
 	endDate: '2023-03-18',
-	certDates: ['2023-02-18', '2023-02-19', '2023-02-20', '2023-03-18'],
+	certDates: ['2023-02-19', '2023-02-22', '2023-02-25', '2023-03-18'],
 	certifications: [],
 };
 
@@ -155,14 +155,32 @@ export const ManyTimeOngoing2 = {
 	state: 'ONGOING',
 	startDate: '2023-01-17',
 	endDate: '2023-03-18',
-	certDates: ['2023-02-18', '2023-02-19', '2023-02-20', '2023-03-18'],
+	certDates: ['2023-01-18', '2023-01-19', '2023-02-19', '2023-02-22', '2023-03-18'],
 	certifications: [
 		{
 			id: 5,
 			content: '지속 인증 글',
-			picture: 'dddddd',
+			picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAEssp5xBCP420VJTAkFru3VTpDnHVnXzjg&usqp=CAU',
+			state: 'SUCCESS',
+			date: '2023-02-19',
+			successCount: 1,
+			failCount: 1,
+		},
+		{
+			id: 5,
+			content: '지속 인증 글',
+			picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAEssp5xBCP420VJTAkFru3VTpDnHVnXzjg&usqp=CAU',
+			state: 'FAIL',
+			date: '2023-02-19',
+			successCount: 1,
+			failCount: 1,
+		},
+		{
+			id: 5,
+			content: '지속 인증 글',
+			picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAEssp5xBCP420VJTAkFru3VTpDnHVnXzjg&usqp=CAU',
 			state: 'ONGOING',
-			date: '2023-02-18',
+			date: '2023-02-19',
 			successCount: 1,
 			failCount: 1,
 		},
@@ -212,7 +230,8 @@ export const ManyTimeWaiting = {
 		{
 			id: 9,
 			content: '지속 인증 글',
-			picture: 'dddddd',
+			picture:
+				'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWAFVzacOJiaWFv-AFwrhuosAaLm8zqn4GLo8V5EUvcUL6nit1GSMC8PVvB3zPqipp5Js&usqp=CAU',
 			state: 'ONGOING',
 			date: '2023-02-18',
 			successCount: 1,

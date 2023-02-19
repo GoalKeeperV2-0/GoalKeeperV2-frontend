@@ -3,12 +3,12 @@ import { ReactComponent as CancelIcon } from 'app.modules/assets/icons/calendar/
 import React from 'react';
 interface Props {
 	status: 'init' | 'selected';
-	dayDiff: number;
+	term: number;
 	endDate: string;
 	certDates: string[];
 	deleteCertDateHandler: (date: string) => void;
 }
-function ManytimeGoalStatusMessages({ status, dayDiff, endDate, certDates, deleteCertDateHandler }: Props) {
+function ManytimeGoalStatusMessages({ status, term, endDate, certDates, deleteCertDateHandler }: Props) {
 	return (
 		<>
 			{status === 'init' ? (
@@ -30,7 +30,7 @@ function ManytimeGoalStatusMessages({ status, dayDiff, endDate, certDates, delet
 						textColor="text-primaryOrange-200"
 						className=" w-fit px-[0.8rem]"
 					>
-						목표기간은 총 {dayDiff}일
+						목표기간은 총 {term}일
 					</Button>
 					<Button
 						variant="solid"

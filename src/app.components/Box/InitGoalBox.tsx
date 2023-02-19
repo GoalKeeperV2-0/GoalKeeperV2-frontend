@@ -13,9 +13,9 @@ function InitGoalBox() {
 	};
 	return (
 		<BoxLayout openModalHandler={openModalHandler} mode="init">
-			<BoxImage bgUrl="bg-[url('../../public/images/goalBox/init.svg')]" />
-			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between">
-				<div className="flex items-center justify-between">
+			<BoxImage bgUrl="/images/goalBox/init.svg" />
+			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-[0.1rem] rounded-b-[1.6rem] border-borderGray">
+				<div className="flex items-center justify-between ">
 					<Button variant="solid" size="xs" bgColor="bg-buttonGray-200" className="w-[7.6rem] ">
 						목표등록
 					</Button>
@@ -24,7 +24,6 @@ function InitGoalBox() {
 				<div className="text-left flex flex-col space-y-[0.3rem]">
 					<span className="pc:text-body1-pc text-primaryBlack-200">일반,지속</span>
 					<span className="pc:text-body6-pc ">목표인증을 시작하세요!</span>
-					<span className="pc:text-body1-pc text-primaryBlack-200">클릭해서 목표인증을 시작해요.</span>
 				</div>
 			</div>
 		</BoxLayout>
