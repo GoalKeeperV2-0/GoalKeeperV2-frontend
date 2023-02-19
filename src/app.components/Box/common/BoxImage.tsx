@@ -5,7 +5,12 @@ interface Props {
 }
 
 function BoxImage({ bgUrl }: Props) {
-	return <div className={`h-1/2 bg-buttonGray-200 pc:rounded-t-[1rem] bg-cover ${bgUrl}`} />;
+	return (
+		<div
+			className="h-1/2 bg-buttonGray-200 pc:rounded-t-[1rem] bg-cover"
+			style={{ backgroundImage: `url(${bgUrl})` }}
+		/>
+	);
 }
 
 export default BoxImage;

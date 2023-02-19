@@ -13,7 +13,7 @@ function InitGoalBox() {
 	};
 	return (
 		<BoxLayout openModalHandler={openModalHandler} mode="init">
-			<BoxImage bgUrl="bg-[url('../../public/images/goalBox/init.svg')]" />
+			<BoxImage bgUrl="/images/goalBox/init.svg" />
 			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between">
 				<div className="flex items-center justify-between">
 					<Button variant="solid" size="xs" bgColor="bg-buttonGray-200" className="w-[7.6rem] ">

@@ -27,8 +27,8 @@ function Aside() {
 			<div className="space-y-[3rem]">
 				<OverviewTemplate title="전체 목표현황">
 					<ul className="p-[1.6rem] rounded-[0.8rem] bg-primaryOrange-100 pc:text-body1-pc space-y-[1.6rem]">
-						{OverviewData.map((data) => (
-							<li className="flex justify-between ">
+						{OverviewData.map((data, index) => (
+							<li className="flex justify-between " key={index}>
 								<div className="flex items-center">{data.field}</div>
 								<div className="text-primaryOrange-200">{data.value}</div>
 							</li>

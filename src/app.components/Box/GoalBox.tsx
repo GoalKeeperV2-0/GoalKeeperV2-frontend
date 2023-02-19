@@ -40,37 +40,35 @@ function GoalBox({ goalData }: Props) {
 		let res = '';
 		const { year, month, date } = getKoreaToday();
 
-		const manyTimeUrl = certifications
-			? "bg-[url('../../public/images/goalBox/manytime/ongoingActive.svg')]"
-			: "bg-[url('../../public/images/goalBox/manytime/ongoingInactive.svg')]";
-
-		const oneTimeUrl =
-			endDate === formatDate(year, month, date)
-				? "bg-[url('../../public/images/goalBox/onetime/ongoingActive.svg')]"
-				: "bg-[url('../../public/images/goalBox/onetime/ongoingInactive.svg')]";
 		switch (state) {
-			case 'ONGOING':
-				res = certDates ? manyTimeUrl : oneTimeUrl;
-				break;
 			case 'WAITING_CERT_COMPLETE':
-				res = certDates
-					? "bg-[url('../../public/images/goalBox/manytime/ongoingInactive.svg')]"
-					: "bg-[url('../../public/images/goalBox/onetime/ongoingInactive.svg')]";
+				res = certDates ? `images/goalBox/manytime/ongoingInactive.svg` : certification?.picture ?? '';
 				break;
 			case 'SUCCESS':
-				res = certDates
-					? "bg-[url('../../public/images/goalBox/manytime/ongoingInactive.svg')]"
-					: "bg-[url('../../public/images/goalBox/onetime/ongoingInactive.svg')]";
+				res = '/images/goalBox/success.svg';
 				break;
 			case 'FAIL':
-				res = certDates
-					? "bg-[url('../../public/images/goalBox/manytime/ongoingInactive.svg')]"
-					: "bg-[url('../../public/images/goalBox/onetime/ongoingInactive.svg')]";
+				res = '/images/goalBox/fail.svg';
+				break;
+			case 'HOLD':
+				res = '/images/goalBox/hold.svg';
 				break;
 			default:
-				res = certDates
-					? "bg-[url('../../public/images/goalBox/manytime/ongoingInactive.svg')]"
-					: "bg-[url('../../public/images/goalBox/onetime/ongoingInactive.svg')]";
+				// eslint-disable-next-line no-case-declarations, no-nested-ternary
+				const manyTimeUrl = certifications?.[certifications.length - 1]?.picture
+					? certifications?.[certifications.length - 1]?.picture
+					: certDates?.includes(formatDate(year, month, date))
+					? '/images/goalBox/manytime/ongoingActive.svg'
+					: '/images/goalBox/manytime/ongoingInactive.svg';
+
+				// eslint-disable-next-line no-case-declarations
+				const oneTimeUrl =
+					endDate === formatDate(year, month, date)
+						? '/images/goalBox/onetime/ongoingActive.svg'
+						: '/images/goalBox/onetime/ongoingInactive.svg';
+
+				res = certDates ? manyTimeUrl : oneTimeUrl;
+				break;
 		}
 
 		return res;
