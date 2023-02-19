@@ -17,7 +17,7 @@ function FilterButton({ children, isPressed, name, value, onClick }: Props) {
 			size="sm"
 			bgColor={isPressed ? 'bg-primaryBlack-500' : 'bg-buttonGray-300'}
 			textColor={isPressed ? 'text-white' : 'text-primaryBlack-500'}
-			className="p-[1.6rem]"
+			className="px-[1.6rem] "
 		>
 			{children}
 		</Button>
