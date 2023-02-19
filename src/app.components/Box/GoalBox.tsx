@@ -35,7 +35,7 @@ function GoalBox({ goalData }: Props) {
 		FAIL: '실패',
 		HOLD: '실패',
 	};
-	const { state, certDates, certifications, certification, endDate } = goalData;
+	const { state, certDates, certifications, certification, endDate, title } = goalData;
 	const { year, month, date } = getKoreaToday();
 	const isCertDate = () => {
 		return endDate === formatDate(year, month, date) || certDates?.includes(formatDate(year, month, date));
@@ -134,9 +134,8 @@ function GoalBox({ goalData }: Props) {
 					</div>
 				</div>
 				<div className="text-left flex flex-col space-y-[0.3rem]">
-					<span className="pc:text-body1-pc text-primaryBlack-200">일반,지속</span>
-					<span className="pc:text-body6-pc ">목표인증을 시작하세요!</span>
-					<span className="pc:text-body1-pc text-primaryBlack-200">클릭해서 목표인증을 시작해요.</span>
+					<span className="pc:text-body1-pc text-primaryOrange-200">{isManyTimeGoal() ? '지속' : '일반'}</span>
+					<span className="pc:text-body6-pc ">{title}</span>
 				</div>
 			</div>
 		</BoxLayout>
