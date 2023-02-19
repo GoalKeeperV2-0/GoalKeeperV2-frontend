@@ -155,8 +155,26 @@ export const ManyTimeOngoing2 = {
 	state: 'ONGOING',
 	startDate: '2023-01-17',
 	endDate: '2023-03-18',
-	certDates: ['2023-02-19', '2023-02-22', '2023-02-25', '2023-03-18'],
+	certDates: ['2023-01-18', '2023-01-19', '2023-02-19', '2023-02-22', '2023-03-18'],
 	certifications: [
+		{
+			id: 5,
+			content: '지속 인증 글',
+			picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAEssp5xBCP420VJTAkFru3VTpDnHVnXzjg&usqp=CAU',
+			state: 'SUCCESS',
+			date: '2023-02-19',
+			successCount: 1,
+			failCount: 1,
+		},
+		{
+			id: 5,
+			content: '지속 인증 글',
+			picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAEssp5xBCP420VJTAkFru3VTpDnHVnXzjg&usqp=CAU',
+			state: 'FAIL',
+			date: '2023-02-19',
+			successCount: 1,
+			failCount: 1,
+		},
 		{
 			id: 5,
 			content: '지속 인증 글',
