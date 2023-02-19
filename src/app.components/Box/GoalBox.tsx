@@ -1,5 +1,6 @@
 import Button from 'app.components/App.base/Button';
 import { formatDate } from 'app.modules/utils/formatDate';
+import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
 import React from 'react';
 
@@ -17,6 +18,7 @@ export type GoalDataType = {
 	id: number;
 	title: string;
 	state: GoalStateType;
+	startDate: string;
 	endDate: string;
 	certDates: string[];
 	certification: Partial<CertType> | null;
@@ -35,11 +37,12 @@ function GoalBox({ goalData }: Props) {
 		FAIL: '실패',
 		HOLD: '실패',
 	};
-	const { state, certDates, certifications, certification, endDate, title } = goalData;
+	const { state, certDates, certifications, certification, endDate, startDate, title } = goalData;
 	const { year, month, date } = getKoreaToday();
+	const todayString = formatDate(year, month, date);
 	// TODO: 함수 네이밍 조정
 	const isCertDate = () => {
-		return endDate === formatDate(year, month, date) || certDates?.includes(formatDate(year, month, date));
+		return endDate === todayString || certDates?.includes(formatDate(year, month, date));
 	};
 	const isManyTimeGoal = () => {
 		return certDates !== undefined;
@@ -124,6 +127,7 @@ function GoalBox({ goalData }: Props) {
 		if (state === 'SUCCESS') return 'text-primaryOrange-200';
 		return 'text-primaryBlack-500';
 	};
+	console.log(todayString, 'today', '2022-02-19');
 	return (
 		<BoxLayout openModalHandler={() => null}>
 			{!(state === 'ONGOING' && !isCertDate()) && (
@@ -140,8 +144,8 @@ function GoalBox({ goalData }: Props) {
 						{goalState[state]}
 					</Button>
 					<div>
-						🗓 <span />
-						<span />
+						🗓 {isManyTimeGoal() && <span />}
+						<span>D-{getDayDiff(todayString, endDate)}</span>
 					</div>
 				</div>
 				<div className="text-left flex flex-col space-y-[0.3rem]">
