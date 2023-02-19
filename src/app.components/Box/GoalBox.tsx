@@ -37,6 +37,7 @@ function GoalBox({ goalData }: Props) {
 	};
 	const { state, certDates, certifications, certification, endDate, title } = goalData;
 	const { year, month, date } = getKoreaToday();
+	// TODO: 함수 네이밍 조정
 	const isCertDate = () => {
 		return endDate === formatDate(year, month, date) || certDates?.includes(formatDate(year, month, date));
 	};
@@ -113,6 +114,16 @@ function GoalBox({ goalData }: Props) {
 
 		return res;
 	};
+	const getBgColor = () => {
+		if (state === 'FAIL') return 'bg-buttonRed-100';
+		if (state === 'SUCCESS') return 'bg-primaryOrange-100';
+		return 'bg-buttonGray-200';
+	};
+	const getTextColor = () => {
+		if (state === 'FAIL') return 'text-buttonRed-200';
+		if (state === 'SUCCESS') return 'text-primaryOrange-200';
+		return 'text-primaryBlack-500';
+	};
 	return (
 		<BoxLayout openModalHandler={() => null}>
 			{!(state === 'ONGOING' && !isCertDate()) && (
@@ -125,7 +136,7 @@ function GoalBox({ goalData }: Props) {
 			{/*하단에만 border 부여, 상부에도 부여하면 이미지가 꽉 안차보임. */}
 			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-[0.1rem] rounded-b-[1.6rem] border-borderGray">
 				<div className="flex items-center justify-between ">
-					<Button variant="solid" size="xs" bgColor="bg-buttonGray-200" className="w-[7.6rem] ">
+					<Button variant="solid" size="xs" bgColor={getBgColor()} textColor={getTextColor()} className="w-[7.6rem] ">
 						{goalState[state]}
 					</Button>
 					<div>
