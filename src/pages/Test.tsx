@@ -123,7 +123,9 @@ function Test() {
 	const { curMonthLastDate, curMonthLastDay } = getCurMonthLastDayInfo(year, month);
 	return (
 		<div>
-			<Calander />
+			<a href="tel:010-5132-3070" className="  p-[0.8rem] bg-g4 aria-disabled:bg-g1 rounded-[0.8rem]">
+				전화걸기
+			</a>
 		</div>
 	);
 }
