@@ -47,13 +47,17 @@ function GoalBox({ goalData }: Props) {
 	const isManyTimeGoal = () => {
 		return certDates !== undefined;
 	};
+	// 목표 등록 상태
+	const isJustRegister = () => {
+		if (isManyTimeGoal()) return state === 'ONGOING' && getDayDiff(todayString, certDates[0]) > 0;
+		return state === 'ONGOING' && getDayDiff(todayString, endDate) > 0;
+	};
 	const getBoxMessage = () => {
 		let res;
 
 		switch (state) {
 			case 'WAITING_CERT_COMPLETE':
 				res = '정산은 일주일 정도 소요돼요';
-
 				break;
 			case 'SUCCESS':
 				res = '보상금 지급 완료';
@@ -67,16 +71,16 @@ function GoalBox({ goalData }: Props) {
 				break;
 			default:
 				if (isCertDate()) {
-					if (isManyTimeGoal() && certifications.length > 0) {
+					res = '목표인증을 해주세요!';
+				} else if (isManyTimeGoal()) {
+					if (certifications.length > 0) {
 						const successCtn = certifications.filter((cert) => cert.state === 'SUCCESS').length;
 						const failCtn = certifications.filter((cert) => cert.state === 'FAIL').length;
-						console.log(certifications);
-						// TODO: 백엔드와 논의사항
+
+						// 소수점 첫째자리에서 반올림하기로 백엔드와 통일함
 						res = `${Math.round((successCtn / certDates.length) * 100)}% (${successCtn}회 성공,${failCtn}회 실패)`;
-					} else {
-						res = '목표인증을 해주세요!';
 					}
-				}
+				} else res = '';
 				break;
 		}
 
@@ -127,13 +131,41 @@ function GoalBox({ goalData }: Props) {
 		if (state === 'SUCCESS') return 'text-primaryOrange-200';
 		return 'text-primaryBlack-500';
 	};
-	console.log(todayString, 'today', '2022-02-19');
+	const getDdayMessage = () => {
+		if (state === 'FAIL' || state === 'SUCCESS') return <span>정산 완료</span>;
+		if (state === 'HOLD') return <span>보류</span>;
+		if (state === 'WAITING_CERT_COMPLETE') return <span>정산</span>;
+		const dEndDate = getDayDiff(todayString, endDate);
+		if (isManyTimeGoal()) {
+			let dCert = 0;
+			for (let i = 0; i < certDates.length; i += 1) {
+				const tmp = getDayDiff(todayString, certDates[i]);
+
+				if (tmp >= 0) {
+					console.log(todayString, certDates[i]);
+					dCert = tmp;
+
+					break;
+				}
+			}
+
+			return (
+				<>
+					<span className={`${dCert === 0 ? 'text-primaryOrange-200' : ''}`}>D-{dCert === 0 ? 'DAY' : dCert}</span>
+					<span> D-{dEndDate}</span>
+				</>
+			);
+		}
+		return (
+			<span className={`${dEndDate === 0 ? 'text-primaryOrange-200' : ''}`}>D-{dEndDate === 0 ? 'DAY' : dEndDate}</span>
+		);
+	};
 	return (
 		<BoxLayout openModalHandler={() => null}>
-			{!(state === 'ONGOING' && !isCertDate()) && (
+			{!isJustRegister() && (
 				<div className=" w-[27.7rem]   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[1.5rem] text-white pc:text-body1-pc text-start space-x-[0.8rem]">
 					{state !== 'ONGOING' && <img alt="" src={`/images/goalBox/icon/${state}.svg`} />}
-					<span>{getBoxMessage()}</span>
+					{getBoxMessage()}
 				</div>
 			)}
 			<BoxImage bgUrl={getBgUrl()} />
@@ -145,7 +177,7 @@ function GoalBox({ goalData }: Props) {
 					</Button>
 					<div>
 						🗓 {isManyTimeGoal() && <span />}
-						<span>D-{getDayDiff(todayString, endDate)}</span>
+						<span>{getDdayMessage()}</span>
 					</div>
 				</div>
 				<div className="text-left flex flex-col space-y-[0.3rem]">

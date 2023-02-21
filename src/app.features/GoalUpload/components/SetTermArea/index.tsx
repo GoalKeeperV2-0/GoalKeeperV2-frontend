@@ -2,7 +2,6 @@ import Button from 'app.components/App.base/Button';
 import Label from 'app.components/App.base/Input/Label';
 import Calendar from 'app.components/Calendar';
 import { goalFormState } from 'app.features/GoalUpload/store';
-import { GoalType } from 'app.modules/api/uploadGoal';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import React from 'react';
 import { useRecoilState } from 'recoil';

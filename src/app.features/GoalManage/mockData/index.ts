@@ -23,7 +23,7 @@ export const OneTimeOngoingDday = {
 	reward: 'LOW_RETURN',
 	state: 'ONGOING',
 	startDate: '2023-02-09',
-	endDate: '2023-02-19',
+	endDate: '2023-02-21',
 	certification: null,
 };
 
@@ -37,7 +37,7 @@ export const OneTimeWaiting = {
 	reward: 'LOW_RETURN',
 	state: 'WAITING_CERT_COMPLETE',
 	startDate: '2023-02-09',
-	endDate: '2023-02-18',
+	endDate: '2023-02-21',
 	certification: {
 		id: 1,
 		content: 'ddd',
@@ -140,7 +140,7 @@ export const ManyTimeDday = {
 	state: 'ONGOING',
 	startDate: '2023-01-17',
 	endDate: '2023-03-18',
-	certDates: ['2023-02-19', '2023-02-22', '2023-02-25', '2023-03-18'],
+	certDates: ['2023-02-21', '2023-02-25', '2023-02-28', '2023-03-18'],
 	certifications: [],
 };
 
@@ -155,7 +155,7 @@ export const ManyTimeOngoing2 = {
 	state: 'ONGOING',
 	startDate: '2023-01-17',
 	endDate: '2023-03-18',
-	certDates: ['2023-01-18', '2023-01-19', '2023-02-19', '2023-02-22', '2023-03-18'],
+	certDates: ['2023-01-18', '2023-01-19', '2023-02-20', '2023-02-22', '2023-03-18'],
 	certifications: [
 		{
 			id: 5,
@@ -171,16 +171,7 @@ export const ManyTimeOngoing2 = {
 			content: '지속 인증 글',
 			picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAEssp5xBCP420VJTAkFru3VTpDnHVnXzjg&usqp=CAU',
 			state: 'FAIL',
-			date: '2023-02-19',
-			successCount: 1,
-			failCount: 1,
-		},
-		{
-			id: 5,
-			content: '지속 인증 글',
-			picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoAEssp5xBCP420VJTAkFru3VTpDnHVnXzjg&usqp=CAU',
-			state: 'ONGOING',
-			date: '2023-02-19',
+			date: '2023-02-20',
 			successCount: 1,
 			failCount: 1,
 		},
@@ -197,15 +188,15 @@ export const ManyTimeWaiting = {
 	reward: 'HIGH_RETURN',
 	state: 'WAITING_CERT_COMPLETE',
 	startDate: '2023-01-17',
-	endDate: '2023-02-18',
-	certDates: ['2023-01-02', '2023-01-02', '2023-01-03', '2023-02-18'],
+	endDate: '2023-02-21',
+	certDates: ['2023-01-17', '2023-01-18', '2023-01-19', '2023-02-21'],
 	certifications: [
 		{
 			id: 6,
 			content: '지속 인증 글',
 			picture: 'dddddd',
 			state: 'SUCCESS',
-			date: '2023-01-12',
+			date: '2023-01-17',
 			successCount: 1,
 			failCount: 1,
 		},
@@ -214,7 +205,7 @@ export const ManyTimeWaiting = {
 			content: '지속 인증 글',
 			picture: 'dddddd',
 			state: 'SUCCESS',
-			date: '2023-01-02',
+			date: '2023-01-18',
 			successCount: 1,
 			failCount: 1,
 		},
@@ -223,7 +214,7 @@ export const ManyTimeWaiting = {
 			content: '지속 인증 글',
 			picture: 'dddddd',
 			state: 'SUCCESS',
-			date: '2023-01-03',
+			date: '2023-01-19',
 			successCount: 1,
 			failCount: 1,
 		},
@@ -233,7 +224,7 @@ export const ManyTimeWaiting = {
 			picture:
 				'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWAFVzacOJiaWFv-AFwrhuosAaLm8zqn4GLo8V5EUvcUL6nit1GSMC8PVvB3zPqipp5Js&usqp=CAU',
 			state: 'ONGOING',
-			date: '2023-02-18',
+			date: '2023-02-21',
 			successCount: 1,
 			failCount: 1,
 		},
