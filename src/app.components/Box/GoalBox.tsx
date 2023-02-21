@@ -1,9 +1,11 @@
 import Button from 'app.components/App.base/Button';
+import { modalState } from 'app.modules/store/modal';
 import { formatDate } from 'app.modules/utils/formatDate';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
 import React from 'react';
-
+import { useRecoilState } from 'recoil';
+import DetailGoal from 'app.features/GoalManage/modalContents/DetailGoal';
 import BoxImage from './common/BoxImage';
 import BoxLayout from './common/BoxLayout';
 
@@ -40,6 +42,10 @@ function GoalBox({ goalData }: Props) {
 	const { state, certDates, certifications, certification, endDate, startDate, title } = goalData;
 	const { year, month, date } = getKoreaToday();
 	const todayString = formatDate(year, month, date);
+	const [modal, setModal] = useRecoilState(modalState);
+	const openModalHandler = () => {
+		setModal({ render: <DetailGoal />, isOpen: true });
+	};
 	// TODO: 함수 네이밍 조정
 	const isCertDate = () => {
 		return endDate === todayString || certDates?.includes(formatDate(year, month, date));
@@ -142,7 +148,6 @@ function GoalBox({ goalData }: Props) {
 				const tmp = getDayDiff(todayString, certDates[i]);
 
 				if (tmp >= 0) {
-					console.log(todayString, certDates[i]);
 					dCert = tmp;
 
 					break;
@@ -161,7 +166,7 @@ function GoalBox({ goalData }: Props) {
 		);
 	};
 	return (
-		<BoxLayout openModalHandler={() => null}>
+		<BoxLayout openModalHandler={openModalHandler}>
 			{!isJustRegister() && (
 				<div className=" w-[27.7rem]   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[1.5rem] text-white pc:text-body1-pc text-start space-x-[0.8rem]">
 					{state !== 'ONGOING' && <img alt="" src={`/images/goalBox/icon/${state}.svg`} />}
@@ -175,7 +180,7 @@ function GoalBox({ goalData }: Props) {
 					<Button variant="solid" size="xs" bgColor={getBgColor()} textColor={getTextColor()} className="w-[7.6rem] ">
 						{goalState[state]}
 					</Button>
-					<div>
+					<div className="pc:text-body2-pc">
 						🗓 {isManyTimeGoal() && <span />}
 						<span>{getDdayMessage()}</span>
 					</div>

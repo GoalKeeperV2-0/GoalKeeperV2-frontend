@@ -23,6 +23,9 @@
     .text-body6-pc{
        @apply font-semibold pc:text-[2.2rem] pc:leading-[3rem];
     }
+    .text-body7-pc{
+      @apply font-bold pc:text-[2.4rem] pc:leading-[3rem];
+   }
     .text-body1-mo{
        @apply font-medium text-[1.6rem] leading-[1.9rem];
     }
