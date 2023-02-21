@@ -140,7 +140,7 @@ export const ManyTimeDday = {
 	state: 'ONGOING',
 	startDate: '2023-01-17',
 	endDate: '2023-03-18',
-	certDates: ['2023-02-21', '2023-02-22', '2023-02-25', '2023-03-18'],
+	certDates: ['2023-02-21', '2023-02-25', '2023-02-28', '2023-03-18'],
 	certifications: [],
 };
 

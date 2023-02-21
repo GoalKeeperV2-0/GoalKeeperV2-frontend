@@ -54,7 +54,7 @@ function GoalBox({ goalData }: Props) {
 	};
 	const getBoxMessage = () => {
 		let res;
-		console.log(isManyTimeGoal(), certifications, title);
+
 		switch (state) {
 			case 'WAITING_CERT_COMPLETE':
 				res = '정산은 일주일 정도 소요돼요';
@@ -74,7 +74,6 @@ function GoalBox({ goalData }: Props) {
 					res = '목표인증을 해주세요!';
 				} else if (isManyTimeGoal()) {
 					if (certifications.length > 0) {
-						console.log(1);
 						const successCtn = certifications.filter((cert) => cert.state === 'SUCCESS').length;
 						const failCtn = certifications.filter((cert) => cert.state === 'FAIL').length;
 
@@ -133,31 +132,40 @@ function GoalBox({ goalData }: Props) {
 		return 'text-primaryBlack-500';
 	};
 	const getDdayMessage = () => {
-		if (state === 'FAIL' || state === 'SUCCESS') return '정산 완료';
-		if (state === 'HOLD') return '보류';
-		if (state === 'WAITING_CERT_COMPLETE') return '정산';
+		if (state === 'FAIL' || state === 'SUCCESS') return <span>정산 완료</span>;
+		if (state === 'HOLD') return <span>보류</span>;
+		if (state === 'WAITING_CERT_COMPLETE') return <span>정산</span>;
 		const dEndDate = getDayDiff(todayString, endDate);
 		if (isManyTimeGoal()) {
 			let dCert = 0;
 			for (let i = 0; i < certDates.length; i += 1) {
-				const tmp = getDayDiff(todayString, certDates[0]);
-				if (tmp > 0) {
+				const tmp = getDayDiff(todayString, certDates[i]);
+
+				if (tmp >= 0) {
+					console.log(todayString, certDates[i]);
 					dCert = tmp;
 
 					break;
 				}
 			}
 
-			return `D-${dCert} D-${dEndDate}`;
+			return (
+				<>
+					<span className={`${dCert === 0 ? 'text-primaryOrange-200' : ''}`}>D-{dCert === 0 ? 'DAY' : dCert}</span>
+					<span> D-{dEndDate}</span>
+				</>
+			);
 		}
-		return `D-${dEndDate === 0 ? 'DAY' : dEndDate}`;
+		return (
+			<span className={`${dEndDate === 0 ? 'text-primaryOrange-200' : ''}`}>D-{dEndDate === 0 ? 'DAY' : dEndDate}</span>
+		);
 	};
 	return (
 		<BoxLayout openModalHandler={() => null}>
 			{!isJustRegister() && (
 				<div className=" w-[27.7rem]   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[1.5rem] text-white pc:text-body1-pc text-start space-x-[0.8rem]">
 					{state !== 'ONGOING' && <img alt="" src={`/images/goalBox/icon/${state}.svg`} />}
-					<span>{getBoxMessage()}</span>
+					{getBoxMessage()}
 				</div>
 			)}
 			<BoxImage bgUrl={getBgUrl()} />
