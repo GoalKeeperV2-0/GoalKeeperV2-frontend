@@ -6,7 +6,7 @@ import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import DetailGoal from 'app.features/GoalManage/modalContents/DetailGoal';
-import { CertType, GoalDataType, GoalStateType, MappedState } from 'app.features/GoalManage/types';
+import { GoalDataType, MappedState } from 'app.features/GoalManage/types';
 import { getDdayMessage } from 'app.features/GoalManage/utils/getDdayMessage';
 import BoxImage from './common/BoxImage';
 import BoxLayout from './common/BoxLayout';
@@ -23,7 +23,7 @@ function GoalBox({ goalData }: Props) {
 		FAIL: '실패',
 		HOLD: '실패',
 	};
-	const { id, state, certDates, certifications, certification, endDate, startDate, title } = goalData;
+	const { id, state, certDates, certifications, endDate, startDate, title } = goalData;
 	const { year, month, date } = getKoreaToday();
 	const todayString = formatDate(year, month, date);
 	const [modal, setModal] = useRecoilState(modalState);
@@ -81,7 +81,8 @@ function GoalBox({ goalData }: Props) {
 
 		switch (state) {
 			case 'WAITING_CERT_COMPLETE':
-				res = isManyTimeGoal() ? certifications?.[certifications.length - 1]?.picture : certification?.picture ?? '';
+				res = certifications?.[certifications.length - 1]?.picture;
+
 				break;
 			case 'SUCCESS':
 				res = '/images/goalBox/success.svg';

@@ -32,7 +32,6 @@ export type GoalDataType = {
 	startDate: string;
 	endDate: string;
 	certDates: string[];
-	certification: Partial<CertType> | null;
 	certifications: CertType[];
 	categoryType: CategoryType;
 	point: number;

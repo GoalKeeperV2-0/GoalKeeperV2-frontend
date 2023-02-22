@@ -44,30 +44,50 @@ function DetailGoal({ id }: Props) {
 	};
 	const dDayString = getDayDiff(todayString, goal.endDate);
 	const getBgColor = () => {
-		if (goal.certification) {
-			if (goal.certification.state === 'ONGOING') return 'bg-primaryOrange-100';
-			if (goal.certification.state === 'SUCCESS') return 'bg-primaryOrange-200';
+		if (goal.certifications.length) {
+			if (goal.certifications[0].state === 'ONGOING') return 'bg-primaryOrange-100';
+			if (goal.certifications[0].state === 'SUCCESS') return 'bg-primaryOrange-200';
 			return 'bg-buttonRed-100';
 		}
 		return isJustRegister() ? 'bg-buttonGray-200' : 'bg-primaryBlack-500';
 	};
 	const getTextColor1 = () => {
-		if (goal.certification) {
-			if (goal.certification.state === 'ONGOING') return 'text-primaryOrange-200';
-			if (goal.certification.state === 'SUCCESS') return 'text-white';
+		if (goal.certifications[0]) {
+			if (goal.certifications[0].state === 'ONGOING') return 'text-primaryOrange-200';
+			if (goal.certifications[0].state === 'SUCCESS') return 'text-white';
 			return 'text-buttonRed-200';
 		}
 		return `${isJustRegister() ? 'text-[#828282]' : 'text-white'}`;
 	};
 	const getTextColor2 = () => {
-		if (goal.certification) {
-			if (goal.certification.state === 'ONGOING') return 'text-primaryOrange-200';
-			if (goal.certification.state === 'SUCCESS') return 'text-primaryOrange-200';
+		if (goal.certifications[0]) {
+			if (goal.certifications[0].state === 'ONGOING') return 'text-primaryOrange-200';
+			if (goal.certifications[0].state === 'SUCCESS') return 'text-primaryOrange-200';
 			return 'text-buttonRed-200';
 		}
 		return 'text-white';
 	};
-	console.log(goal?.certification?.picture);
+	const getBoxMessage = () => {
+		let res = '';
+		if (!goal.certifications) return res;
+		const { state } = goal.certifications[0];
+		switch (state) {
+			case 'SUCCESS':
+				res = '인증을 성공했어요';
+				break;
+			case 'FAIL':
+				if (goal.state === 'HOLD') res = '검토를 요청할 수 있어요';
+				else res = '인증을 실패했어요';
+				break;
+
+			default:
+				res = '';
+				break;
+		}
+
+		return res;
+	};
+
 	return (
 		<div className="space-y-[3.2rem]">
 			<div className="flex justify-between">
@@ -107,9 +127,9 @@ function DetailGoal({ id }: Props) {
 				<div className="flex justify-between items-start">
 					<Badge bgColor={getBgColor()} className={`text-[#828282] items-center  space-x-[1.6rem] `}>
 						<span className={`${getTextColor1()}`}>{getDateString()}</span>
-						{goal.certification ? (
+						{goal.certifications.length ? (
 							<span className={` ${getTextColor2()} bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]`}>
-								{MappedCertState[goal.certification?.state as CertStateType]}
+								{MappedCertState[goal.certifications[0]?.state as CertStateType]}
 							</span>
 						) : (
 							<span
@@ -128,15 +148,22 @@ function DetailGoal({ id }: Props) {
 							content="인증 사진"
 							className={`${isJustRegister() ? 'text-[#828282]' : ''}`}
 						/>
-						{goal.certification !== null ? (
+						{goal.certifications.length ? (
 							<div
-								className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7] rounded-[0.8rem] bg-cover"
-								style={{ backgroundImage: `url(${goal.certification.picture})` }}
-							/>
+								className="w-[46.4rem] h-[24.5rem]  rounded-[0.8rem] bg-cover relative"
+								style={{ backgroundImage: `url(${goal.certifications[0].picture})` }}
+							>
+								<div className=" w-full   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[0.8rem] text-white pc:text-body1-pc text-start  space-x-[0.8rem]">
+									{goal.certifications[0].state !== 'ONGOING' && (
+										<img alt="" src={`/images/goalBox/icon/${goal.state}.svg`} className="mr-[0.8rem]" />
+									)}
+									{getBoxMessage()}
+								</div>
+							</div>
 						) : (
 							<label
 								htmlFor="certImage"
-								className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7] rounded-[0.8rem] grid place-content-center"
+								className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7] rounded-[0.8rem] grid place-content-center "
 							>
 								<div className="flex flex-col items-center space-y-[1rem]">
 									<CameraIcon />
