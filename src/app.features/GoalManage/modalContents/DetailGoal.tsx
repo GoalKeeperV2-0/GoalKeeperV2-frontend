@@ -8,7 +8,15 @@ import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
 import React from 'react';
 import { MY_GOALS } from '../mockData';
-import { CategoryType, GoalDataType, MappedCategory, MappedReward, RewardType } from '../types';
+import {
+	CategoryType,
+	CertStateType,
+	GoalDataType,
+	MappedCategory,
+	MappedCertState,
+	MappedReward,
+	RewardType,
+} from '../types';
 import { getDdayMessage } from '../utils/getDdayMessage';
 
 interface Props {
@@ -35,6 +43,30 @@ function DetailGoal({ id }: Props) {
 		return `${+goalMonth}월 ${+goalDate}일`;
 	};
 	const dDayString = getDayDiff(todayString, goal.endDate);
+	const getBgColor = () => {
+		if (goal.certification) {
+			if (goal.certification.state === 'ONGOING') return 'bg-primaryOrange-100';
+			if (goal.certification.state === 'SUCCESS') return 'bg-primaryOrange-200';
+			return 'bg-buttonRed-100';
+		}
+		return isJustRegister() ? 'bg-buttonGray-200' : 'bg-primaryBlack-500';
+	};
+	const getTextColor1 = () => {
+		if (goal.certification) {
+			if (goal.certification.state === 'ONGOING') return 'text-primaryOrange-200';
+			if (goal.certification.state === 'SUCCESS') return 'text-white';
+			return 'text-buttonRed-200';
+		}
+		return `${isJustRegister() ? 'text-[#828282]' : 'text-white'}`;
+	};
+	const getTextColor2 = () => {
+		if (goal.certification) {
+			if (goal.certification.state === 'ONGOING') return 'text-primaryOrange-200';
+			if (goal.certification.state === 'SUCCESS') return 'text-primaryOrange-200';
+			return 'text-buttonRed-200';
+		}
+		return 'text-white';
+	};
 	return (
 		<div className="space-y-[3.2rem]">
 			<div className="flex justify-between">
@@ -72,18 +104,21 @@ function DetailGoal({ id }: Props) {
 
 			<form className="space-y-[3.2rem]">
 				<div className="flex justify-between items-start">
-					<Badge
-						bgColor={isJustRegister() ? 'bg-buttonGray-200' : 'bg-primaryBlack-500'}
-						className="text-[#828282] items-center  space-x-[1.6rem]"
-					>
-						<span className={`${isJustRegister() ? 'text-[#828282]' : 'text-white'}`}>{getDateString()}</span>
-						<span
-							className={`${
-								isJustRegister() ? 'text-[#828282]' : 'text-black'
-							} bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]`}
-						>
-							{dDayString === 0 ? '인증' : `D-${dDayString}`}
-						</span>
+					<Badge bgColor={getBgColor()} className={`text-[#828282] items-center  space-x-[1.6rem] `}>
+						<span className={`${getTextColor1()}`}>{getDateString()}</span>
+						{goal.certification ? (
+							<span className={` ${getTextColor2()} bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]`}>
+								{MappedCertState[goal.certification?.state as CertStateType]}
+							</span>
+						) : (
+							<span
+								className={`${
+									isJustRegister() ? 'text-[#828282]' : 'text-black'
+								} bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]`}
+							>
+								{dDayString === 0 ? '인증' : `D-${dDayString}`}
+							</span>
+						)}
 					</Badge>
 					<div className="flex flex-col space-y-[1.2rem]">
 						<Label

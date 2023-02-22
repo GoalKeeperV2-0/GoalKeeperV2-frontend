@@ -112,12 +112,12 @@ function GoalBox({ goalData }: Props) {
 		return res;
 	};
 	const getBgColor = () => {
-		if (state === 'FAIL') return 'bg-buttonRed-100';
+		if (state === 'FAIL' || state === 'HOLD') return 'bg-buttonRed-100';
 		if (state === 'SUCCESS') return 'bg-primaryOrange-100';
 		return 'bg-buttonGray-200';
 	};
 	const getTextColor = () => {
-		if (state === 'FAIL') return 'text-buttonRed-200';
+		if (state === 'FAIL' || state === 'HOLD') return 'text-buttonRed-200';
 		if (state === 'SUCCESS') return 'text-primaryOrange-200';
 		return 'text-primaryBlack-500';
 	};

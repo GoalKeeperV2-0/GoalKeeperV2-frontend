@@ -1,5 +1,6 @@
 export type GoalStateType = 'ONGOING' | 'WAITING_CERT_COMPLETE' | 'SUCCESS' | 'FAIL' | 'HOLD';
 export type CategoryType = 'STUDY' | 'EXERCISE' | 'HABIT' | 'HOBBY' | 'ETC';
+export type CertStateType = 'ONGOING' | 'SUCCESS' | 'FAIL';
 export type RewardType = 'HIGH_RETURN' | 'LOW_RETURN';
 export type MappedState = { [K in GoalStateType]: string };
 
@@ -18,6 +19,11 @@ export const MappedCategory: { [K in CategoryType]: string } = {
 export const MappedReward: { [K in RewardType]: string } = {
 	HIGH_RETURN: '하이리스크',
 	LOW_RETURN: '로우리스크',
+};
+export const MappedCertState: { [K in CertStateType]: string } = {
+	ONGOING: '검증 중',
+	SUCCESS: '성공',
+	FAIL: '실패',
 };
 export type GoalDataType = {
 	id: number;
