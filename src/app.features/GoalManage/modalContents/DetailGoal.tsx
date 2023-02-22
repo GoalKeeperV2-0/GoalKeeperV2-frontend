@@ -67,6 +67,7 @@ function DetailGoal({ id }: Props) {
 		}
 		return 'text-white';
 	};
+	console.log(goal?.certification?.picture);
 	return (
 		<div className="space-y-[3.2rem]">
 			<div className="flex justify-between">
@@ -127,18 +128,25 @@ function DetailGoal({ id }: Props) {
 							content="인증 사진"
 							className={`${isJustRegister() ? 'text-[#828282]' : ''}`}
 						/>
-						<label
-							htmlFor="certImage"
-							className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7] rounded-[0.8rem] grid place-content-center"
-						>
-							<div className="flex flex-col items-center space-y-[1rem]">
-								<CameraIcon />
-								<span className="text-primaryBlack-300 pc:text-body1-pc">
-									{isJustRegister() ? `${dDayString}일 후 등록 할 수 있어요.` : '0/1'}
-								</span>
-							</div>
-							<input id="certImage" disabled={isJustRegister()} type="file" accept="image/*" className=" hidden" />
-						</label>
+						{goal.certification !== null ? (
+							<div
+								className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7] rounded-[0.8rem] bg-cover"
+								style={{ backgroundImage: `url(${goal.certification.picture})` }}
+							/>
+						) : (
+							<label
+								htmlFor="certImage"
+								className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7] rounded-[0.8rem] grid place-content-center"
+							>
+								<div className="flex flex-col items-center space-y-[1rem]">
+									<CameraIcon />
+									<span className="text-primaryBlack-300 pc:text-body1-pc">
+										{isJustRegister() ? `${dDayString}일 후 등록 할 수 있어요.` : '0/1'}
+									</span>
+								</div>
+								<input id="certImage" disabled={isJustRegister()} type="file" accept="image/*" className=" hidden" />
+							</label>
+						)}
 					</div>
 				</div>
 				<div className="flex flex-col space-y-[1.2rem]">
