@@ -3,38 +3,56 @@ import Button from 'app.components/App.base/Button';
 import Label from 'app.components/App.base/Input/Label';
 import { ReactComponent as BlackBallIcon } from 'app.modules/assets/icons/ball/blackBall.svg';
 import { ReactComponent as CameraIcon } from 'app.modules/assets/manageGoal/camera.svg';
+import { formatDate } from 'app.modules/utils/formatDate';
+import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
 import React from 'react';
+import { MY_GOALS } from '../mockData';
+import { CategoryType, GoalDataType, MappedCategory, MappedReward, RewardType } from '../types';
+import { getDdayMessage } from '../utils/getDdayMessage';
 
-function DetailGoal() {
+interface Props {
+	id: number;
+}
+
+function DetailGoal({ id }: Props) {
 	console.log('detail-goal');
+	const goal: GoalDataType = MY_GOALS.filter((item) => item.id === id)[0] as unknown as GoalDataType;
+	const { year, month, date } = getKoreaToday();
+	const todayString = formatDate(year, month, date);
+	console.log(goal);
+	const isManyTimeGoal = () => {
+		return goal.certDates !== undefined;
+	};
 	return (
 		<div className="space-y-[3.2rem]">
 			<div className="flex justify-between">
-				<span className="pc:text-body7-pc">샐러드 챙겨먹기</span>
+				<span className="pc:text-body7-pc">{goal.title}</span>
 				<div className="w-[46.4rem] h-[9.5rem] flex flex-col justify-between">
-					<p className="whitespace-pre-wrap h-[4.4rem] w-full truncate pc:text-body4-pc">
-						사먹거나, 직접 만들어 먹거나 상관없이 기간 내 샐러드 챙겨먹기사먹거나, 직접 만들어 먹거나 상관없이 기간 내
-						샐러드 챙겨먹기사먹거나, 직접 만들어 먹거나 상관없이 기간 내 샐러드 챙겨먹기사먹거나, 직접 만들어 먹거나
-						상관없이 기간 내 샐러드 챙겨먹기사먹거나, 직접 만들어 먹거나 상관없이 기간 내 샐러드 챙겨먹기사먹거나, 직접
-						만들어 먹거나 상관없이 기간 내 샐러드 챙겨먹기사먹거나, 직접 만들어 먹거나 상관없이 기간 내 샐러드 챙겨먹기
-					</p>
+					<p className="whitespace-pre-wrap h-[4.4rem] w-full truncate pc:text-body4-pc">{goal.content}</p>
 
 					<div className="flex justify-between items-center">
 						<div className="flex space-x-[0.8rem]">
-							<Badge bgColor="bg-buttonGray-200">기타</Badge>
+							<Badge bgColor="bg-buttonGray-200">{MappedCategory[goal.categoryType as CategoryType]}</Badge>
 							<Badge bgColor="bg-buttonGray-200" className="pc:text-body2-pc flex items-center  space-x-[0.8rem] ">
 								<div className="flex items-center space-x-[0.2rem]">
-									<span>1000</span>
+									<span>{goal.point}</span>
 
 									<BlackBallIcon className="w-[1.8rem] h-[1.8rem] mt-[0.3rem]" />
 								</div>
 								<div className="w-[0.1rem] h-full bg-[#D3D3D3]" />
-								<span>하이리스크</span>
+								<span>{MappedReward[goal?.reward as RewardType]}</span>
 							</Badge>
 						</div>
 						{/* TODO: 컴포넌트 만들기 */}
 						<div className="pc:text-body2-pc">
-							🗓 <span>D-25</span>
+							🗓{' '}
+							{getDdayMessage({
+								state: goal.state,
+								endDate: goal.endDate,
+								isManyTimeGoal: isManyTimeGoal(),
+								certDates: goal.certDates,
+								todayString,
+							})}
 						</div>
 					</div>
 				</div>

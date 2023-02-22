@@ -1,8 +1,9 @@
-import GoalBox, { GoalDataType } from 'app.components/Box/GoalBox';
+import GoalBox from 'app.components/Box/GoalBox';
 import InitGoalBox from 'app.components/Box/InitGoalBox';
 import FilterButton from 'app.components/FilterButton';
 import React, { useState } from 'react';
 import { MY_GOALS } from '../mockData';
+import { GoalDataType } from '../types';
 
 function ManageGoalScreen() {
 	const [filter, setFilter] = useState('전체');

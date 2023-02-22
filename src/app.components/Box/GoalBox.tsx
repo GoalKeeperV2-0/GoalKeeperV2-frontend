@@ -6,26 +6,10 @@ import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import DetailGoal from 'app.features/GoalManage/modalContents/DetailGoal';
+import { CertType, GoalDataType, GoalStateType, MappedState } from 'app.features/GoalManage/types';
+import { getDdayMessage } from 'app.features/GoalManage/utils/getDdayMessage';
 import BoxImage from './common/BoxImage';
 import BoxLayout from './common/BoxLayout';
-
-type GoalStateType = 'ONGOING' | 'WAITING_CERT_COMPLETE' | 'SUCCESS' | 'FAIL' | 'HOLD';
-type MappedState = { [K in GoalStateType]: string };
-type CertType = {
-	date: '2023-01-12';
-	picture: string;
-	state: 'SUCCESS' | 'FAIL' | 'ONGOING';
-};
-export type GoalDataType = {
-	id: number;
-	title: string;
-	state: GoalStateType;
-	startDate: string;
-	endDate: string;
-	certDates: string[];
-	certification: Partial<CertType> | null;
-	certifications: CertType[];
-};
 
 interface Props {
 	goalData: GoalDataType;
@@ -39,12 +23,12 @@ function GoalBox({ goalData }: Props) {
 		FAIL: '실패',
 		HOLD: '실패',
 	};
-	const { state, certDates, certifications, certification, endDate, startDate, title } = goalData;
+	const { id, state, certDates, certifications, certification, endDate, startDate, title } = goalData;
 	const { year, month, date } = getKoreaToday();
 	const todayString = formatDate(year, month, date);
 	const [modal, setModal] = useRecoilState(modalState);
 	const openModalHandler = () => {
-		setModal({ render: <DetailGoal />, isOpen: true });
+		setModal({ render: <DetailGoal id={id} />, isOpen: true });
 	};
 	// TODO: 함수 네이밍 조정
 	const isCertDate = () => {
@@ -137,34 +121,7 @@ function GoalBox({ goalData }: Props) {
 		if (state === 'SUCCESS') return 'text-primaryOrange-200';
 		return 'text-primaryBlack-500';
 	};
-	const getDdayMessage = () => {
-		if (state === 'FAIL' || state === 'SUCCESS') return <span>정산 완료</span>;
-		if (state === 'HOLD') return <span>보류</span>;
-		if (state === 'WAITING_CERT_COMPLETE') return <span>정산</span>;
-		const dEndDate = getDayDiff(todayString, endDate);
-		if (isManyTimeGoal()) {
-			let dCert = 0;
-			for (let i = 0; i < certDates.length; i += 1) {
-				const tmp = getDayDiff(todayString, certDates[i]);
 
-				if (tmp >= 0) {
-					dCert = tmp;
-
-					break;
-				}
-			}
-
-			return (
-				<>
-					<span className={`${dCert === 0 ? 'text-primaryOrange-200' : ''}`}>D-{dCert === 0 ? 'DAY' : dCert}</span>
-					<span> D-{dEndDate}</span>
-				</>
-			);
-		}
-		return (
-			<span className={`${dEndDate === 0 ? 'text-primaryOrange-200' : ''}`}>D-{dEndDate === 0 ? 'DAY' : dEndDate}</span>
-		);
-	};
 	return (
 		<BoxLayout openModalHandler={openModalHandler}>
 			{!isJustRegister() && (
@@ -182,7 +139,7 @@ function GoalBox({ goalData }: Props) {
 					</Button>
 					<div className="pc:text-body2-pc">
 						🗓 {isManyTimeGoal() && <span />}
-						<span>{getDdayMessage()}</span>
+						{getDdayMessage({ state, endDate, isManyTimeGoal: isManyTimeGoal(), certDates, todayString })}
 					</div>
 				</div>
 				<div className="text-left flex flex-col space-y-[0.3rem]">
