@@ -4,6 +4,7 @@ import Label from 'app.components/App.base/Input/Label';
 import { ReactComponent as BlackBallIcon } from 'app.modules/assets/icons/ball/blackBall.svg';
 import { ReactComponent as CameraIcon } from 'app.modules/assets/manageGoal/camera.svg';
 import { formatDate } from 'app.modules/utils/formatDate';
+import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
 import React from 'react';
 import { MY_GOALS } from '../mockData';
@@ -20,9 +21,20 @@ function DetailGoal({ id }: Props) {
 	const { year, month, date } = getKoreaToday();
 	const todayString = formatDate(year, month, date);
 	console.log(goal);
+	// TODO:recoil로 이 상태들을 관리할까?
 	const isManyTimeGoal = () => {
 		return goal.certDates !== undefined;
 	};
+	const isJustRegister = () => {
+		if (isManyTimeGoal()) return goal.state === 'ONGOING' && getDayDiff(todayString, goal.certDates[0]) > 0;
+		return goal.state === 'ONGOING' && getDayDiff(todayString, goal.endDate) > 0;
+	};
+	const getDateString = () => {
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		const [_, goalMonth, goalDate] = goal.endDate.split('-');
+		return `${+goalMonth}월 ${+goalDate}일`;
+	};
+	const dDayString = getDayDiff(todayString, goal.endDate);
 	return (
 		<div className="space-y-[3.2rem]">
 			<div className="flex justify-between">
@@ -60,21 +72,37 @@ function DetailGoal({ id }: Props) {
 
 			<form className="space-y-[3.2rem]">
 				<div className="flex justify-between items-start">
-					<Badge bgColor="bg-buttonGray-200" className="text-[#828282] items-center  space-x-[1.6rem]">
-						<span>12월 1일</span>
-						<span className="bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]">D-6</span>
+					<Badge
+						bgColor={isJustRegister() ? 'bg-buttonGray-200' : 'bg-primaryBlack-500'}
+						className="text-[#828282] items-center  space-x-[1.6rem]"
+					>
+						<span className={`${isJustRegister() ? 'text-[#828282]' : 'text-white'}`}>{getDateString()}</span>
+						<span
+							className={`${
+								isJustRegister() ? 'text-[#828282]' : 'text-black'
+							} bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]`}
+						>
+							{dDayString === 0 ? '인증' : `D-${dDayString}`}
+						</span>
 					</Badge>
 					<div className="flex flex-col space-y-[1.2rem]">
-						<Label required htmlFor="certImage" content="인증 사진" className="text-[#828282]" />
+						<Label
+							required
+							htmlFor="certImage"
+							content="인증 사진"
+							className={`${isJustRegister() ? 'text-[#828282]' : ''}`}
+						/>
 						<label
 							htmlFor="certImage"
 							className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7] rounded-[0.8rem] grid place-content-center"
 						>
-							<div className="flex flex-col items-center">
+							<div className="flex flex-col items-center space-y-[1rem]">
 								<CameraIcon />
-								<span className="text-primaryBlack-300 pc:text-body1-pc">5일 후 등록할 수 있어요.</span>
+								<span className="text-primaryBlack-300 pc:text-body1-pc">
+									{isJustRegister() ? `${dDayString}일 후 등록 할 수 있어요.` : '0/1'}
+								</span>
 							</div>
-							<input id="certImage" disabled type="file" accept="image/*" className=" hidden" />
+							<input id="certImage" disabled={isJustRegister()} type="file" accept="image/*" className=" hidden" />
 						</label>
 					</div>
 				</div>
@@ -82,9 +110,9 @@ function DetailGoal({ id }: Props) {
 					<Label required htmlFor="certContent" content="인증 내용" className="text-[#828282]" />
 					<textarea
 						id="certContent"
-						placeholder="6일 후 인증 할 수 있어요."
+						placeholder={isJustRegister() ? `${dDayString}일 후 인증 할 수 있어요.` : '인증내용을 작성해주세요.'}
 						required
-						readOnly
+						disabled={isJustRegister()}
 						name="content"
 						onChange={() => null}
 						className="resize-none w-full h-[9.4rem] outline-none  border-[0.1rem] rounded-[0.8rem] p-[2.4rem]"
