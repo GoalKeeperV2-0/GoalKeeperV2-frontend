@@ -11,6 +11,7 @@ import { MY_GOALS } from '../mockData';
 import {
 	CategoryType,
 	CertStateType,
+	CertType,
 	GoalDataType,
 	MappedCategory,
 	MappedCertState,
@@ -18,6 +19,88 @@ import {
 	RewardType,
 } from '../types';
 import { getDdayMessage } from '../utils/getDdayMessage';
+
+interface TempProps {
+	certDates: string[];
+	certifications: CertType[];
+	endDate: string;
+	isJustRegister: boolean;
+	todayString: string;
+}
+// TODO: 인증일에 인증 안올린 경우 처리
+function CertDateList({ certifications, certDates, endDate, isJustRegister, todayString }: TempProps) {
+	const getDateString = (certDate: string) => {
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		const [_, goalMonth, goalDate] = certDate.split('-');
+		return `${+goalMonth}월 ${+goalDate}일`;
+	};
+	const hasCertifications = certifications.length > 0;
+	const getDday = (certDate: string) => {
+		return getDayDiff(todayString, certDate);
+	};
+	const getBgColor = (certDate: string, index: number) => {
+		if (getDday(certDate) < 0) {
+			if (!certifications[index] || certifications[index]?.state === 'FAIL') return 'bg-buttonRed-100';
+			if (certifications[index]?.state === 'ONGOING') return 'bg-primaryOrange-100';
+			if (certifications[index]?.state === 'SUCCESS') return 'bg-primaryOrange-200';
+		}
+		return todayString === certDate ? 'bg-primaryBlack-500' : 'bg-buttonGray-200';
+	};
+	const getTextColor1 = (certDate: string, index: number) => {
+		if (getDday(certDate) < 0) {
+			if (!certifications[index] || certifications[index]?.state === 'FAIL') return 'text-primaryRed-200';
+			if (certifications[index]?.state === 'ONGOING') return 'text-primaryOrange-200';
+			if (certifications[index]?.state === 'SUCCESS') return 'text-white';
+		}
+		return todayString === certDate ? 'text-white' : 'text-[#828282]';
+	};
+	const getTextColor2 = (certDate: string, index: number) => {
+		if (getDday(certDate) < 0) {
+			if (!certifications[index] || certifications[index]?.state === 'FAIL') return 'text-buttonRed-200';
+			if (certifications[index]?.state === 'ONGOING') return 'text-primaryOrange-200';
+			if (certifications[index]?.state === 'SUCCESS') return 'text-primaryOrange-200';
+		}
+		return 'text-white';
+	};
+	const getIsUploaded = (certDate: string) => {
+		console.log(
+			certifications.filter((item) => item.date === certDate),
+			certDate
+		);
+		return certifications.filter((item) => item.date === certDate).length > 0;
+	};
+	return (
+		<ul className="space-y-[0.8rem]">
+			{(certDates ?? [endDate]).map((item, index) => (
+				<Badge
+					key={index}
+					bgColor={getBgColor(item, index)}
+					className={`text-[#828282] items-center  space-x-[1.6rem] `}
+				>
+					<span className={`${getTextColor1(item, index)}`}>{getDateString(item)}</span>
+					{getDday(item) < 0 ? (
+						<span
+							className={` ${getTextColor2(
+								item,
+								index
+							)} bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]`}
+						>
+							{MappedCertState[certifications[index]?.state as CertStateType] ?? '실패'}
+						</span>
+					) : (
+						<span
+							className={`${
+								todayString === item ? 'text-primaryBlack-500' : 'text-[#828282]'
+							} bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]`}
+						>
+							{+getDday(item) === 0 ? '인증' : `D-${getDday(item)}`}
+						</span>
+					)}
+				</Badge>
+			))}
+		</ul>
+	);
+}
 
 interface Props {
 	id: number;
@@ -28,7 +111,7 @@ function DetailGoal({ id }: Props) {
 	const goal: GoalDataType = MY_GOALS.filter((item) => item.id === id)[0] as unknown as GoalDataType;
 	const { year, month, date } = getKoreaToday();
 	const todayString = formatDate(year, month, date);
-	console.log(goal);
+
 	// TODO:recoil로 이 상태들을 관리할까?
 	const isManyTimeGoal = () => {
 		return goal.certDates !== undefined;
@@ -37,39 +120,12 @@ function DetailGoal({ id }: Props) {
 		if (isManyTimeGoal()) return goal.state === 'ONGOING' && getDayDiff(todayString, goal.certDates[0]) > 0;
 		return goal.state === 'ONGOING' && getDayDiff(todayString, goal.endDate) > 0;
 	};
-	const getDateString = () => {
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		const [_, goalMonth, goalDate] = goal.endDate.split('-');
-		return `${+goalMonth}월 ${+goalDate}일`;
-	};
+
 	const dDayString = getDayDiff(todayString, goal.endDate);
-	const getBgColor = () => {
-		if (goal.certifications.length) {
-			if (goal.certifications[0].state === 'ONGOING') return 'bg-primaryOrange-100';
-			if (goal.certifications[0].state === 'SUCCESS') return 'bg-primaryOrange-200';
-			return 'bg-buttonRed-100';
-		}
-		return isJustRegister() ? 'bg-buttonGray-200' : 'bg-primaryBlack-500';
-	};
-	const getTextColor1 = () => {
-		if (goal.certifications[0]) {
-			if (goal.certifications[0].state === 'ONGOING') return 'text-primaryOrange-200';
-			if (goal.certifications[0].state === 'SUCCESS') return 'text-white';
-			return 'text-buttonRed-200';
-		}
-		return `${isJustRegister() ? 'text-[#828282]' : 'text-white'}`;
-	};
-	const getTextColor2 = () => {
-		if (goal.certifications[0]) {
-			if (goal.certifications[0].state === 'ONGOING') return 'text-primaryOrange-200';
-			if (goal.certifications[0].state === 'SUCCESS') return 'text-primaryOrange-200';
-			return 'text-buttonRed-200';
-		}
-		return 'text-white';
-	};
+
 	const getBoxMessage = () => {
-		let res = '';
-		if (!goal.certifications) return res;
+		const res = '';
+		/*if (!goal.certifications) return res;
 		const { state } = goal.certifications[0];
 		switch (state) {
 			case 'SUCCESS':
@@ -84,7 +140,7 @@ function DetailGoal({ id }: Props) {
 				res = '';
 				break;
 		}
-
+*/
 		return res;
 	};
 
@@ -125,22 +181,7 @@ function DetailGoal({ id }: Props) {
 
 			<form className="space-y-[3.2rem]">
 				<div className="flex justify-between items-start">
-					<Badge bgColor={getBgColor()} className={`text-[#828282] items-center  space-x-[1.6rem] `}>
-						<span className={`${getTextColor1()}`}>{getDateString()}</span>
-						{goal.certifications.length ? (
-							<span className={` ${getTextColor2()} bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]`}>
-								{MappedCertState[goal.certifications[0]?.state as CertStateType]}
-							</span>
-						) : (
-							<span
-								className={`${
-									isJustRegister() ? 'text-[#828282]' : 'text-black'
-								} bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]`}
-							>
-								{dDayString === 0 ? '인증' : `D-${dDayString}`}
-							</span>
-						)}
-					</Badge>
+					<CertDateList {...goal} isJustRegister={isJustRegister()} todayString={`${todayString}`} />
 					<div className="flex flex-col space-y-[1.2rem]">
 						<Label
 							required

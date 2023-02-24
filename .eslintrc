@@ -32,7 +32,8 @@
       "jsx-a11y/anchor-is-valid":"off",
       "no-console":"off",
       "react/jsx-no-useless-fragment":"off",
-      "@typescript-eslint/dot-notation":"off"
+      "@typescript-eslint/dot-notation":"off",
+      "react/jsx-props-no-spreading":"off"
 
     }
    
