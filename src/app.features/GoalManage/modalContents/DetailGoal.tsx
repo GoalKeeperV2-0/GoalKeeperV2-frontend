@@ -6,7 +6,7 @@ import { ReactComponent as CameraIcon } from 'app.modules/assets/manageGoal/came
 import { formatDate } from 'app.modules/utils/formatDate';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
-import React from 'react';
+import React, { useState } from 'react';
 import { MY_GOALS } from '../mockData';
 import {
 	CategoryType,
@@ -24,105 +24,97 @@ interface TempProps {
 	certDates: string[];
 	certifications: CertType[];
 	endDate: string;
-	isJustRegister: boolean;
 	todayString: string;
+	selectCertHandler: (index: number) => void;
 }
-// TODO: 인증일에 인증 안올린 경우 처리
-function CertDateList({ certifications, certDates, endDate, isJustRegister, todayString }: TempProps) {
+// TODO: 인증일에 인증 안올린 경우 처리 -> 완료
+function CertDateList({ certifications, certDates, endDate, todayString, selectCertHandler }: TempProps) {
 	const getDateString = (certDate: string) => {
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		const [_, goalMonth, goalDate] = certDate.split('-');
 		return `${+goalMonth}월 ${+goalDate}일`;
 	};
-	const hasCertifications = certifications.length > 0;
 	const getDday = (certDate: string) => {
 		return getDayDiff(todayString, certDate);
 	};
 	const getBgColor = (certDate: string, index: number) => {
-		if (getDday(certDate) < 0) {
-			if (!certifications[index] || certifications[index]?.state === 'FAIL') return 'bg-buttonRed-100';
-			if (certifications[index]?.state === 'ONGOING') return 'bg-primaryOrange-100';
-			if (certifications[index]?.state === 'SUCCESS') return 'bg-primaryOrange-200';
-		}
-		return todayString === certDate ? 'bg-primaryBlack-500' : 'bg-buttonGray-200';
+		const dday = getDday(certDate);
+
+		if ((dday < 0 && !certifications[index]) || certifications[index]?.state === 'FAIL') return 'bg-buttonRed-100';
+		if (certifications[index]?.state === 'ONGOING') return 'bg-primaryOrange-100';
+		if (certifications[index]?.state === 'SUCCESS') return 'bg-primaryOrange-200';
+
+		if (dday === 0 && !certifications[index]) return 'bg-primaryBlack-500';
+		return 'bg-buttonGray-200';
 	};
 	const getTextColor1 = (certDate: string, index: number) => {
-		if (getDday(certDate) < 0) {
-			if (!certifications[index] || certifications[index]?.state === 'FAIL') return 'text-primaryRed-200';
-			if (certifications[index]?.state === 'ONGOING') return 'text-primaryOrange-200';
-			if (certifications[index]?.state === 'SUCCESS') return 'text-white';
-		}
-		return todayString === certDate ? 'text-white' : 'text-[#828282]';
+		const dday = getDday(certDate);
+
+		if ((dday < 0 && !certifications[index]) || certifications[index]?.state === 'FAIL') return 'text-primaryRed-200';
+		if (certifications[index]?.state === 'ONGOING') return 'text-primaryOrange-200';
+		if (certifications[index]?.state === 'SUCCESS') return 'text-white';
+
+		if (dday === 0 && !certifications[index]) return 'text-white';
+		return 'text-[#828282]';
 	};
 	const getTextColor2 = (certDate: string, index: number) => {
-		if (getDday(certDate) < 0) {
-			if (!certifications[index] || certifications[index]?.state === 'FAIL') return 'text-buttonRed-200';
-			if (certifications[index]?.state === 'ONGOING') return 'text-primaryOrange-200';
-			if (certifications[index]?.state === 'SUCCESS') return 'text-primaryOrange-200';
-		}
-		return 'text-white';
+		const dday = getDday(certDate);
+
+		if ((dday < 0 && !certifications[index]) || certifications[index]?.state === 'FAIL') return 'text-buttonRed-200';
+		if (certifications[index]?.state === 'ONGOING') return 'text-primaryOrange-200';
+		if (certifications[index]?.state === 'SUCCESS') return 'text-primaryOrange-200';
+
+		if (!certifications[index]) return 'text-primaryBlack-500';
+		return 'text-primaryOrange-200';
 	};
-	const getIsUploaded = (certDate: string) => {
-		console.log(
-			certifications.filter((item) => item.date === certDate),
-			certDate
-		);
-		return certifications.filter((item) => item.date === certDate).length > 0;
+	const getMessage = (certDate: string, index: number) => {
+		const dday = getDday(certDate);
+		if (dday === 0 && !certifications[index]) return '인증';
+		return MappedCertState[certifications[index]?.state as CertStateType] ?? '실패';
 	};
 	return (
 		<ul className="space-y-[0.8rem]">
 			{(certDates ?? [endDate]).map((item, index) => (
-				<Badge
+				<Button
 					key={index}
+					onClick={() => selectCertHandler(index)}
+					variant="solid"
+					size="xs"
 					bgColor={getBgColor(item, index)}
-					className={`text-[#828282] items-center  space-x-[1.6rem] `}
+					className="text-[#828282] flex items-center  space-x-[1.6rem] w-fit p-[0.8rem]"
 				>
 					<span className={`${getTextColor1(item, index)}`}>{getDateString(item)}</span>
-					{getDday(item) < 0 ? (
+					{getDday(item) <= 0 ? (
 						<span
 							className={` ${getTextColor2(
 								item,
 								index
-							)} bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]`}
+							)} bg-white rounded-[0.6rem] px-[0.6rem] max-h-[2rem] text-[1.2rem] flex items-center`}
 						>
-							{MappedCertState[certifications[index]?.state as CertStateType] ?? '실패'}
+							{getMessage(item, index)}
 						</span>
 					) : (
 						<span
-							className={`${
-								todayString === item ? 'text-primaryBlack-500' : 'text-[#828282]'
-							} bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]`}
+							className={` text-[#828282]
+							 bg-white rounded-[0.6rem] px-[0.6rem] max-h-[2rem] flex items-center text-[1.2rem]`}
 						>
-							{+getDday(item) === 0 ? '인증' : `D-${getDday(item)}`}
+							{`D-${getDday(item)}`}
 						</span>
 					)}
-				</Badge>
+				</Button>
 			))}
 		</ul>
 	);
 }
-
-interface Props {
-	id: number;
+interface ImageProps {
+	todayString: string;
+	certification: CertType | null;
+	certDate: string;
 }
-
-function DetailGoal({ id }: Props) {
-	console.log('detail-goal');
-	const goal: GoalDataType = MY_GOALS.filter((item) => item.id === id)[0] as unknown as GoalDataType;
-	const { year, month, date } = getKoreaToday();
-	const todayString = formatDate(year, month, date);
-
-	// TODO:recoil로 이 상태들을 관리할까?
-	const isManyTimeGoal = () => {
-		return goal.certDates !== undefined;
+function CertImage({ todayString, certification, certDate }: ImageProps) {
+	const getDday = () => {
+		return getDayDiff(todayString, certDate);
 	};
-	const isJustRegister = () => {
-		if (isManyTimeGoal()) return goal.state === 'ONGOING' && getDayDiff(todayString, goal.certDates[0]) > 0;
-		return goal.state === 'ONGOING' && getDayDiff(todayString, goal.endDate) > 0;
-	};
-
-	const dDayString = getDayDiff(todayString, goal.endDate);
-
 	const getBoxMessage = () => {
 		const res = '';
 		/*if (!goal.certifications) return res;
@@ -142,6 +134,85 @@ function DetailGoal({ id }: Props) {
 		}
 */
 		return res;
+	};
+	console.log(getDday());
+	return (
+		<>
+			{/* TODO: cert 없는 경우 처리*/}
+
+			<div className="flex flex-col space-y-[1.2rem]">
+				<Label
+					required
+					htmlFor="certImage"
+					content="인증 사진"
+					className={`${getDday() < 0 ? 'text-[#828282]' : ''}`}
+				/>
+				{getDday() < 0 ? (
+					<div
+						className="w-[46.4rem] h-[24.5rem]  rounded-[0.8rem] bg-cover relative"
+						style={{ backgroundImage: `url(${certification?.picture})` }}
+					>
+						<div className=" w-full   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[0.8rem] text-white pc:text-body1-pc text-start  space-x-[0.8rem]">
+							{certification?.state !== 'ONGOING' && (
+								<img alt="" src={`/images/goalBox/icon/${certification?.state}.svg`} className="mr-[0.8rem]" />
+							)}
+							{getBoxMessage()}
+						</div>
+					</div>
+				) : (
+					<label
+						htmlFor="certImage"
+						className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7] rounded-[0.8rem] grid place-content-center "
+					>
+						<div className="flex flex-col items-center space-y-[1rem]">
+							<CameraIcon />
+							<span className="text-primaryBlack-300 pc:text-body1-pc">
+								{getDday() > 0 ? `${getDday()}일 후 등록 할 수 있어요.` : '0/1'}
+							</span>
+						</div>
+						<input id="certImage" disabled={getDday() > 0} type="file" accept="image/*" className=" hidden" />
+					</label>
+				)}
+			</div>
+		</>
+	);
+}
+
+interface Props {
+	id: number;
+}
+
+function DetailGoal({ id }: Props) {
+	console.log('detail-goal');
+	const goal: GoalDataType = MY_GOALS.filter((item) => item.id === id)[0] as unknown as GoalDataType;
+	const { year, month, date } = getKoreaToday();
+	const todayString = formatDate(year, month, date);
+
+	const [selectedCertIdx, setSelectedCertIdx] = useState<number>(0);
+	// TODO:recoil로 이 상태들을 관리할까?
+	const isManyTimeGoal = () => {
+		return goal.certDates !== undefined;
+	};
+	const isJustRegister = () => {
+		if (isManyTimeGoal()) return goal.state === 'ONGOING' && getDayDiff(todayString, goal.certDates[0]) > 0;
+		return goal.state === 'ONGOING' && getDayDiff(todayString, goal.endDate) > 0;
+	};
+
+	const dDayString = getDayDiff(todayString, goal.endDate);
+
+	const selectCertHandler = (index: number) => {
+		setSelectedCertIdx(index);
+	};
+	const getCert = () => {
+		const cert = goal.certifications.filter(
+			(item) => item.date === (goal.certDates ?? [goal.endDate])[selectedCertIdx]
+		);
+
+		if (cert.length) {
+			return cert[0];
+		}
+
+		return null;
 	};
 
 	return (
@@ -181,41 +252,12 @@ function DetailGoal({ id }: Props) {
 
 			<form className="space-y-[3.2rem]">
 				<div className="flex justify-between items-start">
-					<CertDateList {...goal} isJustRegister={isJustRegister()} todayString={`${todayString}`} />
-					<div className="flex flex-col space-y-[1.2rem]">
-						<Label
-							required
-							htmlFor="certImage"
-							content="인증 사진"
-							className={`${isJustRegister() ? 'text-[#828282]' : ''}`}
-						/>
-						{goal.certifications.length ? (
-							<div
-								className="w-[46.4rem] h-[24.5rem]  rounded-[0.8rem] bg-cover relative"
-								style={{ backgroundImage: `url(${goal.certifications[0].picture})` }}
-							>
-								<div className=" w-full   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[0.8rem] text-white pc:text-body1-pc text-start  space-x-[0.8rem]">
-									{goal.certifications[0].state !== 'ONGOING' && (
-										<img alt="" src={`/images/goalBox/icon/${goal.state}.svg`} className="mr-[0.8rem]" />
-									)}
-									{getBoxMessage()}
-								</div>
-							</div>
-						) : (
-							<label
-								htmlFor="certImage"
-								className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7] rounded-[0.8rem] grid place-content-center "
-							>
-								<div className="flex flex-col items-center space-y-[1rem]">
-									<CameraIcon />
-									<span className="text-primaryBlack-300 pc:text-body1-pc">
-										{isJustRegister() ? `${dDayString}일 후 등록 할 수 있어요.` : '0/1'}
-									</span>
-								</div>
-								<input id="certImage" disabled={isJustRegister()} type="file" accept="image/*" className=" hidden" />
-							</label>
-						)}
-					</div>
+					<CertDateList {...goal} todayString={`${todayString}`} selectCertHandler={selectCertHandler} />
+					<CertImage
+						todayString={todayString}
+						certification={getCert()}
+						certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
+					/>
 				</div>
 				<div className="flex flex-col space-y-[1.2rem]">
 					<Label required htmlFor="certContent" content="인증 내용" className="text-[#828282]" />
