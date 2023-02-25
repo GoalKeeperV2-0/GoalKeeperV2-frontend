@@ -2,21 +2,15 @@ import Badge from 'app.components/App.base/Badge';
 import Button from 'app.components/App.base/Button';
 import Label from 'app.components/App.base/Input/Label';
 import { ReactComponent as BlackBallIcon } from 'app.modules/assets/icons/ball/blackBall.svg';
-import { ReactComponent as CameraIcon } from 'app.modules/assets/manageGoal/camera.svg';
 import { formatDate } from 'app.modules/utils/formatDate';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
-import React from 'react';
+import React, { useState } from 'react';
+import CertContent from '../components/CertContent';
+import CertDateList from '../components/CertDateList';
+import CertImage from '../components/CertImage';
 import { MY_GOALS } from '../mockData';
-import {
-	CategoryType,
-	CertStateType,
-	GoalDataType,
-	MappedCategory,
-	MappedCertState,
-	MappedReward,
-	RewardType,
-} from '../types';
+import { CategoryType, GoalDataType, MappedCategory, MappedReward, RewardType } from '../types';
 import { getDdayMessage } from '../utils/getDdayMessage';
 
 interface Props {
@@ -28,7 +22,8 @@ function DetailGoal({ id }: Props) {
 	const goal: GoalDataType = MY_GOALS.filter((item) => item.id === id)[0] as unknown as GoalDataType;
 	const { year, month, date } = getKoreaToday();
 	const todayString = formatDate(year, month, date);
-	console.log(goal);
+
+	const [selectedCertIdx, setSelectedCertIdx] = useState<number>(0);
 	// TODO:recoil로 이 상태들을 관리할까?
 	const isManyTimeGoal = () => {
 		return goal.certDates !== undefined;
@@ -37,55 +32,20 @@ function DetailGoal({ id }: Props) {
 		if (isManyTimeGoal()) return goal.state === 'ONGOING' && getDayDiff(todayString, goal.certDates[0]) > 0;
 		return goal.state === 'ONGOING' && getDayDiff(todayString, goal.endDate) > 0;
 	};
-	const getDateString = () => {
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		const [_, goalMonth, goalDate] = goal.endDate.split('-');
-		return `${+goalMonth}월 ${+goalDate}일`;
-	};
-	const dDayString = getDayDiff(todayString, goal.endDate);
-	const getBgColor = () => {
-		if (goal.certifications.length) {
-			if (goal.certifications[0].state === 'ONGOING') return 'bg-primaryOrange-100';
-			if (goal.certifications[0].state === 'SUCCESS') return 'bg-primaryOrange-200';
-			return 'bg-buttonRed-100';
-		}
-		return isJustRegister() ? 'bg-buttonGray-200' : 'bg-primaryBlack-500';
-	};
-	const getTextColor1 = () => {
-		if (goal.certifications[0]) {
-			if (goal.certifications[0].state === 'ONGOING') return 'text-primaryOrange-200';
-			if (goal.certifications[0].state === 'SUCCESS') return 'text-white';
-			return 'text-buttonRed-200';
-		}
-		return `${isJustRegister() ? 'text-[#828282]' : 'text-white'}`;
-	};
-	const getTextColor2 = () => {
-		if (goal.certifications[0]) {
-			if (goal.certifications[0].state === 'ONGOING') return 'text-primaryOrange-200';
-			if (goal.certifications[0].state === 'SUCCESS') return 'text-primaryOrange-200';
-			return 'text-buttonRed-200';
-		}
-		return 'text-white';
-	};
-	const getBoxMessage = () => {
-		let res = '';
-		if (!goal.certifications) return res;
-		const { state } = goal.certifications[0];
-		switch (state) {
-			case 'SUCCESS':
-				res = '인증을 성공했어요';
-				break;
-			case 'FAIL':
-				if (goal.state === 'HOLD') res = '검토를 요청할 수 있어요';
-				else res = '인증을 실패했어요';
-				break;
 
-			default:
-				res = '';
-				break;
+	const selectCertHandler = (index: number) => {
+		setSelectedCertIdx(index);
+	};
+	const getCert = () => {
+		const cert = goal.certifications.filter(
+			(item) => item.date === (goal.certDates ?? [goal.endDate])[selectedCertIdx]
+		);
+
+		if (cert.length) {
+			return cert[0];
 		}
 
-		return res;
+		return null;
 	};
 
 	return (
@@ -125,69 +85,18 @@ function DetailGoal({ id }: Props) {
 
 			<form className="space-y-[3.2rem]">
 				<div className="flex justify-between items-start">
-					<Badge bgColor={getBgColor()} className={`text-[#828282] items-center  space-x-[1.6rem] `}>
-						<span className={`${getTextColor1()}`}>{getDateString()}</span>
-						{goal.certifications.length ? (
-							<span className={` ${getTextColor2()} bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]`}>
-								{MappedCertState[goal.certifications[0]?.state as CertStateType]}
-							</span>
-						) : (
-							<span
-								className={`${
-									isJustRegister() ? 'text-[#828282]' : 'text-black'
-								} bg-white rounded-[0.6rem] px-[0.6rem] py-[0.3rem] text-[1.2rem]`}
-							>
-								{dDayString === 0 ? '인증' : `D-${dDayString}`}
-							</span>
-						)}
-					</Badge>
-					<div className="flex flex-col space-y-[1.2rem]">
-						<Label
-							required
-							htmlFor="certImage"
-							content="인증 사진"
-							className={`${isJustRegister() ? 'text-[#828282]' : ''}`}
-						/>
-						{goal.certifications.length ? (
-							<div
-								className="w-[46.4rem] h-[24.5rem]  rounded-[0.8rem] bg-cover relative"
-								style={{ backgroundImage: `url(${goal.certifications[0].picture})` }}
-							>
-								<div className=" w-full   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[0.8rem] text-white pc:text-body1-pc text-start  space-x-[0.8rem]">
-									{goal.certifications[0].state !== 'ONGOING' && (
-										<img alt="" src={`/images/goalBox/icon/${goal.state}.svg`} className="mr-[0.8rem]" />
-									)}
-									{getBoxMessage()}
-								</div>
-							</div>
-						) : (
-							<label
-								htmlFor="certImage"
-								className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7] rounded-[0.8rem] grid place-content-center "
-							>
-								<div className="flex flex-col items-center space-y-[1rem]">
-									<CameraIcon />
-									<span className="text-primaryBlack-300 pc:text-body1-pc">
-										{isJustRegister() ? `${dDayString}일 후 등록 할 수 있어요.` : '0/1'}
-									</span>
-								</div>
-								<input id="certImage" disabled={isJustRegister()} type="file" accept="image/*" className=" hidden" />
-							</label>
-						)}
-					</div>
-				</div>
-				<div className="flex flex-col space-y-[1.2rem]">
-					<Label required htmlFor="certContent" content="인증 내용" className="text-[#828282]" />
-					<textarea
-						id="certContent"
-						placeholder={isJustRegister() ? `${dDayString}일 후 인증 할 수 있어요.` : '인증내용을 작성해주세요.'}
-						required
-						disabled={isJustRegister()}
-						name="content"
-						onChange={() => null}
-						className="resize-none w-full h-[9.4rem] outline-none  border-[0.1rem] rounded-[0.8rem] p-[2.4rem]"
+					<CertDateList {...goal} todayString={`${todayString}`} selectCertHandler={selectCertHandler} />
+					<CertImage
+						todayString={todayString}
+						certification={getCert()}
+						certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
 					/>
 				</div>
+				<CertContent
+					todayString={todayString}
+					certification={getCert()}
+					certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
+				/>
 			</form>
 			<Button variant="solid" size="lg" bgColor="bg-buttonGray-200">
 				닫기
