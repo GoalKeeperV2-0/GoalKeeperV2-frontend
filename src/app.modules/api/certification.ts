@@ -6,18 +6,12 @@ export interface PostCert {
 	content: string;
 	picture: string; // TODO: 백엔드 이미지 처리 완료되면 수정 필요
 }
-export const postCert = async (body: PostCert) => {
-	const res = await client.post(
-		`certifications/${body.goalType}/${body.goalId}`,
-		{
-			...body,
+export const postCert = async (body: FormData) => {
+	const res = await client.post(`certifications/${body.get('goalType')}/${body.get('goalId')}`, body, {
+		headers: {
+			'Content-Type': 'multipart/form-data',
 		},
-		{
-			headers: {
-				'Content-Type': 'multipart/form-data',
-			},
-		}
-	);
+	});
 
 	return res;
 };

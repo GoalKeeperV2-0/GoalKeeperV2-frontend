@@ -1,7 +1,7 @@
 // 일반 목표
 // 목표 등록
 export const OneTimeOngoing = {
-	id: 1,
+	id: -1,
 	title: 'test',
 	categoryType: 'STUDY',
 	content: 'test',
@@ -154,18 +154,29 @@ export const ManyTimeOngoing = {
 
 // 진행 중, 인증 없는 상태, 인증일
 export const ManyTimeDday = {
-	id: 17,
-	title: '철봉을 꾸준히',
+	id: 1,
+	title: '철봉에 매달리자',
 	categoryType: 'EXERCISE',
-	content: '철봉에 꾸준히 매달리자',
-	point: 200,
+	content: '꾸준히 철봉에 매달리자',
+	point: 100,
 	reward: 'HIGH_RETURN',
 	startDate: '2023-02-25',
 	endDate: '2023-03-31',
 	certifications: [],
 	goalState: 'ONGOING',
 	holdable: true,
-	certDates: ['2023-02-25', '2023-02-26', '2023-02-27', '2023-02-28', '2023-03-31'],
+	certDates: [
+		'2023-02-25',
+		'2023-02-26',
+		'2023-02-27',
+		'2023-02-28',
+		'2023-03-01',
+		'2023-03-08',
+		'2023-03-15',
+		'2023-03-22',
+		'2023-03-29',
+		'2023-03-31',
+	],
 };
 
 // 진행 중 , 인증 1개 있는 상태

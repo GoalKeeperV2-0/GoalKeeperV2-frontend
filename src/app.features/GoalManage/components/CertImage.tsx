@@ -8,7 +8,7 @@ interface Props {
 	todayString: string;
 	certification: CertType | null;
 	certDate: string;
-	certImageHandler: () => void;
+	certImageHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 // TODO: 이미지 handler
 function CertImage({ todayString, certification, certDate, certImageHandler }: Props) {
@@ -58,7 +58,14 @@ function CertImage({ todayString, certification, certDate, certImageHandler }: P
 								{getDday() > 0 ? `${getDday()}일 후 등록 할 수 있어요.` : '0/1'}
 							</span>
 						</div>
-						<input id="certImage" disabled={getDday() !== 0} type="file" accept="image/*" className=" hidden" />
+						<input
+							id="certImage"
+							onChange={certImageHandler}
+							disabled={getDday() !== 0}
+							type="file"
+							accept="image/*"
+							className=" hidden"
+						/>
 					</label>
 				) : (
 					<div

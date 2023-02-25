@@ -7,7 +7,7 @@ import React from 'react';
 import { useRecoilState } from 'recoil';
 import ManytimeGoalStatusMessages from './ManytimeGoalStatusMessages';
 import OnetimeGoalStatusMessage from './OneTimeGoalStatusMessage';
-
+// TODO: 새로고침했을 때 , 날짜설정 버그 생기는거 다 고치기
 function SetTermArea() {
 	const [goalForm, setGoalForm] = useRecoilState(goalFormState);
 	const { goalType, endDate, startDate, certDates } = goalForm;
