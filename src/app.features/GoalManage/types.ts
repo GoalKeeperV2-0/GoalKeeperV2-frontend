@@ -8,6 +8,7 @@ export type CertType = {
 	date: string;
 	picture: string;
 	state: 'SUCCESS' | 'FAIL' | 'ONGOING';
+	content: string;
 };
 export const MappedCategory: { [K in CategoryType]: string } = {
 	STUDY: '공부',
