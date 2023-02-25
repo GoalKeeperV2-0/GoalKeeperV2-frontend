@@ -1,4 +1,4 @@
-import { GoalType, PostManyTimeGoal } from 'app.modules/api/uploadGoal';
+import { GoalType, PostManyTimeGoal } from 'app.modules/api/goal';
 import { atom } from 'recoil';
 export interface IGoalForm {
 	goalType: GoalType;

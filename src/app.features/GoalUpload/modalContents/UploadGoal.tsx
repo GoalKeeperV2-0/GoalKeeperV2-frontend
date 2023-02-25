@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import SubmitButton from 'app.components/SubmitButton';
-import { postManytimeGoal, PostOnetimeGoal, postOnetimeGoal } from 'app.modules/api/uploadGoal';
+import { postManytimeGoal, PostOnetimeGoal, postOnetimeGoal } from 'app.modules/api/goal';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import SelectCategoryArea from '../components/SelectCategoryArea';
@@ -11,7 +11,7 @@ import SetGoalContentArea from '../components/SetGoalContentArea';
 import SetTermArea from '../components/SetTermArea';
 import { goalFormState } from '../store';
 // TODO: 리코일 방식이 나을듯-> 리코일 방식으로 바꾸자
-
+// TODO: 모달 닫았을 때 , 정보 초기화 시키고, 등록했을때도 정보 초기화 시키기 (지금 인풋 내용 남아있음)
 function UploadGoal() {
 	console.log('upload-one-time-goal');
 	const [goalForm, setGoalForm] = useRecoilState(goalFormState);

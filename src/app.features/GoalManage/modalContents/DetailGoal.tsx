@@ -1,9 +1,9 @@
+import { useMutation } from '@tanstack/react-query';
 import Badge from 'app.components/App.base/Badge';
 import Button from 'app.components/App.base/Button';
-import Label from 'app.components/App.base/Input/Label';
+import { postCert } from 'app.modules/api/certification';
 import { ReactComponent as BlackBallIcon } from 'app.modules/assets/icons/ball/blackBall.svg';
 import { formatDate } from 'app.modules/utils/formatDate';
-import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
 import React, { useState } from 'react';
 import CertContent from '../components/CertContent';
@@ -19,18 +19,27 @@ interface Props {
 
 function DetailGoal({ id }: Props) {
 	console.log('detail-goal');
+	const { mutate: postCertMutate, isLoading } = useMutation(postCert, {
+		onSuccess: (res) => {
+			console.log(res);
+
+			alert('인증등록완료');
+			//resetGoalForm();
+		},
+		onError: (error) => alert('오류 발생.'),
+	});
+
 	const goal: GoalDataType = MY_GOALS.filter((item) => item.id === id)[0] as unknown as GoalDataType;
 	const { year, month, date } = getKoreaToday();
+	const [certContent, setCertContent] = useState<string>('');
+	const [certImage, setCertImage] = useState<File>();
+
 	const todayString = formatDate(year, month, date);
 
 	const [selectedCertIdx, setSelectedCertIdx] = useState<number>(0);
 	// TODO:recoil로 이 상태들을 관리할까?
 	const isManyTimeGoal = () => {
 		return goal.certDates !== undefined;
-	};
-	const isJustRegister = () => {
-		if (isManyTimeGoal()) return goal.state === 'ONGOING' && getDayDiff(todayString, goal.certDates[0]) > 0;
-		return goal.state === 'ONGOING' && getDayDiff(todayString, goal.endDate) > 0;
 	};
 
 	const selectCertHandler = (index: number) => {
@@ -47,7 +56,32 @@ function DetailGoal({ id }: Props) {
 
 		return null;
 	};
-
+	const certImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const img = e.target?.files?.[0];
+		setCertImage(img);
+	};
+	const certContentHanlder = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setCertContent(e.target.value);
+	};
+	const certSubmitHandler = (e: React.FormEvent) => {
+		e.preventDefault();
+		if (isLoading) return;
+		const goalType: 'oneTime' | 'manyTime' = isManyTimeGoal() ? 'manyTime' : 'oneTime';
+		if (!goal?.id || !certContent.trim() || !certImage) return;
+		const formData = new FormData();
+		formData.append('goalType', goalType);
+		formData.append('content', certContent);
+		formData.append('picture', certImage);
+		formData.append('goalId', `${goal.id}`);
+		/*const body = {
+			goalType,
+			goalId: goal.id,
+			content: certContent,
+			picture: certImage,
+		};*/
+		console.log(formData.get('picture'), certImage);
+		postCertMutate(formData);
+	};
 	return (
 		<div className="space-y-[3.2rem]">
 			<div className="flex justify-between">
@@ -72,7 +106,7 @@ function DetailGoal({ id }: Props) {
 						<div className="pc:text-body2-pc">
 							🗓{' '}
 							{getDdayMessage({
-								state: goal.state,
+								goalState: goal.goalState,
 								endDate: goal.endDate,
 								isManyTimeGoal: isManyTimeGoal(),
 								certDates: goal.certDates,
@@ -83,24 +117,27 @@ function DetailGoal({ id }: Props) {
 				</div>
 			</div>
 
-			<form className="space-y-[3.2rem]">
+			<form className="space-y-[3.2rem]" onSubmit={certSubmitHandler}>
 				<div className="flex justify-between items-start">
 					<CertDateList {...goal} todayString={`${todayString}`} selectCertHandler={selectCertHandler} />
 					<CertImage
 						todayString={todayString}
 						certification={getCert()}
 						certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
+						certImageHandler={certImageHandler}
 					/>
 				</div>
 				<CertContent
 					todayString={todayString}
 					certification={getCert()}
 					certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
+					certContentHanlder={certContentHanlder}
+					certContent={certContent}
 				/>
+				<Button type="submit" variant="solid" size="lg" bgColor="bg-buttonGray-200">
+					닫기
+				</Button>
 			</form>
-			<Button variant="solid" size="lg" bgColor="bg-buttonGray-200">
-				닫기
-			</Button>
 		</div>
 	);
 }

@@ -16,14 +16,15 @@ interface Props {
 }
 
 function GoalBox({ goalData }: Props) {
-	const goalState: MappedState = {
+	const mappedGoalState: MappedState = {
+		// TODO: types폴더로 옮기기
 		ONGOING: '진행중',
 		WAITING_CERT_COMPLETE: '진행완료',
 		SUCCESS: '성공',
 		FAIL: '실패',
 		HOLD: '실패',
 	};
-	const { id, state, certDates, certifications, endDate, startDate, title } = goalData;
+	const { id, goalState, certDates, certifications, endDate, startDate, title } = goalData;
 	const { year, month, date } = getKoreaToday();
 	const todayString = formatDate(year, month, date);
 	const [modal, setModal] = useRecoilState(modalState);
@@ -39,13 +40,13 @@ function GoalBox({ goalData }: Props) {
 	};
 	// 목표 등록 상태
 	const isJustRegister = () => {
-		if (isManyTimeGoal()) return state === 'ONGOING' && getDayDiff(todayString, certDates[0]) > 0;
-		return state === 'ONGOING' && getDayDiff(todayString, endDate) > 0;
+		if (isManyTimeGoal()) return goalState === 'ONGOING' && getDayDiff(todayString, certDates[0]) > 0;
+		return goalState === 'ONGOING' && getDayDiff(todayString, endDate) > 0;
 	};
 	const getBoxMessage = () => {
 		let res;
 
-		switch (state) {
+		switch (goalState) {
 			case 'WAITING_CERT_COMPLETE':
 				res = '정산은 일주일 정도 소요돼요';
 				break;
@@ -79,7 +80,7 @@ function GoalBox({ goalData }: Props) {
 	const getBgUrl = () => {
 		let res = '';
 
-		switch (state) {
+		switch (goalState) {
 			case 'WAITING_CERT_COMPLETE':
 				res = certifications?.[certifications.length - 1]?.picture;
 
@@ -113,13 +114,13 @@ function GoalBox({ goalData }: Props) {
 		return res;
 	};
 	const getBgColor = () => {
-		if (state === 'FAIL' || state === 'HOLD') return 'bg-buttonRed-100';
-		if (state === 'SUCCESS') return 'bg-primaryOrange-100';
+		if (goalState === 'FAIL' || goalState === 'HOLD') return 'bg-buttonRed-100';
+		if (goalState === 'SUCCESS') return 'bg-primaryOrange-100';
 		return 'bg-buttonGray-200';
 	};
 	const getTextColor = () => {
-		if (state === 'FAIL' || state === 'HOLD') return 'text-buttonRed-200';
-		if (state === 'SUCCESS') return 'text-primaryOrange-200';
+		if (goalState === 'FAIL' || goalState === 'HOLD') return 'text-buttonRed-200';
+		if (goalState === 'SUCCESS') return 'text-primaryOrange-200';
 		return 'text-primaryBlack-500';
 	};
 
@@ -127,7 +128,7 @@ function GoalBox({ goalData }: Props) {
 		<BoxLayout openModalHandler={openModalHandler}>
 			{!isJustRegister() && (
 				<div className=" w-[27.7rem]   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[1.5rem] text-white pc:text-body1-pc text-start space-x-[0.8rem]">
-					{state !== 'ONGOING' && <img alt="" src={`/images/goalBox/icon/${state}.svg`} />}
+					{goalState !== 'ONGOING' && <img alt="" src={`/images/goalBox/icon/${goalState}.svg`} />}
 					{getBoxMessage()}
 				</div>
 			)}
@@ -136,11 +137,11 @@ function GoalBox({ goalData }: Props) {
 			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-[0.1rem] rounded-b-[1.6rem] border-borderGray">
 				<div className="flex items-center justify-between ">
 					<Button variant="solid" size="xs" bgColor={getBgColor()} textColor={getTextColor()} className="w-[7.6rem] ">
-						{goalState[state]}
+						{mappedGoalState[goalState]}
 					</Button>
 					<div className="pc:text-body2-pc">
 						🗓 {isManyTimeGoal() && <span />}
-						{getDdayMessage({ state, endDate, isManyTimeGoal: isManyTimeGoal(), certDates, todayString })}
+						{getDdayMessage({ goalState, endDate, isManyTimeGoal: isManyTimeGoal(), certDates, todayString })}
 					</div>
 				</div>
 				<div className="text-left flex flex-col space-y-[0.3rem]">

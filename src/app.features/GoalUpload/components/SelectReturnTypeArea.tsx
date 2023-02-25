@@ -5,7 +5,7 @@ import { ReactComponent as ActiveLowSvg } from 'app.modules/assets/uploadGoal/ac
 import { ReactComponent as InActiveHighSvg } from 'app.modules/assets/uploadGoal/inactiveHigh.svg';
 import { ReactComponent as InActiveLowSvg } from 'app.modules/assets/uploadGoal/inactiveLow.svg';
 import { useRecoilState } from 'recoil';
-import { RewardType } from 'app.modules/api/uploadGoal';
+import { RewardType } from 'app.modules/api/goal';
 import { goalFormState } from '../store';
 
 // TODO: 통일성을 주는게 맞나?
