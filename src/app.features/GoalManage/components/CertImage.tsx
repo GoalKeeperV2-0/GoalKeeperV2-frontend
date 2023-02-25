@@ -8,8 +8,10 @@ interface Props {
 	todayString: string;
 	certification: CertType | null;
 	certDate: string;
+	certImageHandler: () => void;
 }
-function CertImage({ todayString, certification, certDate }: Props) {
+// TODO: 이미지 handler
+function CertImage({ todayString, certification, certDate, certImageHandler }: Props) {
 	const getDday = () => {
 		return getDayDiff(todayString, certDate);
 	};

@@ -2,17 +2,17 @@ import React from 'react';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import { GoalStateType } from '../types';
 type Params = {
-	state: GoalStateType;
+	goalState: GoalStateType;
 	endDate: string;
 	isManyTimeGoal: boolean;
 	certDates: string[];
 	todayString: string;
 };
 
-export const getDdayMessage = ({ state, endDate, isManyTimeGoal, certDates, todayString }: Params) => {
-	if (state === 'FAIL' || state === 'SUCCESS') return <span>정산 완료</span>;
-	if (state === 'HOLD') return <span>보류</span>;
-	if (state === 'WAITING_CERT_COMPLETE') return <span>정산</span>;
+export const getDdayMessage = ({ goalState, endDate, isManyTimeGoal, certDates, todayString }: Params) => {
+	if (goalState === 'FAIL' || goalState === 'SUCCESS') return <span>정산 완료</span>;
+	if (goalState === 'HOLD') return <span>보류</span>;
+	if (goalState === 'WAITING_CERT_COMPLETE') return <span>정산</span>;
 	const dEndDate = getDayDiff(todayString, endDate);
 	if (isManyTimeGoal) {
 		let dCert = 0;

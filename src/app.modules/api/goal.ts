@@ -14,7 +14,7 @@ export interface PostOnetimeGoal {
 	reward: RewardType;
 }
 export const postOnetimeGoal = async (body: PostOnetimeGoal) => {
-	const res = await client.post('/goal/onetime', {
+	const res = await client.post('/goal/oneTime', {
 		...body,
 	});
 
@@ -27,7 +27,7 @@ export interface PostManyTimeGoal extends PostOnetimeGoal {
 }
 
 export const postManytimeGoal = async (body: PostManyTimeGoal) => {
-	const res = await client.post('goal/manytime', {
+	const res = await client.post('goal/manyTime', {
 		...body,
 	});
 

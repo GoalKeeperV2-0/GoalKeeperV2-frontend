@@ -29,13 +29,14 @@ export const MappedCertState: { [K in CertStateType]: string } = {
 export type GoalDataType = {
 	id: number;
 	title: string;
-	state: GoalStateType;
+	goalState: GoalStateType;
 	startDate: string;
 	endDate: string;
 	certDates: string[];
 	certifications: CertType[];
 	categoryType: CategoryType;
 	point: number;
+	holdable: boolean;
 	reward: RewardType;
 	content: string;
 };
