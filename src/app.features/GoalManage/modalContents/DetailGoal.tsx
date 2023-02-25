@@ -27,7 +27,7 @@ interface TempProps {
 	todayString: string;
 	selectCertHandler: (index: number) => void;
 }
-// TODO: 인증일에 인증 안올린 경우 처리 -> 완료
+// TODO: 인증일에 인증 안올린 경우 처리 -> UI 처리도 필요
 function CertDateList({ certifications, certDates, endDate, todayString, selectCertHandler }: TempProps) {
 	const getDateString = (certDate: string) => {
 		// eslint-disable-next-line @typescript-eslint/naming-convention
@@ -44,7 +44,7 @@ function CertDateList({ certifications, certDates, endDate, todayString, selectC
 		if (certifications[index]?.state === 'ONGOING') return 'bg-primaryOrange-100';
 		if (certifications[index]?.state === 'SUCCESS') return 'bg-primaryOrange-200';
 
-		if (dday === 0 && !certifications[index]) return 'bg-primaryBlack-500';
+		if (dday === 0) return 'bg-primaryBlack-500';
 		return 'bg-buttonGray-200';
 	};
 	const getTextColor1 = (certDate: string, index: number) => {
@@ -54,7 +54,7 @@ function CertDateList({ certifications, certDates, endDate, todayString, selectC
 		if (certifications[index]?.state === 'ONGOING') return 'text-primaryOrange-200';
 		if (certifications[index]?.state === 'SUCCESS') return 'text-white';
 
-		if (dday === 0 && !certifications[index]) return 'text-white';
+		if (dday === 0) return 'text-white';
 		return 'text-[#828282]';
 	};
 	const getTextColor2 = (certDate: string, index: number) => {
@@ -64,7 +64,7 @@ function CertDateList({ certifications, certDates, endDate, todayString, selectC
 		if (certifications[index]?.state === 'ONGOING') return 'text-primaryOrange-200';
 		if (certifications[index]?.state === 'SUCCESS') return 'text-primaryOrange-200';
 
-		if (!certifications[index]) return 'text-primaryBlack-500';
+		if (dday === 0) return 'text-primaryBlack-500';
 		return 'text-primaryOrange-200';
 	};
 	const getMessage = (certDate: string, index: number) => {
@@ -147,7 +147,20 @@ function CertImage({ todayString, certification, certDate }: ImageProps) {
 					content="인증 사진"
 					className={`${getDday() < 0 ? 'text-[#828282]' : ''}`}
 				/>
-				{getDday() < 0 ? (
+				{certification === null && getDday() >= 0 ? (
+					<label
+						htmlFor="certImage"
+						className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7] rounded-[0.8rem] grid place-content-center "
+					>
+						<div className="flex flex-col items-center space-y-[1rem]">
+							<CameraIcon />
+							<span className="text-primaryBlack-300 pc:text-body1-pc">
+								{getDday() > 0 ? `${getDday()}일 후 등록 할 수 있어요.` : '0/1'}
+							</span>
+						</div>
+						<input id="certImage" disabled={getDday() !== 0} type="file" accept="image/*" className=" hidden" />
+					</label>
+				) : (
 					<div
 						className="w-[46.4rem] h-[24.5rem]  rounded-[0.8rem] bg-cover relative"
 						style={{ backgroundImage: `url(${certification?.picture})` }}
@@ -159,19 +172,6 @@ function CertImage({ todayString, certification, certDate }: ImageProps) {
 							{getBoxMessage()}
 						</div>
 					</div>
-				) : (
-					<label
-						htmlFor="certImage"
-						className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7] rounded-[0.8rem] grid place-content-center "
-					>
-						<div className="flex flex-col items-center space-y-[1rem]">
-							<CameraIcon />
-							<span className="text-primaryBlack-300 pc:text-body1-pc">
-								{getDday() > 0 ? `${getDday()}일 후 등록 할 수 있어요.` : '0/1'}
-							</span>
-						</div>
-						<input id="certImage" disabled={getDday() > 0} type="file" accept="image/*" className=" hidden" />
-					</label>
 				)}
 			</div>
 		</>
