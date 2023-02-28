@@ -33,7 +33,7 @@ function DetailGoal({ id }: Props) {
 	const { year, month, date } = getKoreaToday();
 	const [certContent, setCertContent] = useState<string>('');
 	const [certImage, setCertImage] = useState<File>();
-
+	const [certImagePreview, setCertImagePreview] = useState<string | null>('');
 	const todayString = formatDate(year, month, date);
 
 	const [selectedCertIdx, setSelectedCertIdx] = useState<number>(0);
@@ -58,7 +58,15 @@ function DetailGoal({ id }: Props) {
 	};
 	const certImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const img = e.target?.files?.[0];
+		if (!img) return;
 		setCertImage(img);
+		const reader = new FileReader();
+
+		reader.readAsDataURL(img);
+		reader.onloadend = () => {
+			if (!reader?.result) return;
+			setCertImagePreview(reader.result as string);
+		};
 	};
 	const certContentHanlder = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setCertContent(e.target.value);
@@ -125,6 +133,7 @@ function DetailGoal({ id }: Props) {
 						certification={getCert()}
 						certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
 						certImageHandler={certImageHandler}
+						certImagePreview={certImagePreview as string}
 					/>
 				</div>
 				<CertContent
