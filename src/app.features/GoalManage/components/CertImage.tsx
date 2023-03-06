@@ -10,9 +10,10 @@ interface Props {
 	certDate: string;
 	certImageHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	certImagePreview: string | null;
+	isCertModal?: boolean;
 }
 // TODO: 이미지 handler
-function CertImage({ todayString, certification, certDate, certImageHandler, certImagePreview }: Props) {
+function CertImage({ todayString, certification, certDate, certImageHandler, certImagePreview, isCertModal }: Props) {
 	const getDday = () => {
 		return getDayDiff(todayString, certDate);
 	};
@@ -82,12 +83,14 @@ function CertImage({ todayString, certification, certDate, certImageHandler, cer
 						className="w-[46.4rem] h-[24.5rem]  rounded-[0.8rem] bg-cover relative"
 						style={{ backgroundImage: `url(${certification?.picture})` }}
 					>
-						<div className=" w-full   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[0.8rem] text-white pc:text-body1-pc text-start  space-x-[0.8rem]">
-							{certification?.state !== 'ONGOING' && (
-								<img alt="" src={`/images/goalBox/icon/${certification?.state}.svg`} className="mr-[0.8rem]" />
-							)}
-							{getBoxMessage()}
-						</div>
+						{!isCertModal && (
+							<div className=" w-full   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[0.8rem] text-white pc:text-body1-pc text-start  space-x-[0.8rem]">
+								{certification?.state !== 'ONGOING' && (
+									<img alt="" src={`/images/goalBox/icon/${certification?.state}.svg`} className="mr-[0.8rem]" />
+								)}
+								{getBoxMessage()}
+							</div>
+						)}
 					</div>
 				)}
 			</div>

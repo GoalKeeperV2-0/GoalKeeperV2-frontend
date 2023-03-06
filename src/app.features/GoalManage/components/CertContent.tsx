@@ -18,7 +18,7 @@ function CertContent({ todayString, certification, certDate, certContent, certCo
 	return (
 		<div className="flex flex-col space-y-[1.2rem]">
 			<Label required htmlFor="certContent" content="인증 내용" className="text-[#828282]" />
-			{getDday() >= 0 ? (
+			{certContent ? (
 				<textarea
 					id="certContent"
 					placeholder={isJustRegister ? `${getDday()}일 후 인증 할 수 있어요.` : '인증내용을 작성해주세요.'}
