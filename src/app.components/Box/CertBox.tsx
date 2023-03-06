@@ -26,9 +26,22 @@ function CertBox({ certData }: Props) {
 		todayString,
 		`${certDate.split('-')[0]}-${certDate.split('-')[1]}-${+certDate.split('-')[2] + 7}`
 	);
+	const closeModalHandler = () => {
+		setModal({
+			render: null,
+			isOpen: false,
+		});
+	};
 	const openModalHandler = () => {
 		setModal({
-			render: <DetailCert certData={certData} goal={manyTimeGoal ?? (oneTimeGoal as GoalDataType)} dday={dday} />,
+			render: (
+				<DetailCert
+					certData={certData}
+					goal={manyTimeGoal ?? (oneTimeGoal as GoalDataType)}
+					dday={dday}
+					closeModalHandler={closeModalHandler}
+				/>
+			),
 			isOpen: true,
 		});
 	};

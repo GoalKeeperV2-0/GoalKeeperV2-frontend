@@ -14,9 +14,10 @@ interface Props {
 	certData: CertDataType; // TODO:  goalData 빼기
 	goal: GoalDataType;
 	dday: number;
+	closeModalHandler: () => void;
 }
 
-function DetailCert({ certData, goal, dday }: Props) {
+function DetailCert({ certData, goal, dday, closeModalHandler }: Props) {
 	console.log('detail-cert');
 	/*const { mutate: postCertMutate, isLoading } = useMutation(postCert, {
 		onSuccess: (res) => {
@@ -109,9 +110,19 @@ function DetailCert({ certData, goal, dday }: Props) {
 					certContentHanlder={certContentHanlder}
 					certContent={certContent}
 				/>
-				<Button type="submit" variant="solid" size="lg" bgColor="bg-buttonGray-200">
-					닫기
-				</Button>
+				<div className="flex w-full space-x-[1.6rem]">
+					<Button onClick={closeModalHandler} type="button" variant="solid" size="lg" bgColor="bg-buttonGray-200">
+						닫기
+					</Button>
+					<div className="flex space-x-[0.8rem] min-w-[46.2rem]">
+						<Button type="submit" variant="solid" size="lg" bgColor="bg-buttonGray-300" textColor="text-buttonGray-400">
+							실패
+						</Button>
+						<Button type="submit" variant="solid" size="lg" bgColor="bg-primaryOrange-200" textColor="text-white">
+							닫기
+						</Button>
+					</div>
+				</div>
 			</form>
 		</div>
 	);
