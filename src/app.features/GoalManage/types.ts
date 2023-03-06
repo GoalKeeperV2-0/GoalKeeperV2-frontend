@@ -17,6 +17,13 @@ export const MappedCategory: { [K in CategoryType]: string } = {
 	HOBBY: '취미',
 	ETC: '기타',
 };
+export const MappedGoalState: { [K in GoalStateType]: string } = {
+	ONGOING: '진행중',
+	WAITING_CERT_COMPLETE: '진행완료',
+	SUCCESS: '성공',
+	FAIL: '실패',
+	HOLD: '실패',
+};
 export const MappedReward: { [K in RewardType]: string } = {
 	HIGH_RETURN: '하이리스크',
 	LOW_RETURN: '로우리스크',
@@ -29,11 +36,11 @@ export const MappedCertState: { [K in CertStateType]: string } = {
 export type GoalDataType = {
 	id: number;
 	title: string;
-	goalState: GoalStateType;
+	goalState: string;
 	startDate: string;
 	endDate: string;
-	certDates: string[];
-	certifications: CertType[];
+	certDates?: string[];
+	certifications: CertType[] | null;
 	categoryType: CategoryType;
 	point: number;
 	holdable: boolean;

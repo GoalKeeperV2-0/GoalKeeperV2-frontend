@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Certifications from 'pages/Certifications';
 import { SERVICE_URL } from './app.modules/constants/ServiceUrl';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
@@ -23,6 +24,7 @@ function App() {
 						<Route path={SERVICE_URL.oauth2Callback} element={<Oauth2Callback />} />
 						<Route path={SERVICE_URL.oauth2Register} element={<Oauth2Register />} />
 						<Route path={SERVICE_URL.manageGoal} element={<ManageGoal />} />
+						<Route path={SERVICE_URL.certifications} element={<Certifications />} />
 						<Route path="/test" element={<Test />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>

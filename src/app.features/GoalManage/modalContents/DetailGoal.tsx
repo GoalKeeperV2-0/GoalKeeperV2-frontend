@@ -10,7 +10,7 @@ import CertContent from '../components/CertContent';
 import CertDateList from '../components/CertDateList';
 import CertImage from '../components/CertImage';
 import { MY_GOALS } from '../mockData';
-import { CategoryType, GoalDataType, MappedCategory, MappedReward, RewardType } from '../types';
+import { CategoryType, GoalDataType, GoalStateType, MappedCategory, MappedReward, RewardType } from '../types';
 import { getDdayMessage } from '../utils/getDdayMessage';
 
 interface Props {
@@ -46,11 +46,11 @@ function DetailGoal({ id }: Props) {
 		setSelectedCertIdx(index);
 	};
 	const getCert = () => {
-		const cert = goal.certifications.filter(
+		const cert = goal.certifications?.filter(
 			(item) => item.date === (goal.certDates ?? [goal.endDate])[selectedCertIdx]
 		);
 
-		if (cert.length) {
+		if (cert?.length) {
 			return cert[0];
 		}
 
@@ -114,7 +114,7 @@ function DetailGoal({ id }: Props) {
 						<div className="pc:text-body2-pc">
 							🗓{' '}
 							{getDdayMessage({
-								goalState: goal.goalState,
+								goalState: goal.goalState as GoalStateType,
 								endDate: goal.endDate,
 								isManyTimeGoal: isManyTimeGoal(),
 								certDates: goal.certDates,
