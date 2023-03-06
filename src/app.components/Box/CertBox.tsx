@@ -9,6 +9,7 @@ import DetailGoal from 'app.features/GoalManage/modalContents/DetailGoal';
 import { GoalDataType, MappedCategory, MappedGoalState } from 'app.features/GoalManage/types';
 import { getDdayMessage } from 'app.features/GoalManage/utils/getDdayMessage';
 import { CertDataType } from 'app.features/Certification/types';
+import DetailCert from 'app.features/Certification/modalContents/DetailCert';
 import BoxImage from './common/BoxImage';
 import BoxLayout from './common/BoxLayout';
 
@@ -17,12 +18,32 @@ interface Props {
 }
 
 function CertBox({ certData }: Props) {
-	const { id, content, picture, state, date: certDate, successCount, failCount } = certData;
+	const { id, content, picture, state, date: certDate, successCount, failCount, oneTimeGoal, manyTimeGoal } = certData;
 	const { year, month, date } = getKoreaToday();
 	const todayString = formatDate(year, month, date);
 	const [modal, setModal] = useRecoilState(modalState);
+	const dday = getDayDiff(
+		todayString,
+		`${certDate.split('-')[0]}-${certDate.split('-')[1]}-${+certDate.split('-')[2] + 7}`
+	);
+	const closeModalHandler = () => {
+		setModal({
+			render: null,
+			isOpen: false,
+		});
+	};
 	const openModalHandler = () => {
-		setModal({ render: <DetailGoal id={id} />, isOpen: true });
+		setModal({
+			render: (
+				<DetailCert
+					certData={certData}
+					goal={manyTimeGoal ?? (oneTimeGoal as GoalDataType)}
+					dday={dday}
+					closeModalHandler={closeModalHandler}
+				/>
+			),
+			isOpen: true,
+		});
 	};
 
 	const isManyTimeGoal = () => {
@@ -50,12 +71,15 @@ function CertBox({ certData }: Props) {
 						size="xs"
 						bgColor="bg-buttonGray-200"
 						textColor="text-primaryBlack-500"
-						className="w-[7.6rem] "
+						className="w-[7.6rem]"
 					>
 						{getCategory()}
 					</Button>
 					{/*D-0 처리도 같이하기*/}
-					<div className="pc:text-body2-pc">🗓 D-7</div>
+					<div className="pc:text-body2-pc">
+						⏰ D-
+						{dday}
+					</div>
 				</div>
 				<div className="text-left flex flex-col space-y-[0.3rem]">
 					<span className="pc:text-body1-pc text-primaryOrange-200">{isManyTimeGoal() ? '지속' : '일반'}</span>
