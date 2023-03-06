@@ -55,7 +55,13 @@ function CertBox({ certData }: Props) {
 						{getCategory()}
 					</Button>
 					{/*D-0 처리도 같이하기*/}
-					<div className="pc:text-body2-pc">🗓 D-7</div>
+					<div className="pc:text-body2-pc">
+						🗓 D-
+						{getDayDiff(
+							todayString,
+							`${certDate.split('-')[0]}-${certDate.split('-')[1]}-${+certDate.split('-')[2] + 7}`
+						)}
+					</div>
 				</div>
 				<div className="text-left flex flex-col space-y-[0.3rem]">
 					<span className="pc:text-body1-pc text-primaryOrange-200">{isManyTimeGoal() ? '지속' : '일반'}</span>
