@@ -6,7 +6,7 @@ import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import DetailGoal from 'app.features/GoalManage/modalContents/DetailGoal';
-import { GoalDataType, MappedState } from 'app.features/GoalManage/types';
+import { GoalDataType, GoalStateType, MappedState } from 'app.features/GoalManage/types';
 import { getDdayMessage } from 'app.features/GoalManage/utils/getDdayMessage';
 import BoxImage from './common/BoxImage';
 import BoxLayout from './common/BoxLayout';
@@ -24,7 +24,7 @@ function GoalBox({ goalData }: Props) {
 		FAIL: '실패',
 		HOLD: '실패',
 	};
-	const { id, goalState, certDates, certifications, endDate, startDate, title } = goalData;
+	const { id, goalState, certDates, certifications, endDate, title } = goalData;
 	const { year, month, date } = getKoreaToday();
 	const todayString = formatDate(year, month, date);
 	const [modal, setModal] = useRecoilState(modalState);
@@ -40,7 +40,7 @@ function GoalBox({ goalData }: Props) {
 	};
 	// 목표 등록 상태
 	const isJustRegister = () => {
-		if (isManyTimeGoal()) return goalState === 'ONGOING' && getDayDiff(todayString, certDates[0]) > 0;
+		if (isManyTimeGoal()) return goalState === 'ONGOING' && getDayDiff(todayString, (certDates ?? [])[0]) > 0;
 		return goalState === 'ONGOING' && getDayDiff(todayString, endDate) > 0;
 	};
 	const getBoxMessage = () => {
@@ -64,12 +64,14 @@ function GoalBox({ goalData }: Props) {
 				if (isCertDate()) {
 					res = '목표인증을 해주세요!';
 				} else if (isManyTimeGoal()) {
-					if (certifications.length > 0) {
-						const successCtn = certifications.filter((cert) => cert.state === 'SUCCESS').length;
-						const failCtn = certifications.filter((cert) => cert.state === 'FAIL').length;
+					if ((certifications ?? []).length > 0) {
+						const successCtn = (certifications ?? []).filter((cert) => cert.state === 'SUCCESS').length;
+						const failCtn = (certifications ?? []).filter((cert) => cert.state === 'FAIL').length;
 
 						// 소수점 첫째자리에서 반올림하기로 백엔드와 통일함
-						res = `${Math.round((successCtn / certDates.length) * 100)}% (${successCtn}회 성공,${failCtn}회 실패)`;
+						res = `${Math.round(
+							(successCtn / (certDates ?? []).length) * 100
+						)}% (${successCtn}회 성공,${failCtn}회 실패)`;
 					}
 				} else res = '';
 				break;
@@ -82,7 +84,7 @@ function GoalBox({ goalData }: Props) {
 
 		switch (goalState) {
 			case 'WAITING_CERT_COMPLETE':
-				res = certifications?.[certifications.length - 1]?.picture;
+				res = (certifications ?? [])?.[(certifications ?? []).length - 1]?.picture;
 
 				break;
 			case 'SUCCESS':
@@ -137,11 +139,17 @@ function GoalBox({ goalData }: Props) {
 			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-[0.1rem] rounded-b-[1.6rem] border-borderGray">
 				<div className="flex items-center justify-between ">
 					<Button variant="solid" size="xs" bgColor={getBgColor()} textColor={getTextColor()} className="w-[7.6rem] ">
-						{mappedGoalState[goalState]}
+						{mappedGoalState[goalState as GoalStateType]}
 					</Button>
 					<div className="pc:text-body2-pc">
 						🗓 {isManyTimeGoal() && <span />}
-						{getDdayMessage({ goalState, endDate, isManyTimeGoal: isManyTimeGoal(), certDates, todayString })}
+						{getDdayMessage({
+							goalState: goalState as GoalStateType,
+							endDate,
+							isManyTimeGoal: isManyTimeGoal(),
+							certDates,
+							todayString,
+						})}
 					</div>
 				</div>
 				<div className="text-left flex flex-col space-y-[0.3rem]">

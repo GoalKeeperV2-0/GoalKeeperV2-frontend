@@ -25,7 +25,7 @@ function CertContent({ todayString, certification, certDate, certContent, certCo
 					required
 					disabled={isJustRegister}
 					name="content"
-					value={certContent}
+					value={getDday() === 0 ? certContent : ''}
 					onChange={certContentHanlder}
 					className="resize-none w-full h-[9.4rem] outline-none  border-[0.1rem] rounded-[0.8rem] p-[2.4rem]"
 				/>

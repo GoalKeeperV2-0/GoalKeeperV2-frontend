@@ -5,7 +5,7 @@ type Params = {
 	goalState: GoalStateType;
 	endDate: string;
 	isManyTimeGoal: boolean;
-	certDates: string[];
+	certDates: string[] | undefined;
 	todayString: string;
 };
 
@@ -15,6 +15,7 @@ export const getDdayMessage = ({ goalState, endDate, isManyTimeGoal, certDates, 
 	if (goalState === 'WAITING_CERT_COMPLETE') return <span>정산</span>;
 	const dEndDate = getDayDiff(todayString, endDate);
 	if (isManyTimeGoal) {
+		if (certDates === undefined) return null;
 		let dCert = 0;
 		for (let i = 0; i < certDates.length; i += 1) {
 			const tmp = getDayDiff(todayString, certDates[i]);

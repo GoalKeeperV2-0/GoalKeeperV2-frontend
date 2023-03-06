@@ -9,9 +9,10 @@ interface Props {
 	certification: CertType | null;
 	certDate: string;
 	certImageHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	certImagePreview: string | null;
 }
 // TODO: 이미지 handler
-function CertImage({ todayString, certification, certDate, certImageHandler }: Props) {
+function CertImage({ todayString, certification, certDate, certImageHandler, certImagePreview }: Props) {
 	const getDday = () => {
 		return getDayDiff(todayString, certDate);
 	};
@@ -50,22 +51,31 @@ function CertImage({ todayString, certification, certDate, certImageHandler }: P
 				{certification === null && getDday() >= 0 ? (
 					<label
 						htmlFor="certImage"
-						className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7] rounded-[0.8rem] grid place-content-center "
+						className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7]  rounded-[0.8rem] grid place-content-center "
 					>
-						<div className="flex flex-col items-center space-y-[1rem]">
-							<CameraIcon />
-							<span className="text-primaryBlack-300 pc:text-body1-pc">
-								{getDday() > 0 ? `${getDday()}일 후 등록 할 수 있어요.` : '0/1'}
-							</span>
-						</div>
-						<input
-							id="certImage"
-							onChange={certImageHandler}
-							disabled={getDday() !== 0}
-							type="file"
-							accept="image/*"
-							className=" hidden"
-						/>
+						{certImagePreview && getDday() === 0 ? (
+							<div
+								className="w-[46.4rem] h-[24.5rem]  rounded-[0.8rem] bg-cover relative"
+								style={{ backgroundImage: `url(${certImagePreview as string})` }}
+							/>
+						) : (
+							<>
+								<div className="flex flex-col items-center space-y-[1rem]">
+									<CameraIcon />
+									<span className="text-primaryBlack-300 pc:text-body1-pc">
+										{getDday() > 0 ? `${getDday()}일 후 등록 할 수 있어요.` : '0/1'}
+									</span>
+								</div>
+								<input
+									id="certImage"
+									onChange={certImageHandler}
+									disabled={getDday() !== 0}
+									type="file"
+									accept="image/*"
+									className=" hidden"
+								/>
+							</>
+						)}
 					</label>
 				) : (
 					<div

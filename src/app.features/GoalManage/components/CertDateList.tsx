@@ -3,8 +3,8 @@ import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import React from 'react';
 import { CertStateType, CertType, MappedCertState } from '../types';
 interface Props {
-	certDates: string[];
-	certifications: CertType[];
+	certDates?: string[];
+	certifications: CertType[] | null;
 	endDate: string;
 	todayString: string;
 	selectCertHandler: (index: number) => void;
@@ -20,6 +20,7 @@ function CertDateList({ certifications, certDates, endDate, todayString, selectC
 		return getDayDiff(todayString, certDate);
 	};
 	const getBgColor = (certDate: string, index: number) => {
+		if (certifications === null) return 'bg-buttonGray-200';
 		const dday = getDday(certDate);
 
 		if ((dday < 0 && !certifications[index]) || certifications[index]?.state === 'FAIL') return 'bg-buttonRed-100';
@@ -30,6 +31,7 @@ function CertDateList({ certifications, certDates, endDate, todayString, selectC
 		return 'bg-buttonGray-200';
 	};
 	const getTextColor1 = (certDate: string, index: number) => {
+		if (certifications === null) return 'text-[#828282]';
 		const dday = getDday(certDate);
 
 		if ((dday < 0 && !certifications[index]) || certifications[index]?.state === 'FAIL') return 'text-primaryRed-200';
@@ -40,6 +42,7 @@ function CertDateList({ certifications, certDates, endDate, todayString, selectC
 		return 'text-[#828282]';
 	};
 	const getTextColor2 = (certDate: string, index: number) => {
+		if (certifications === null) return 'text-primaryOrange-200';
 		const dday = getDday(certDate);
 
 		if ((dday < 0 && !certifications[index]) || certifications[index]?.state === 'FAIL') return 'text-buttonRed-200';
@@ -50,6 +53,7 @@ function CertDateList({ certifications, certDates, endDate, todayString, selectC
 		return 'text-primaryOrange-200';
 	};
 	const getMessage = (certDate: string, index: number) => {
+		if (certifications === null) return '';
 		const dday = getDday(certDate);
 		if (dday === 0 && !certifications[index]) return '인증';
 		return MappedCertState[certifications[index]?.state as CertStateType] ?? '실패';

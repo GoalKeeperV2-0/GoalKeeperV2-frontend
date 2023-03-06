@@ -25,7 +25,7 @@ export const OneTimeOngoingDday = {
 	goalState: 'ONGOING',
 	holdable: true,
 	startDate: '2023-02-09',
-	endDate: '2023-03-06',
+	endDate: '2023-03-07',
 	certifications: [],
 };
 
@@ -40,7 +40,7 @@ export const OneTimeWaiting = {
 	goalState: 'WAITING_CERT_COMPLETE',
 	holdable: true,
 	startDate: '2023-02-09',
-	endDate: '2023-02-25',
+	endDate: '2023-03-01',
 	certifications: [
 		{
 			id: 1,
@@ -49,7 +49,7 @@ export const OneTimeWaiting = {
 			state: 'ONGOING',
 			successCount: 1,
 			failCount: 1,
-			date: '2023-02-25',
+			date: '2023-03-01',
 		},
 	],
 };

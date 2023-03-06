@@ -10,7 +10,7 @@ import CertContent from '../components/CertContent';
 import CertDateList from '../components/CertDateList';
 import CertImage from '../components/CertImage';
 import { MY_GOALS } from '../mockData';
-import { CategoryType, GoalDataType, MappedCategory, MappedReward, RewardType } from '../types';
+import { CategoryType, GoalDataType, GoalStateType, MappedCategory, MappedReward, RewardType } from '../types';
 import { getDdayMessage } from '../utils/getDdayMessage';
 
 interface Props {
@@ -33,7 +33,7 @@ function DetailGoal({ id }: Props) {
 	const { year, month, date } = getKoreaToday();
 	const [certContent, setCertContent] = useState<string>('');
 	const [certImage, setCertImage] = useState<File>();
-
+	const [certImagePreview, setCertImagePreview] = useState<string | null>('');
 	const todayString = formatDate(year, month, date);
 
 	const [selectedCertIdx, setSelectedCertIdx] = useState<number>(0);
@@ -46,11 +46,11 @@ function DetailGoal({ id }: Props) {
 		setSelectedCertIdx(index);
 	};
 	const getCert = () => {
-		const cert = goal.certifications.filter(
+		const cert = goal.certifications?.filter(
 			(item) => item.date === (goal.certDates ?? [goal.endDate])[selectedCertIdx]
 		);
 
-		if (cert.length) {
+		if (cert?.length) {
 			return cert[0];
 		}
 
@@ -58,7 +58,15 @@ function DetailGoal({ id }: Props) {
 	};
 	const certImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const img = e.target?.files?.[0];
+		if (!img) return;
 		setCertImage(img);
+		const reader = new FileReader();
+
+		reader.readAsDataURL(img);
+		reader.onloadend = () => {
+			if (!reader?.result) return;
+			setCertImagePreview(reader.result as string);
+		};
 	};
 	const certContentHanlder = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setCertContent(e.target.value);
@@ -106,7 +114,7 @@ function DetailGoal({ id }: Props) {
 						<div className="pc:text-body2-pc">
 							🗓{' '}
 							{getDdayMessage({
-								goalState: goal.goalState,
+								goalState: goal.goalState as GoalStateType,
 								endDate: goal.endDate,
 								isManyTimeGoal: isManyTimeGoal(),
 								certDates: goal.certDates,
@@ -125,6 +133,7 @@ function DetailGoal({ id }: Props) {
 						certification={getCert()}
 						certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
 						certImageHandler={certImageHandler}
+						certImagePreview={certImagePreview as string}
 					/>
 				</div>
 				<CertContent
