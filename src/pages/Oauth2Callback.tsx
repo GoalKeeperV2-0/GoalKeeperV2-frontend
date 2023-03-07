@@ -5,7 +5,7 @@ import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import { oauth2 } from 'app.modules/api/auth';
 import { setCookie } from 'app.modules/cookie';
 import client from 'app.modules/api/client';
-function Oauth2Callback() {
+function Oauth2CallbackPage() {
 	const navigate = useNavigate();
 	const { data } = useQuery(
 		['oauth2', 'google'],
@@ -41,4 +41,4 @@ function Oauth2Callback() {
 	return <div>OauthCallback</div>;
 }
 
-export default Oauth2Callback;
+export default Oauth2CallbackPage;

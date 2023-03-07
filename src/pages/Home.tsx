@@ -2,7 +2,7 @@ import BaseLayout from 'app.components/BaseLayout';
 import HomeScreen from 'app.features/Home/screens/HomeScreen';
 import React, { useEffect } from 'react';
 
-function Home() {
+function HomePage() {
 	return (
 		<BaseLayout>
 			<HomeScreen />
@@ -10,4 +10,4 @@ function Home() {
 	);
 }
 
-export default Home;
+export default HomePage;

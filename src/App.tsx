@@ -1,16 +1,16 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Certifications from 'pages/Certifications';
+import CertListPage from 'pages/CertList';
 import { SERVICE_URL } from './app.modules/constants/ServiceUrl';
-import Home from './pages/Home';
-import NotFound from './pages/NotFound';
+import HomePage from './pages/Home';
+import NotFoundPage from './pages/NotFound';
 // import Login from './pages/login';
-import SignUp from './pages/SignUp';
-import Login from './pages/Login';
-import Oauth2Callback from './pages/Oauth2Callback';
-import Oauth2Register from './pages/Oauth2Register';
+import SignUpPage from './pages/SignUp';
+import LoginPage from './pages/Login';
+import Oauth2CallbackPage from './pages/Oauth2Callback';
+import Oauth2RegisterPage from './pages/Oauth2Register';
 import Test from './pages/Test';
-import ManageGoal from './pages/ManageGoal';
+import ManageGoalPage from './pages/ManageGoal';
 
 function App() {
 	return (
@@ -18,15 +18,15 @@ function App() {
 			<Router>
 				<Suspense fallback={<div>Loading..</div>}>
 					<Routes>
-						<Route path={SERVICE_URL.home} element={<Home />} />
-						<Route path={SERVICE_URL.login} element={<Login />} />
-						<Route path={SERVICE_URL.signUp} element={<SignUp />} />
-						<Route path={SERVICE_URL.oauth2Callback} element={<Oauth2Callback />} />
-						<Route path={SERVICE_URL.oauth2Register} element={<Oauth2Register />} />
-						<Route path={SERVICE_URL.manageGoal} element={<ManageGoal />} />
-						<Route path={SERVICE_URL.certifications} element={<Certifications />} />
+						<Route path={SERVICE_URL.home} element={<HomePage />} />
+						<Route path={SERVICE_URL.login} element={<LoginPage />} />
+						<Route path={SERVICE_URL.signUp} element={<SignUpPage />} />
+						<Route path={SERVICE_URL.oauth2Callback} element={<Oauth2CallbackPage />} />
+						<Route path={SERVICE_URL.oauth2Register} element={<Oauth2RegisterPage />} />
+						<Route path={SERVICE_URL.manageGoal} element={<ManageGoalPage />} />
+						<Route path={SERVICE_URL.certifications} element={<CertListPage />} />
 						<Route path="/test" element={<Test />} />
-						<Route path="*" element={<NotFound />} />
+						<Route path="*" element={<NotFoundPage />} />
 					</Routes>
 				</Suspense>
 			</Router>

@@ -1,12 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 import BaseLayout from 'app.components/BaseLayout';
-import Oauth2RegisterView from 'app.features/Auth/views/Oauth2RegisterView';
+import Oauth2RegisterView from 'app.features/Auth/screens/Oauth2RegisterScreen';
 import { oauth2Register } from 'app.modules/api/auth';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Oauth2Register() {
+function Oauth2RegisterPage() {
 	const navigate = useNavigate();
 	const { mutate: patchUser, isLoading: isPatchLoading } = useMutation(oauth2Register, {
 		onSuccess: (res) => {
@@ -27,4 +27,4 @@ function Oauth2Register() {
 	);
 }
 
-export default Oauth2Register;
+export default Oauth2RegisterPage;

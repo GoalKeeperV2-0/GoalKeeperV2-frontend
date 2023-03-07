@@ -2,7 +2,7 @@ import BaseLayout from 'app.components/BaseLayout';
 import CertificationsScreen from 'app.features/Certification/screens/CertificationsScreen';
 import React from 'react';
 
-function Certifications() {
+function CertListPage() {
 	return (
 		<BaseLayout>
 			<CertificationsScreen />
@@ -10,4 +10,4 @@ function Certifications() {
 	);
 }
 
-export default Certifications;
+export default CertListPage;

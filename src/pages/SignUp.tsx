@@ -1,8 +1,8 @@
 import BaseLayout from 'app.components/BaseLayout';
 import React, { useEffect } from 'react';
-import SignUpView from '../app.features/Auth/views/SignUpView';
+import SignUpView from '../app.features/Auth/screens/SignUpScreen';
 
-function Login() {
+function SignUpPage() {
 	return (
 		<BaseLayout>
 			<SignUpView onSubmit={() => '수정필요'} error="" />
@@ -10,4 +10,4 @@ function Login() {
 	);
 }
 
-export default Login;
+export default SignUpPage;

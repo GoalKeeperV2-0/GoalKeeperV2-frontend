@@ -2,7 +2,7 @@ import BaseLayout from 'app.components/BaseLayout';
 import ManageGoalScreen from 'app.features/GoalManage/screens/ManageGoalScreen';
 import React from 'react';
 
-function ManageGoal() {
+function ManageGoalPage() {
 	return (
 		<BaseLayout>
 			<ManageGoalScreen />
@@ -10,4 +10,4 @@ function ManageGoal() {
 	);
 }
 
-export default ManageGoal;
+export default ManageGoalPage;
