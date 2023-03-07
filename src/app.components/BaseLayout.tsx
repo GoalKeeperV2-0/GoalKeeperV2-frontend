@@ -21,7 +21,7 @@ export default function BaseTemplate({ isAdmin, children }: TemplateProps) {
 
 			<main className="flex mt-[3.3rem] pc:mt-[7.4rem]">
 				{!ASIDE_NOT_INCLUDE.includes(window.location.pathname) && <Aside />}
-				<div className="w-full">{children}</div>
+				<div className="min-w-[89.4rem] w-[89.4rem]">{children}</div>
 			</main>
 			{modal.isOpen && <ModalSection />}
 		</div>
