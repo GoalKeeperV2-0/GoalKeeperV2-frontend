@@ -19,7 +19,7 @@ function Aside() {
 		{ field: '목표 실패', value: 1 },
 	];
 	return (
-		<aside className="min-w-[27.8rem] mr-[2.8rem] rounded-[1.6rem] w-[27.8rem] p-[2.4rem] border-[0.1rem] border-borderGray  bg-white space-y-[1.6rem]">
+		<aside className="h-fit min-w-[27.8rem] mr-[2.8rem] rounded-[1.6rem] w-[27.8rem] p-[2.4rem] border-[0.1rem] border-borderGray  bg-white space-y-[1.6rem]">
 			<div className="border-b-[0.1rem] border-borderGray pb-[1.6rem] mb-[16px]">
 				<div className="test-[22px] font-[600] leading-[30px] mb-[4px]">닉네임</div>
 				<div className="text-[16px] text-primaryOrange-200 font-[600px] leading-[19px]">goalkeeper@gmail.com</div>
