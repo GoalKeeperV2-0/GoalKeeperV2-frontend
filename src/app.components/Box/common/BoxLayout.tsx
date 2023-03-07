@@ -2,13 +2,13 @@ import React from 'react';
 
 interface Props {
 	children: React.ReactNode;
-	openModalHandler: () => void;
+	onOpenModal: () => void;
 	mode?: 'init' | 'default';
 }
-function BoxLayout({ children, openModalHandler, mode = 'default' }: Props) {
+function BoxLayout({ children, onOpenModal, mode = 'default' }: Props) {
 	return (
 		<button
-			onClick={openModalHandler}
+			onClick={onOpenModal}
 			type="button"
 			className={`${
 				mode === 'init' ? 'text-[#828282]' : 'text-primaryBlack-500'

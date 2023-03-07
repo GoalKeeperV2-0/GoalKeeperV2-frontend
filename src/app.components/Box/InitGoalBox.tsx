@@ -12,7 +12,7 @@ function InitGoalBox() {
 		setModal({ render: <UploadGoal />, isOpen: true });
 	};
 	return (
-		<BoxLayout openModalHandler={openModalHandler} mode="init">
+		<BoxLayout onOpenModal={openModalHandler} mode="init">
 			<BoxImage bgUrl="/images/goalBox/init.svg" />
 			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-[0.1rem] rounded-b-[1.6rem] border-borderGray">
 				<div className="flex items-center justify-between ">

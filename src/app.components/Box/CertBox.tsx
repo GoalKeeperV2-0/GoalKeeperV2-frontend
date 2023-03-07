@@ -37,7 +37,7 @@ function CertBox({ certData }: Props) {
 					certData={certData}
 					goal={manyTimeGoal ?? (oneTimeGoal as GoalDataType)}
 					dday={dday}
-					closeModalHandler={closeModalHandler}
+					onCloseModal={closeModalHandler}
 				/>
 			),
 			isOpen: true,
@@ -59,7 +59,7 @@ function CertBox({ certData }: Props) {
 	};
 
 	return (
-		<BoxLayout openModalHandler={openModalHandler}>
+		<BoxLayout onOpenModal={openModalHandler}>
 			<BoxImage bgUrl={picture} />
 			{/*하단에만 border 부여, 상부에도 부여하면 이미지가 꽉 안차보임. */}
 			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-[0.1rem] rounded-b-[1.6rem] border-borderGray">

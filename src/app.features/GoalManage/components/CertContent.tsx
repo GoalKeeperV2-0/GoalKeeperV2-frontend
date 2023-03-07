@@ -7,10 +7,10 @@ interface Props {
 	todayString: string;
 	certification: CertType | null;
 	certDate: string;
-	certContentHanlder: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	onCertContentChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 	certContent: string;
 }
-function CertContent({ todayString, certification, certDate, certContent, certContentHanlder }: Props) {
+function CertContent({ todayString, certification, certDate, certContent, onCertContentChange }: Props) {
 	const getDday = () => {
 		return getDayDiff(todayString, certDate);
 	};
@@ -26,7 +26,7 @@ function CertContent({ todayString, certification, certDate, certContent, certCo
 					disabled={isJustRegister}
 					name="content"
 					value={getDday() === 0 ? certContent : ''}
-					onChange={certContentHanlder}
+					onChange={onCertContentChange}
 					className="resize-none w-full h-[9.4rem] outline-none  border-[0.1rem] rounded-[0.8rem] p-[2.4rem]"
 				/>
 			) : (

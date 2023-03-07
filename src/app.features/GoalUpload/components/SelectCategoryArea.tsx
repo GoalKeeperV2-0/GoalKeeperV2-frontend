@@ -6,9 +6,9 @@ import React from 'react';
 type MappedCategory = { [K in CategoryType]: string };
 interface Props {
 	value: CategoryType | null;
-	valueHandler: (e: React.BaseSyntheticEvent) => void;
+	onChange: (e: React.BaseSyntheticEvent) => void;
 }
-function SelectCategoryArea({ value, valueHandler }: Props) {
+function SelectCategoryArea({ value, onChange }: Props) {
 	const category: MappedCategory = {
 		EXERCISE: '운동',
 		STUDY: '공부',
@@ -24,7 +24,7 @@ function SelectCategoryArea({ value, valueHandler }: Props) {
 					<li key={item}>
 						<Button
 							size="sm"
-							onClick={valueHandler}
+							onClick={onChange}
 							name="categoryType"
 							ariaPressed={value === item}
 							value={item}

@@ -78,9 +78,9 @@ function UploadGoal() {
 	}, [goalForm]);
 	return (
 		<form onSubmit={onSubmit} className="space-y-[3rem]">
-			<SelectGoalTypeArea value={goalForm.goalType} valueHandler={valueHandler} />
-			<SelectCategoryArea value={goalForm.categoryType} valueHandler={valueHandler} />
-			<SetGoalContentArea valueHandler={valueHandler} />
+			<SelectGoalTypeArea value={goalForm.goalType} onChange={valueHandler} />
+			<SelectCategoryArea value={goalForm.categoryType} onChange={valueHandler} />
+			<SetGoalContentArea onChange={valueHandler} />
 			<SetBallArea />
 			<SetTermArea />
 			<SelectReturnTypeArea />

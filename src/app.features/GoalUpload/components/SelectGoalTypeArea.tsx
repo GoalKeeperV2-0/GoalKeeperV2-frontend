@@ -7,9 +7,9 @@ type MappedGoal = { [K in GoalType]: string };
 
 interface Props {
 	value: GoalType;
-	valueHandler: (e: React.BaseSyntheticEvent) => void;
+	onChange: (e: React.BaseSyntheticEvent) => void;
 }
-function SelectGoalTypeArea({ value, valueHandler }: Props) {
+function SelectGoalTypeArea({ value, onChange }: Props) {
 	// TODO: 초기화 방법 더 알아보기
 	const goal: MappedGoal = {
 		onetime: '일반목표',
@@ -22,7 +22,7 @@ function SelectGoalTypeArea({ value, valueHandler }: Props) {
 				{Object.entries(goal).map(([item, content]) => (
 					<Button
 						key={item}
-						onClick={valueHandler}
+						onClick={onChange}
 						name="goalType"
 						value={item}
 						variant="outline"

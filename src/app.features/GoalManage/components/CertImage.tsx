@@ -8,12 +8,12 @@ interface Props {
 	todayString: string;
 	certification: CertType | null;
 	certDate: string;
-	certImageHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	onCertImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	certImagePreview: string | null;
 	isCertModal?: boolean;
 }
 // TODO: 이미지 handler
-function CertImage({ todayString, certification, certDate, certImageHandler, certImagePreview, isCertModal }: Props) {
+function CertImage({ todayString, certification, certDate, onCertImageChange, certImagePreview, isCertModal }: Props) {
 	const getDday = () => {
 		return getDayDiff(todayString, certDate);
 	};
@@ -69,7 +69,7 @@ function CertImage({ todayString, certification, certDate, certImageHandler, cer
 								</div>
 								<input
 									id="certImage"
-									onChange={certImageHandler}
+									onChange={onCertImageChange}
 									disabled={getDday() !== 0}
 									type="file"
 									accept="image/*"

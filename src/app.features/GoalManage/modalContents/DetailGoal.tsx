@@ -127,12 +127,12 @@ function DetailGoal({ id }: Props) {
 
 			<form className="space-y-[3.2rem]" onSubmit={certSubmitHandler}>
 				<div className="flex justify-between items-start">
-					<CertDateList {...goal} todayString={`${todayString}`} selectCertHandler={selectCertHandler} />
+					<CertDateList {...goal} todayString={`${todayString}`} onSelectCert={selectCertHandler} />
 					<CertImage
 						todayString={todayString}
 						certification={getCert()}
 						certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
-						certImageHandler={certImageHandler}
+						onCertImageChange={certImageHandler}
 						certImagePreview={certImagePreview as string}
 					/>
 				</div>
@@ -140,7 +140,7 @@ function DetailGoal({ id }: Props) {
 					todayString={todayString}
 					certification={getCert()}
 					certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
-					certContentHanlder={certContentHanlder}
+					onCertContentChange={certContentHanlder}
 					certContent={certContent}
 				/>
 				<Button type="submit" variant="solid" size="lg" bgColor="bg-buttonGray-200">

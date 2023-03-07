@@ -7,10 +7,10 @@ interface Props {
 	certifications: CertType[] | null;
 	endDate: string;
 	todayString: string;
-	selectCertHandler: (index: number) => void;
+	onSelectCert: (index: number) => void;
 }
 // TODO: 인증일에 인증 안올린 경우 처리 -> UI 처리도 필요
-function CertDateList({ certifications, certDates, endDate, todayString, selectCertHandler }: Props) {
+function CertDateList({ certifications, certDates, endDate, todayString, onSelectCert }: Props) {
 	const getDateString = (certDate: string) => {
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		const [_, goalMonth, goalDate] = certDate.split('-');
@@ -63,7 +63,7 @@ function CertDateList({ certifications, certDates, endDate, todayString, selectC
 			{(certDates ?? [endDate]).map((item, index) => (
 				<Button
 					key={index}
-					onClick={() => selectCertHandler(index)}
+					onClick={() => onSelectCert(index)}
 					variant="solid"
 					size="xs"
 					bgColor={getBgColor(item, index)}

@@ -14,10 +14,10 @@ interface Props {
 	certData: CertDataType; // TODO:  goalData 빼기
 	goal: GoalDataType;
 	dday: number;
-	closeModalHandler: () => void;
+	onCloseModal: () => void;
 }
 
-function DetailCert({ certData, goal, dday, closeModalHandler }: Props) {
+function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 	console.log('detail-cert');
 	/*const { mutate: postCertMutate, isLoading } = useMutation(postCert, {
 		onSuccess: (res) => {
@@ -93,12 +93,12 @@ function DetailCert({ certData, goal, dday, closeModalHandler }: Props) {
 
 			<form className="space-y-[3.2rem]" onSubmit={judgeSubmitHandler}>
 				<div className="flex justify-between items-start">
-					<CertDateList {...goal} todayString={`${todayString}`} selectCertHandler={selectCertHandler} />
+					<CertDateList {...goal} todayString={`${todayString}`} onSelectCert={selectCertHandler} />
 					<CertImage
 						todayString={todayString}
 						certification={getCert()}
 						certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
-						certImageHandler={certImageHandler}
+						onCertImageChange={certImageHandler}
 						certImagePreview={certImagePreview as string}
 						isCertModal
 					/>
@@ -107,11 +107,11 @@ function DetailCert({ certData, goal, dday, closeModalHandler }: Props) {
 					todayString={todayString}
 					certification={getCert()}
 					certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
-					certContentHanlder={certContentHanlder}
+					onCertContentChange={certContentHanlder}
 					certContent={certContent}
 				/>
 				<div className="flex w-full space-x-[1.6rem]">
-					<Button onClick={closeModalHandler} type="button" variant="solid" size="lg" bgColor="bg-buttonGray-200">
+					<Button onClick={() => onCloseModal()} type="button" variant="solid" size="lg" bgColor="bg-buttonGray-200">
 						닫기
 					</Button>
 					<div className="flex space-x-[0.8rem] min-w-[46.2rem]">

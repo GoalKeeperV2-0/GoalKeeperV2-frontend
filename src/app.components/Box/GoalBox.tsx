@@ -127,7 +127,7 @@ function GoalBox({ goalData }: Props) {
 	};
 
 	return (
-		<BoxLayout openModalHandler={openModalHandler}>
+		<BoxLayout onOpenModal={openModalHandler}>
 			{!isJustRegister() && (
 				<div className=" w-[27.7rem]   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[1.5rem] text-white pc:text-body1-pc text-start space-x-[0.8rem]">
 					{goalState !== 'ONGOING' && <img alt="" src={`/images/goalBox/icon/${goalState}.svg`} />}
