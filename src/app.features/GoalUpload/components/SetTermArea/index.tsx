@@ -21,9 +21,12 @@ function SetTermArea() {
 	const certDatesHandler = (date: string) => {
 		if (goalType === 'onetime') return;
 		if (certDates.includes(date)) return;
+		const updatedCertDate = [...certDates, date];
+		// 날짜순으로 정렬하기
+		updatedCertDate.sort();
 		setGoalForm({
 			...goalForm,
-			certDates: [...certDates, date],
+			certDates: updatedCertDate,
 		});
 	};
 	const resetEndDateHandler = () => {
