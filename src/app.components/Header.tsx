@@ -10,7 +10,7 @@ import RouteModal from './Modal/RouteModal';
 
 // import useDetectClose from 'hooks/useDetectClose';
 
-type Menu = {
+type MenuType = {
 	title: string;
 	path: string;
 };
@@ -19,7 +19,7 @@ export default function Header() {
 	const dropDownRef = useRef<HTMLImageElement>(null);
 	// const [isOpen, setIsOpen] = useDetectClose(dropDownRef, [false, false]);
 	const [isOpenSideMenu, setIsOpenSideMenu] = useState<boolean>(false);
-	const MENU_LIST: Menu[] = [
+	const MENU_LIST: MenuType[] = [
 		{
 			title: '공지사항',
 			path: SERVICE_URL.announcements,
@@ -41,17 +41,6 @@ export default function Header() {
 			path: SERVICE_URL.mypage,
 		},
 	];
-
-	const handleClick = (e: React.MouseEvent<HTMLImageElement>, index: number) => {
-		if (e.target === e.currentTarget) {
-			/*	setIsOpen((current: boolean[]) => {
-				const newIsOpen = current.map(() => false);
-				newIsOpen[index] = !isOpen[index];
-				return newIsOpen;
-			});
-            */
-		}
-	};
 
 	const handleClickOfSideMenu = () => setIsOpenSideMenu(!isOpenSideMenu);
 
