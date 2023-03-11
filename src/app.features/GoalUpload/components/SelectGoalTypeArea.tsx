@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 type MappedGoal = { [K in GoalType]: string };
 
 interface Props {
-	value: GoalType;
+	value: GoalType | null;
 	onChange: (e: React.BaseSyntheticEvent) => void;
 }
 function SelectGoalTypeArea({ value, onChange }: Props) {
