@@ -3,6 +3,8 @@ import { formatDate } from 'app.modules/utils/formatDate';
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as ResetIcon } from 'app.modules/assets/icons/calendar/reset.svg';
 import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
+import { getDayDiff } from 'app.modules/utils/getDayDiff';
+import { getTodayString } from 'app.modules/utils/getTodayString';
 
 const getPrevMonthLastDayInfo = (curYear: number, curMonth: number) => {
 	// getDay() -> 월요일이 1번
@@ -77,15 +79,9 @@ function Calander({ dateHandler, endDate, startDate, certDates, resetEndDateHand
 	const isCertDate = (idx: number) => {
 		return certDates.includes(formatDate(searchYear, searchMonth, idx + 1));
 	};
-	const isInTerm = (selectedDate: number) => {
-		// TODO: 변수명 바꾸기
-		const term = new Date(searchYear, searchMonth, selectedDate);
-		const endDateYear = endDate.split('-')[0];
-		const endDateMonth = endDate.split('-')[1];
-		const endDateDate = endDate.split('-')[2];
-		const today = new Date(year, month, date);
-
-		return +selectedDate <= +endDateDate && searchMonth <= +endDateMonth && searchYear <= +endDateYear && term >= today;
+	const isInTerm = (targetDate: number) => {
+		const targetDateString = formatDate(searchYear, searchMonth, targetDate);
+		return getDayDiff(targetDateString, getTodayString()) <= 0 && getDayDiff(targetDateString, endDate) >= 0;
 	};
 
 	const onDateButtonClick = (e: React.BaseSyntheticEvent) => {
@@ -147,6 +143,7 @@ function Calander({ dateHandler, endDate, startDate, certDates, resetEndDateHand
 							<button
 								type="button"
 								onClick={onDateButtonClick}
+								disabled={Boolean(endDate) && !isInTerm(idx + 1)}
 								value={idx + 1}
 								className={`${
 									isTodayButton(idx) && !isInTerm(idx + 1)

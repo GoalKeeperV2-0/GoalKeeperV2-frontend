@@ -1,7 +1,8 @@
 import { GoalType, PostManyTimeGoal } from 'app.modules/api/goal';
+import { getTodayString } from 'app.modules/utils/getTodayString';
 import { atom } from 'recoil';
 export interface IGoalForm {
-	goalType: GoalType;
+	goalType: GoalType | null;
 	startDate: PostManyTimeGoal['startDate'];
 	endDate: PostManyTimeGoal['endDate']; // '2023-02-13'
 	title: PostManyTimeGoal['title'];
@@ -12,8 +13,8 @@ export interface IGoalForm {
 	reward: PostManyTimeGoal['reward'] | null;
 }
 const initState: IGoalForm = {
-	goalType: 'onetime',
-	startDate: '',
+	goalType: null,
+	startDate: getTodayString(),
 	endDate: '', // '2023-02-13'
 	title: '',
 	content: '',
