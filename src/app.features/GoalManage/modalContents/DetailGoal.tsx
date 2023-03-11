@@ -5,6 +5,7 @@ import { postCert } from 'app.modules/api/certification';
 import { ReactComponent as BlackBallIcon } from 'app.modules/assets/icons/ball/blackBall.svg';
 import { formatDate } from 'app.modules/utils/formatDate';
 import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
+import { getTodayString } from 'app.modules/utils/getTodayString';
 import React, { useState } from 'react';
 import CertContent from '../components/CertContent';
 import CertDateList from '../components/CertDateList';
@@ -30,11 +31,12 @@ function DetailGoal({ id }: Props) {
 	});
 
 	const goal: GoalDataType = MY_GOALS.filter((item) => item.id === id)[0] as unknown as GoalDataType;
-	const { year, month, date } = getKoreaToday();
+
 	const [certContent, setCertContent] = useState<string>('');
 	const [certImage, setCertImage] = useState<File>();
 	const [certImagePreview, setCertImagePreview] = useState<string | null>('');
-	const todayString = formatDate(year, month, date);
+
+	const todayString = getTodayString();
 
 	const [selectedCertIdx, setSelectedCertIdx] = useState<number>(0);
 	// TODO:recoil로 이 상태들을 관리할까?
