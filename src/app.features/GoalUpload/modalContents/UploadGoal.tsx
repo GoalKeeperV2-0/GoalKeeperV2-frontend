@@ -10,8 +10,8 @@ import SetBallArea from '../components/SetBallArea';
 import SetGoalContentArea from '../components/SetGoalContentArea';
 import SetTermArea from '../components/SetTermArea';
 import { goalFormState } from '../store';
-// TODO: 리코일 방식이 나을듯-> 리코일 방식으로 바꾸자
-// TODO: 모달 닫았을 때 , 정보 초기화 시키고, 등록했을때도 정보 초기화 시키기 (지금 인풋 내용 남아있음)
+// TODO: 잔여 포인트 확인
+
 function UploadGoal() {
 	console.log('upload-one-time-goal');
 	const [goalForm, setGoalForm] = useRecoilState(goalFormState);
@@ -76,6 +76,9 @@ function UploadGoal() {
 		if (goalType === 'manytime' && certDates.length < 4) return;
 		setSubmitButtonDisabled(false);
 	}, [goalForm]);
+	useEffect(() => {
+		return () => resetGoalForm();
+	}, []);
 	return (
 		<form onSubmit={onSubmit} className="space-y-[3rem]">
 			<SelectGoalTypeArea value={goalForm.goalType} onChange={valueHandler} />

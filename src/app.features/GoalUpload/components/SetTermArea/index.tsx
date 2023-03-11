@@ -43,7 +43,7 @@ function SetTermArea() {
 		if (!endDate.trim()) return 'init';
 		return 'selected';
 	};
-
+	console.log(startDate, endDate);
 	return (
 		<div className="space-y-[2.4rem] w-full">
 			<Label required htmlFor="goal-term" content="목표기간 선택" />
