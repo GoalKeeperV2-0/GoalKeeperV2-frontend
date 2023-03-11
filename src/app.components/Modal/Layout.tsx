@@ -7,18 +7,17 @@ import { useRecoilState } from 'recoil';
 function ModalLayout() {
 	const [modal, setModal] = useRecoilState(modalState);
 
-	/*useEffect(() => {
+	useEffect(() => {
 		document.body.style.overflow = 'hidden';
 		return () => {
 			document.body.style.overflow = 'scroll';
 		};
-	}, []);*/
+	}, []);
 	return (
-		// TODO:모달 backdrop 화면 꽉채워야 함
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
 		<div
 			onClick={() => setModal({ ...modal, isOpen: false })}
-			className="bg-primaryBlack-500 bg-opacity-20 absolute inset-0 min-h-[150vh] w-[100%]   z-50 "
+			className="bg-primaryBlack-500 bg-opacity-20 absolute inset-0 w-[100%]  z-50 h-[100vh]  "
 		>
 			{/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
 			<div
