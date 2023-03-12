@@ -31,7 +31,7 @@ function ManageGoalPage() {
 			enabled: !!category,
 		}
 	);
-	const goalFilterHandler = (filter: CategoryType) => {
+	const goalFilterHandler = (filter: CategoryType | null) => {
 		setCategory(filter);
 	};
 	return (

@@ -32,7 +32,7 @@ function CertListPage() {
 			enabled: !!category,
 		}
 	);
-	const certFilterHandler = (filter: CategoryType) => {
+	const certFilterHandler = (filter: CategoryType | null) => {
 		setCategory(filter);
 	};
 

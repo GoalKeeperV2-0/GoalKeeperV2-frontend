@@ -10,7 +10,7 @@ const mappedCertFilter = {
 };
 interface Props {
 	certs: CertDataType[];
-	onCertFilterChange: (filter: CategoryType) => void;
+	onCertFilterChange: (filter: CategoryType | null) => void;
 	certFilter: CategoryType | null;
 }
 function CertificationsScreen({ certs, onCertFilterChange, certFilter }: Props) {
@@ -22,10 +22,16 @@ function CertificationsScreen({ certs, onCertFilterChange, certFilter }: Props) 
 				{Object.entries(mappedCertFilter).map(([key, value]) => (
 					<li key={key}>
 						<FilterButton
-							isPressed={certFilter === key}
+							isPressed={(certFilter === null && key === 'ALL') || certFilter === key}
 							name="certFilter"
 							value={key}
-							onClick={() => onCertFilterChange(key as CategoryType)}
+							onClick={() => {
+								if (key === 'ALL') {
+									onCertFilterChange(null);
+									return;
+								}
+								onCertFilterChange(key as CategoryType);
+							}}
 						>
 							{value}
 						</FilterButton>
