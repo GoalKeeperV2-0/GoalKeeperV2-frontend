@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import Button from 'app.components/App.base/Button';
+import DetailGoal from 'app.features/GoalManage/modalContents/DetailGoal';
 import { GoalDataType } from 'app.features/GoalManage/types';
 import UploadOnetimeGoal from 'app.features/GoalUpload/modalContents/UploadGoal';
 import { getUserStatistics } from 'app.modules/api/overview';
@@ -35,6 +36,9 @@ function Aside() {
 		totalSuccessGoalCount: '성공한 목표',
 		totalFailGoalCount: '실패한 목표',
 	};
+	const openModalHandler = (goalData: GoalDataType) => {
+		setModal({ render: <DetailGoal goal={goalData} />, isOpen: true });
+	};
 	return (
 		<aside className="h-fit min-w-[27.8rem] mr-[2.8rem] rounded-[1.6rem] w-[27.8rem] p-[2.4rem] border-[0.1rem] border-borderGray  bg-white space-y-[2rem]">
 			<div className="space-y-[0.4rem]">
@@ -65,7 +69,7 @@ function Aside() {
 								variant="solid"
 								bgColor="bg-primaryOrange-200"
 								textColor="text-white"
-								onClick={() => {}}
+								onClick={() => openModalHandler(goal)}
 							>
 								<div className="flex justify-between w-full h-full p-[1.6rem] truncate text-[1.6rem] leading-[1.92rem]">
 									<span className="truncate">{goal.title}</span>
