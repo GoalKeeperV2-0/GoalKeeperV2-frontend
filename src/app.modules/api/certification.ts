@@ -15,3 +15,9 @@ export const postCert = async (body: FormData) => {
 
 	return res;
 };
+
+export const getCertAll = async (page: number) => {
+	const res = await client.get(`certifications?page=${page}`);
+
+	return res;
+};

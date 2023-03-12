@@ -1,4 +1,3 @@
-import { AgeType, SexType } from 'app.features/Auth/components/signUp/OptionalInputArea';
 import client from './client';
 
 export type CategoryType = 'EXERCISE' | 'STUDY' | 'HOBBY' | 'HABIT' | 'ETC';
