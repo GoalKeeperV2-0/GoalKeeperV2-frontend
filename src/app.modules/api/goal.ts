@@ -39,3 +39,10 @@ export const getGoalAll = async (page: number) => {
 
 	return res;
 };
+
+export const getGoalByCategory = async (page: number, category: CategoryType) => {
+	console.log(category);
+	const res = await client.get(`goal/${category}?page=${page}`);
+
+	return res;
+};
