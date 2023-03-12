@@ -121,7 +121,7 @@ function Aside() {
 						<li className="flex justify-between items-center">
 							<div className="flex items-center text-primaryOrange-200">사용 가능</div>
 							<div className="flex items-center space-x-[0.6rem]">
-								<span>{userPoints?.usablePoint}</span>
+								<span>{userPoints?.usablePoint.toLocaleString()}</span>
 								<BallIcon className="w-[1.6rem] h-[1.6rem]" />
 							</div>
 						</li>
@@ -129,7 +129,7 @@ function Aside() {
 							<li className="flex justify-between items-center pc:text-body1-pc" key={index}>
 								<div>{value}</div>
 								<div className="flex items-center space-x-[0.6rem]">
-									<span>{userPoints?.categoryPoints?.[key]}</span>
+									<span>{userPoints?.categoryPoints?.[key].toLocaleString()}</span>
 									<BallIcon className="w-[1.6rem] h-[1.6rem]" />
 								</div>
 							</li>
