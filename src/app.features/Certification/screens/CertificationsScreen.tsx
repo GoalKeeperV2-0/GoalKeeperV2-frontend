@@ -1,17 +1,19 @@
 import CertBox from 'app.components/Box/CertBox';
 import FilterButton from 'app.components/FilterButton';
-import { MY_CERTS } from 'app.features/Certification/mockData';
 import { CategoryType, GoalDataType, MappedCategory } from 'app.features/GoalManage/types';
 import React, { useState } from 'react';
+import { CertDataType } from '../types';
 
 const mappedCertFilter = {
 	ALL: '전체',
 	...MappedCategory,
 };
-function CertificationsScreen() {
-	type FilterType = CategoryType | 'ALL';
-	const [filter, setFilter] = useState<FilterType>('ALL');
-
+interface Props {
+	certs: CertDataType[];
+	onCertFilterChange: (filter: CategoryType | null) => void;
+	certFilter: CategoryType | null;
+}
+function CertificationsScreen({ certs, onCertFilterChange, certFilter }: Props) {
 	return (
 		<div className="space-y-[3rem]">
 			<h3>목표인증</h3>
@@ -20,10 +22,16 @@ function CertificationsScreen() {
 				{Object.entries(mappedCertFilter).map(([key, value]) => (
 					<li key={key}>
 						<FilterButton
-							isPressed={filter === key}
-							name="goalFilter"
+							isPressed={(certFilter === null && key === 'ALL') || certFilter === key}
+							name="certFilter"
 							value={key}
-							onClick={() => setFilter(key as FilterType)}
+							onClick={() => {
+								if (key === 'ALL') {
+									onCertFilterChange(null);
+									return;
+								}
+								onCertFilterChange(key as CategoryType);
+							}}
 						>
 							{value}
 						</FilterButton>
@@ -31,7 +39,7 @@ function CertificationsScreen() {
 				))}
 			</ul>
 			<ul className="grid grid-cols-3 gap-[3rem]">
-				{MY_CERTS.map((cert, index) => (
+				{certs?.map((cert, index) => (
 					<li key={index}>
 						<CertBox certData={cert} />
 					</li>

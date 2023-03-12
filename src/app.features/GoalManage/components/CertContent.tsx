@@ -7,15 +7,15 @@ interface Props {
 	todayString: string;
 	focusedCert: CertType | null;
 	certDate: string;
-	onCertContentChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-	certContent: string;
+	onCertContentChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+	certContent?: string;
 }
 function CertContent({ todayString, focusedCert, certDate, certContent, onCertContentChange }: Props) {
 	const getDday = () => {
 		return getDayDiff(todayString, certDate);
 	};
 	const isJustRegister = getDday() > 0;
-	console.log(Boolean(certContent), 'certContent');
+	console.log(focusedCert, 'certContent');
 	return (
 		<div className="flex flex-col space-y-[1.2rem]">
 			<Label required htmlFor="certContent" content="인증 내용" className="text-[#828282]" />

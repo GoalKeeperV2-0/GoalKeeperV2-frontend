@@ -1,4 +1,5 @@
 import client from './client';
+import { CategoryType } from './goal';
 
 export interface PostCert {
 	goalType: 'oneTime' | 'manyTime';
@@ -18,6 +19,12 @@ export const postCert = async (body: FormData) => {
 
 export const getCertAll = async (page: number) => {
 	const res = await client.get(`certifications?page=${page}`);
+
+	return res;
+};
+
+export const getCertByCategory = async (page: number, category: CategoryType) => {
+	const res = await client.get(`certifications/${category}?page=${page}`);
 
 	return res;
 };

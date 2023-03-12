@@ -84,7 +84,7 @@ function GoalBox({ goalData }: Props) {
 
 		switch (goalState) {
 			case 'WAITING_CERT_COMPLETE':
-				res = (certifications ?? [])?.[(certifications ?? []).length - 1]?.picture;
+				res = `https://api.goalkeeper.co.kr${(certifications ?? [])?.[(certifications ?? []).length - 1]?.picture}`;
 
 				break;
 			case 'SUCCESS':
@@ -136,7 +136,7 @@ function GoalBox({ goalData }: Props) {
 			)}
 			<BoxImage bgUrl={getBgUrl()} />
 			{/*하단에만 border 부여, 상부에도 부여하면 이미지가 꽉 안차보임. */}
-			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-[0.1rem] rounded-b-[1.6rem] border-borderGray">
+			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-t-[0.1rem]  border-borderGray">
 				<div className="flex items-center justify-between ">
 					<Button variant="solid" size="xs" bgColor={getBgColor()} textColor={getTextColor()} className="w-[7.6rem] ">
 						{mappedGoalState[goalState as GoalStateType]}

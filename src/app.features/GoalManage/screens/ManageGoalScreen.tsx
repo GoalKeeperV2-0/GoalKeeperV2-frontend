@@ -6,7 +6,7 @@ import { CategoryType, GoalDataType, MappedCategory } from '../types';
 
 interface Props {
 	myGoals: GoalDataType[];
-	onGoalFilterChange: (filter: CategoryType) => void;
+	onGoalFilterChange: (filter: CategoryType | null) => void;
 	goalFilter: CategoryType | null;
 }
 function ManageGoalScreen({ myGoals, onGoalFilterChange, goalFilter }: Props) {
@@ -20,10 +20,16 @@ function ManageGoalScreen({ myGoals, onGoalFilterChange, goalFilter }: Props) {
 				{Object.entries({ ALL: '전체', ...MappedCategory })?.map(([key, value]) => (
 					<li key={key}>
 						<FilterButton
-							isPressed={goalFilter === key}
+							isPressed={(goalFilter === null && key === 'ALL') || goalFilter === key}
 							name="goalFilter"
 							value={key}
-							onClick={() => onGoalFilterChange(key as CategoryType)}
+							onClick={() => {
+								if (key === 'ALL') {
+									onGoalFilterChange(null);
+									return;
+								}
+								onGoalFilterChange(key as CategoryType);
+							}}
 						>
 							{value}
 						</FilterButton>
