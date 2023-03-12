@@ -14,6 +14,7 @@ import React from 'react';
 import { ReactComponent as BallIcon } from 'app.modules/assets/icons/ball/blackBall.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { getUserProfile } from 'app.modules/api/user';
 import OverviewTemplate from './OverviewTemplate';
 
 import SideBarButton from './SideBarButton';
@@ -21,6 +22,16 @@ import SideBarButton from './SideBarButton';
 function Aside() {
 	const [modal, setModal] = useRecoilState(modalState);
 	const { data: userStatisticsData } = useQuery(['user', 'statistics'], getUserStatistics, {
+		select: (res) => res.data.data,
+		onSuccess: (res) => {
+			console.log(res);
+		},
+		onError: (error) => {
+			console.log(error);
+		},
+	});
+
+	const { data: user } = useQuery(['user'], getUserProfile, {
 		select: (res) => res.data.data,
 		onSuccess: (res) => {
 			console.log(res);
@@ -52,8 +63,8 @@ function Aside() {
 	return (
 		<aside className="h-fit min-w-[27.8rem] mr-[2.8rem] rounded-[1.6rem] w-[27.8rem] p-[2.4rem] border-[0.1rem] border-borderGray  bg-white space-y-[2rem]">
 			<div className="space-y-[0.4rem]">
-				<div className="pc:text-body6-pc ">닉네임</div>
-				<div className="pc:text-body2-pc text-primaryOrange-200 ">goalkeeper@gmail.com</div>
+				<div className="pc:text-body6-pc ">{user?.name}</div>
+				<div className="pc:text-body2-pc text-primaryOrange-200 ">{user?.email}</div>
 			</div>
 			<div className="space-y-[3rem]">
 				<OverviewTemplate title="">
