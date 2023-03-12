@@ -89,9 +89,14 @@ function DetailGoal({ goal }: Props) {
 	};
 	return (
 		<div className="space-y-[3.2rem]">
-			<div className="flex justify-between">
-				<span className="pc:text-body7-pc">{goal.title}</span>
-				<div className="w-[46.4rem] h-[9.5rem] flex flex-col justify-between">
+			<div className="flex justify-between max-h-[9.5rem]">
+				<div className="max-w-[19rem] ">
+					<p className="pc:text-body7-pc  text-ellipsis max-h-full  overflow-hidden ">
+						{goal.title.slice(0, 26)}
+						{goal.title.length > 26 && '...'}
+					</p>
+				</div>
+				<div className="w-[46.4rem]  flex flex-col justify-between">
 					<p className="whitespace-pre-wrap h-[4.4rem] w-full truncate pc:text-body4-pc">{goal.content}</p>
 
 					<div className="flex justify-between items-center">
