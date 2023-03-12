@@ -1,4 +1,3 @@
-import { AgeType, SexType } from 'app.features/Auth/components/signUp/OptionalInputArea';
 import client from './client';
 
 export type CategoryType = 'EXERCISE' | 'STUDY' | 'HOBBY' | 'HABIT' | 'ETC';
@@ -30,6 +29,19 @@ export const postManytimeGoal = async (body: PostManyTimeGoal) => {
 	const res = await client.post('goal/manyTime', {
 		...body,
 	});
+
+	return res;
+};
+
+export const getGoalAll = async (page: number) => {
+	const res = await client.get(`goal?page=${page}`);
+
+	return res;
+};
+
+export const getGoalByCategory = async (page: number, category: CategoryType) => {
+	console.log(category);
+	const res = await client.get(`goal/${category}?page=${page}`);
 
 	return res;
 };

@@ -3,8 +3,7 @@ import Button from 'app.components/App.base/Button';
 import CertContent from 'app.features/GoalManage/components/CertContent';
 import CertDateList from 'app.features/GoalManage/components/CertDateList';
 import CertImage from 'app.features/GoalManage/components/CertImage';
-import { CategoryType, GoalDataType, GoalStateType, MappedCategory } from 'app.features/GoalManage/types';
-import { getDdayMessage } from 'app.features/GoalManage/utils/getDdayMessage';
+import { CategoryType, GoalDataType, MappedCategory } from 'app.features/GoalManage/types';
 import { formatDate } from 'app.modules/utils/formatDate';
 import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
 import React, { useState } from 'react';
@@ -44,7 +43,7 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 	const selectCertHandler = (index: number) => {
 		setSelectedCertIdx(index);
 	};
-	const getCert = () => {
+	const getFocusedCert = () => {
 		const cert = goal.certifications?.filter(
 			(item) => item.date === (goal.certDates ?? [goal.endDate])[selectedCertIdx]
 		);
@@ -96,7 +95,7 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 					<CertDateList {...goal} todayString={`${todayString}`} onSelectCert={selectCertHandler} />
 					<CertImage
 						todayString={todayString}
-						certification={getCert()}
+						certification={getFocusedCert()}
 						certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
 						onCertImageChange={certImageHandler}
 						certImagePreview={certImagePreview as string}
@@ -105,7 +104,7 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 				</div>
 				<CertContent
 					todayString={todayString}
-					certification={getCert()}
+					focusedCert={getFocusedCert()}
 					certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
 					onCertContentChange={certContentHanlder}
 					certContent={certContent}

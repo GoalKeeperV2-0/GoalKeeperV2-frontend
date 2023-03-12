@@ -29,7 +29,7 @@ function GoalBox({ goalData }: Props) {
 	const todayString = formatDate(year, month, date);
 	const [modal, setModal] = useRecoilState(modalState);
 	const openModalHandler = () => {
-		setModal({ render: <DetailGoal id={id} />, isOpen: true });
+		setModal({ render: <DetailGoal goal={goalData} />, isOpen: true });
 	};
 	// TODO: 함수 네이밍 조정
 	const isCertDate = () => {

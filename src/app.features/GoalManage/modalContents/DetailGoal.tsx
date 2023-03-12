@@ -3,22 +3,19 @@ import Badge from 'app.components/App.base/Badge';
 import Button from 'app.components/App.base/Button';
 import { postCert } from 'app.modules/api/certification';
 import { ReactComponent as BlackBallIcon } from 'app.modules/assets/icons/ball/blackBall.svg';
-import { formatDate } from 'app.modules/utils/formatDate';
-import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
 import { getTodayString } from 'app.modules/utils/getTodayString';
 import React, { useState } from 'react';
 import CertContent from '../components/CertContent';
 import CertDateList from '../components/CertDateList';
 import CertImage from '../components/CertImage';
-import { MY_GOALS } from '../mockData';
 import { CategoryType, GoalDataType, GoalStateType, MappedCategory, MappedReward, RewardType } from '../types';
 import { getDdayMessage } from '../utils/getDdayMessage';
 
 interface Props {
-	id: number;
+	goal: GoalDataType;
 }
 
-function DetailGoal({ id }: Props) {
+function DetailGoal({ goal }: Props) {
 	console.log('detail-goal');
 	const { mutate: postCertMutate, isLoading } = useMutation(postCert, {
 		onSuccess: (res) => {
@@ -29,8 +26,6 @@ function DetailGoal({ id }: Props) {
 		},
 		onError: (error) => alert('오류 발생.'),
 	});
-
-	const goal: GoalDataType = MY_GOALS.filter((item) => item.id === id)[0] as unknown as GoalDataType;
 
 	const [certContent, setCertContent] = useState<string>('');
 	const [certImage, setCertImage] = useState<File>();
@@ -47,7 +42,7 @@ function DetailGoal({ id }: Props) {
 	const selectCertHandler = (index: number) => {
 		setSelectedCertIdx(index);
 	};
-	const getCert = () => {
+	const getFocusedCert = () => {
 		const cert = goal.certifications?.filter(
 			(item) => item.date === (goal.certDates ?? [goal.endDate])[selectedCertIdx]
 		);
@@ -132,7 +127,7 @@ function DetailGoal({ id }: Props) {
 					<CertDateList {...goal} todayString={`${todayString}`} onSelectCert={selectCertHandler} />
 					<CertImage
 						todayString={todayString}
-						certification={getCert()}
+						certification={getFocusedCert()}
 						certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
 						onCertImageChange={certImageHandler}
 						certImagePreview={certImagePreview as string}
@@ -140,7 +135,7 @@ function DetailGoal({ id }: Props) {
 				</div>
 				<CertContent
 					todayString={todayString}
-					certification={getCert()}
+					focusedCert={getFocusedCert()}
 					certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
 					onCertContentChange={certContentHanlder}
 					certContent={certContent}
