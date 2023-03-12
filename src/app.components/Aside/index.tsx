@@ -1,17 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 import Button from 'app.components/App.base/Button';
 import DetailGoal from 'app.features/GoalManage/modalContents/DetailGoal';
-import { GoalDataType } from 'app.features/GoalManage/types';
+import { GoalDataType, MappedCategory } from 'app.features/GoalManage/types';
 import UploadOnetimeGoal from 'app.features/GoalUpload/modalContents/UploadGoal';
-import { getUserStatistics } from 'app.modules/api/overview';
+import { getUserPoints, getUserStatistics } from 'app.modules/api/overview';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import { useMyGoals } from 'app.modules/hooks/useMyGoals';
 import { modalState } from 'app.modules/store/modal';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import { getTodayString } from 'app.modules/utils/getTodayString';
-import { SERVFAIL } from 'dns';
-import React, { useEffect } from 'react';
 
+import React from 'react';
+import { ReactComponent as BallIcon } from 'app.modules/assets/icons/ball/blackBall.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import OverviewTemplate from './OverviewTemplate';
@@ -29,6 +29,15 @@ function Aside() {
 			console.log(error);
 		},
 	});
+	const { data: userPoints } = useQuery(['user', 'statistics', 'point'], getUserPoints, {
+		select: (res) => res.data.data,
+		onSuccess: (res) => {
+			console.log(res);
+		},
+		onError: (error) => {
+			console.log(error);
+		},
+	});
 	const { data: goals } = useMyGoals(0);
 	const UserStatisticsMap = {
 		totalGoalCount: '등록한 목표',
@@ -36,6 +45,7 @@ function Aside() {
 		totalSuccessGoalCount: '성공한 목표',
 		totalFailGoalCount: '실패한 목표',
 	};
+
 	const openModalHandler = (goalData: GoalDataType) => {
 		setModal({ render: <DetailGoal goal={goalData} />, isOpen: true });
 	};
@@ -95,7 +105,24 @@ function Aside() {
 				</OverviewTemplate>
 
 				<OverviewTemplate title="포인트">
-					<ul className="p-[1.6rem] rounded-[0.8rem] bg-buttonGray-100 pc:text-body1-pc space-y-[1.6rem]" />
+					<ul className="p-[1.6rem] rounded-[0.8rem] bg-buttonGray-100 pc:text-body1-pc space-y-[1.6rem]">
+						<li className="flex justify-between items-center">
+							<div className="flex items-center text-primaryOrange-200">사용 가능</div>
+							<div className="flex items-center space-x-[0.6rem]">
+								<span>{userPoints?.usablePoint}</span>
+								<BallIcon className="w-[1.6rem] h-[1.6rem]" />
+							</div>
+						</li>
+						{Object.entries(MappedCategory).map(([key, value], index) => (
+							<li className="flex justify-between items-center pc:text-body1-pc" key={index}>
+								<div>{value}</div>
+								<div className="flex items-center space-x-[0.6rem]">
+									<span>{userPoints?.categoryPoints?.[key]}</span>
+									<BallIcon className="w-[1.6rem] h-[1.6rem]" />
+								</div>
+							</li>
+						))}
+					</ul>
 				</OverviewTemplate>
 			</div>
 		</aside>

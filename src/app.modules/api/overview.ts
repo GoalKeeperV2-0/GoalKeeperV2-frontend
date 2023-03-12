@@ -5,3 +5,9 @@ export const getUserStatistics = async () => {
 
 	return res;
 };
+
+export const getUserPoints = async () => {
+	const res = await client.get(`statistics/user/points`);
+
+	return res;
+};
