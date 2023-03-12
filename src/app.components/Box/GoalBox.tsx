@@ -10,6 +10,8 @@ import { GoalDataType, GoalStateType, MappedState } from 'app.features/GoalManag
 import { getDdayMessage } from 'app.features/GoalManage/utils/getDdayMessage';
 import BoxImage from './common/BoxImage';
 import BoxLayout from './common/BoxLayout';
+import BottomLayout from './common/BottomLayout';
+import BottomText from './common/BottomText';
 
 interface Props {
 	goalData: GoalDataType;
@@ -136,7 +138,7 @@ function GoalBox({ goalData }: Props) {
 			)}
 			<BoxImage bgUrl={getBgUrl()} />
 			{/*하단에만 border 부여, 상부에도 부여하면 이미지가 꽉 안차보임. */}
-			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-t-[0.1rem]  border-borderGray">
+			<BottomLayout>
 				<div className="flex items-center justify-between ">
 					<Button variant="solid" size="xs" bgColor={getBgColor()} textColor={getTextColor()} className="w-[7.6rem] ">
 						{mappedGoalState[goalState as GoalStateType]}
@@ -152,11 +154,8 @@ function GoalBox({ goalData }: Props) {
 						})}
 					</div>
 				</div>
-				<div className="text-left flex flex-col space-y-[0.3rem]">
-					<span className="pc:text-body1-pc text-primaryOrange-200">{isManyTimeGoal() ? '지속' : '일반'}</span>
-					<span className="pc:text-body6-pc ">{title}</span>
-				</div>
-			</div>
+				<BottomText goalTypeText={isManyTimeGoal() ? '지속' : '일반'} title={title} />
+			</BottomLayout>
 		</BoxLayout>
 	);
 }

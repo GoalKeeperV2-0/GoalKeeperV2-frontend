@@ -14,7 +14,7 @@ function InitGoalBox() {
 	return (
 		<BoxLayout onOpenModal={openModalHandler} mode="init">
 			<BoxImage bgUrl="/images/goalBox/init.svg" />
-			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-[0.1rem] rounded-b-[1.6rem] border-borderGray">
+			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-t-[0.1rem]  border-borderGray">
 				<div className="flex items-center justify-between ">
 					<Button variant="solid" size="xs" bgColor="bg-buttonGray-200" className="w-[7.6rem] ">
 						목표등록

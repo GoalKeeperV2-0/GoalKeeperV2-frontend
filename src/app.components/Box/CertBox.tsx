@@ -10,6 +10,8 @@ import { CertDataType } from 'app.features/Certification/types';
 import DetailCert from 'app.features/Certification/modalContents/DetailCert';
 import BoxImage from './common/BoxImage';
 import BoxLayout from './common/BoxLayout';
+import BottomLayout from './common/BottomLayout';
+import BottomText from './common/BottomText';
 
 interface Props {
 	certData: CertDataType;
@@ -62,7 +64,7 @@ function CertBox({ certData }: Props) {
 		<BoxLayout onOpenModal={openModalHandler}>
 			<BoxImage bgUrl={`https://api.goalkeeper.co.kr${picture}`} />
 			{/*하단에만 border 부여, 상부에도 부여하면 이미지가 꽉 안차보임. */}
-			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-t-[0.1rem]  border-borderGray ">
+			<BottomLayout>
 				<div className="flex items-center justify-between ">
 					<Button
 						variant="solid"
@@ -79,11 +81,8 @@ function CertBox({ certData }: Props) {
 						{dday}
 					</div>
 				</div>
-				<div className="text-left flex flex-col space-y-[0.3rem]">
-					<span className="pc:text-body1-pc text-primaryOrange-200">{isManyTimeGoal() ? '지속' : '일반'}</span>
-					<span className="pc:text-body6-pc ">{content}</span>
-				</div>
-			</div>
+				<BottomText goalTypeText={isManyTimeGoal() ? '지속' : '일반'} title={content} />
+			</BottomLayout>
 		</BoxLayout>
 	);
 }
