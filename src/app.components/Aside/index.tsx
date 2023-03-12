@@ -3,10 +3,12 @@ import Button from 'app.components/App.base/Button';
 import { GoalDataType } from 'app.features/GoalManage/types';
 import UploadOnetimeGoal from 'app.features/GoalUpload/modalContents/UploadGoal';
 import { getUserStatistics } from 'app.modules/api/overview';
+import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import { useMyGoals } from 'app.modules/hooks/useMyGoals';
 import { modalState } from 'app.modules/store/modal';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import { getTodayString } from 'app.modules/utils/getTodayString';
+import { SERVFAIL } from 'dns';
 import React, { useEffect } from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
@@ -51,30 +53,31 @@ function Aside() {
 					</ul>
 				</OverviewTemplate>
 				<OverviewTemplate title="최근 목표">
-					<span className="absolute top-0 right-0 text-[1.6rem] mb-[0.8rem] font-semibold leading-[1.92rem] text-primaryBlack-200">
-						더보기
-					</span>
+					<Link to={SERVICE_URL.manageGoal}>
+						<span className="absolute top-0 right-0 text-[1.6rem] mb-[0.8rem] font-semibold leading-[1.92rem] text-primaryBlack-200">
+							더보기
+						</span>
+					</Link>
 					<ul className="space-y-[0.7rem]">
-						{goals &&
-							goals?.content?.slice(0, 2)?.map((goal: GoalDataType) => (
-								<Button
-									size="sm"
-									variant="solid"
-									bgColor="bg-primaryOrange-200"
-									textColor="text-white"
-									onClick={() => {}}
-								>
-									<div className="flex justify-between w-full h-full p-[1.6rem] truncate text-[1.6rem] leading-[1.92rem]">
-										<span className="truncate">{goal.title}</span>
-										<span>
-											🗓{' '}
-											{getDayDiff(getTodayString(), goal.endDate) === 0
-												? '지금'
-												: `D-${getDayDiff(getTodayString(), goal.endDate)}`}
-										</span>
-									</div>
-								</Button>
-							))}
+						{goals?.content.slice(0, 2)?.map((goal: GoalDataType) => (
+							<Button
+								size="sm"
+								variant="solid"
+								bgColor="bg-primaryOrange-200"
+								textColor="text-white"
+								onClick={() => {}}
+							>
+								<div className="flex justify-between w-full h-full p-[1.6rem] truncate text-[1.6rem] leading-[1.92rem]">
+									<span className="truncate">{goal.title}</span>
+									<span>
+										🗓{' '}
+										{getDayDiff(getTodayString(), goal.endDate) === 0
+											? '지금'
+											: `D-${getDayDiff(getTodayString(), goal.endDate)}`}
+									</span>
+								</div>
+							</Button>
+						))}
 
 						<Button
 							size="sm"

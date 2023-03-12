@@ -27,6 +27,7 @@ function ManageGoalPage() {
 	const goalFilterHandler = (filter: CategoryType | null) => {
 		setCategory(filter);
 	};
+	// TODO: 목표랑 인증 둘다 최신순으로 정렬해서 받기
 	return (
 		<BaseLayout>
 			<ManageGoalScreen
