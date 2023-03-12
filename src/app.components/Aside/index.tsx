@@ -86,6 +86,7 @@ function Aside() {
 					<ul className="space-y-[0.7rem]">
 						{goals?.content.slice(0, 2)?.map((goal: GoalDataType) => (
 							<Button
+								key={goal.id}
 								size="sm"
 								variant="solid"
 								bgColor="bg-primaryOrange-200"
