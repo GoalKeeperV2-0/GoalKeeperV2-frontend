@@ -17,7 +17,7 @@ interface Props {
 }
 
 function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
-	console.log('detail-cert');
+	console.log('detail-cert', certData, goal);
 	/*const { mutate: postCertMutate, isLoading } = useMutation(postCert, {
 		onSuccess: (res) => {
 			console.log(res);
@@ -29,31 +29,15 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 	});*/
 
 	const { year, month, date } = getKoreaToday();
-	const [certContent, setCertContent] = useState<string>('');
 	const [certImage, setCertImage] = useState<File>();
 	const [certImagePreview, setCertImagePreview] = useState<string | null>('');
 	const todayString = formatDate(year, month, date);
 
-	const [selectedCertIdx, setSelectedCertIdx] = useState<number>(0);
 	// TODO:recoil로 이 상태들을 관리할까?
 	const isManyTimeGoal = () => {
 		return goal.certDates !== undefined;
 	};
 
-	const selectCertHandler = (index: number) => {
-		setSelectedCertIdx(index);
-	};
-	const getFocusedCert = () => {
-		const cert = goal.certifications?.filter(
-			(item) => item.date === (goal.certDates ?? [goal.endDate])[selectedCertIdx]
-		);
-
-		if (cert?.length) {
-			return cert[0];
-		}
-
-		return null;
-	};
 	const certImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const img = e.target?.files?.[0];
 		if (!img) return;
@@ -66,9 +50,7 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 			setCertImagePreview(reader.result as string);
 		};
 	};
-	const certContentHanlder = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setCertContent(e.target.value);
-	};
+
 	const judgeSubmitHandler = () => {
 		console.log('제출');
 	};
@@ -92,23 +74,17 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 
 			<form className="space-y-[3.2rem]" onSubmit={judgeSubmitHandler}>
 				<div className="flex justify-between items-start">
-					<CertDateList {...goal} todayString={`${todayString}`} onSelectCert={selectCertHandler} />
+					<CertDateList {...goal} todayString={`${todayString}`} clickDisabled />
 					<CertImage
 						todayString={todayString}
-						certification={getFocusedCert()}
-						certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
+						certification={certData}
+						certDate={certData.date}
 						onCertImageChange={certImageHandler}
 						certImagePreview={certImagePreview as string}
 						isCertModal
 					/>
 				</div>
-				<CertContent
-					todayString={todayString}
-					focusedCert={getFocusedCert()}
-					certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
-					onCertContentChange={certContentHanlder}
-					certContent={certContent}
-				/>
+				<CertContent todayString={todayString} focusedCert={certData} certDate={certData.date} />
 				<div className="flex w-full space-x-[1.6rem]">
 					<Button onClick={() => onCloseModal()} type="button" variant="solid" size="lg" bgColor="bg-buttonGray-200">
 						닫기

@@ -43,7 +43,7 @@ function CertBox({ certData }: Props) {
 			isOpen: true,
 		});
 	};
-
+	console.log(certData);
 	const isManyTimeGoal = () => {
 		return Boolean(certData.manyTimeGoal !== undefined);
 	};
@@ -60,9 +60,9 @@ function CertBox({ certData }: Props) {
 
 	return (
 		<BoxLayout onOpenModal={openModalHandler}>
-			<BoxImage bgUrl={picture} />
+			<BoxImage bgUrl={`https://api.goalkeeper.co.kr${picture}`} />
 			{/*하단에만 border 부여, 상부에도 부여하면 이미지가 꽉 안차보임. */}
-			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-[0.1rem] rounded-b-[1.6rem] border-borderGray">
+			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between ">
 				<div className="flex items-center justify-between ">
 					<Button
 						variant="solid"
