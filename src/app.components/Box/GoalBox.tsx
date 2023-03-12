@@ -131,7 +131,7 @@ function GoalBox({ goalData }: Props) {
 	return (
 		<BoxLayout onOpenModal={openModalHandler}>
 			{!isJustRegister() && (
-				<div className=" w-[27.7rem]   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[1.5rem] text-white pc:text-body1-pc text-start space-x-[0.8rem]">
+				<div className="inset-x-0   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[1.5rem] text-white pc:text-body1-pc text-start space-x-[0.8rem]">
 					{goalState !== 'ONGOING' && <img alt="" src={`/images/goalBox/icon/${goalState}.svg`} />}
 					{getBoxMessage()}
 				</div>
@@ -140,6 +140,7 @@ function GoalBox({ goalData }: Props) {
 			{/*하단에만 border 부여, 상부에도 부여하면 이미지가 꽉 안차보임. */}
 			<BottomLayout>
 				<div className="flex items-center justify-between ">
+					{/* TODO: 레이아웃을 div로 바꾸든지 해야할듯. 문제의 버튼 */}
 					<Button variant="solid" size="xs" bgColor={getBgColor()} textColor={getTextColor()} className="w-[7.6rem] ">
 						{mappedGoalState[goalState as GoalStateType]}
 					</Button>

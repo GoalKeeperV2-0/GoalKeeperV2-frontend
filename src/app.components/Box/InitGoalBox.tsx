@@ -3,6 +3,7 @@ import UploadGoal from 'app.features/GoalUpload/modalContents/UploadGoal';
 import { modalState } from 'app.modules/store/modal';
 import React from 'react';
 import { useRecoilState } from 'recoil';
+import BottomLayout from './common/BottomLayout';
 import BoxImage from './common/BoxImage';
 import BoxLayout from './common/BoxLayout';
 
@@ -14,7 +15,7 @@ function InitGoalBox() {
 	return (
 		<BoxLayout onOpenModal={openModalHandler} mode="init">
 			<BoxImage bgUrl="/images/goalBox/init.svg" />
-			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-t-[0.1rem]  border-borderGray">
+			<BottomLayout>
 				<div className="flex items-center justify-between ">
 					<Button variant="solid" size="xs" bgColor="bg-buttonGray-200" className="w-[7.6rem] ">
 						목표등록
@@ -25,7 +26,7 @@ function InitGoalBox() {
 					<span className="pc:text-body1-pc text-primaryBlack-200">일반,지속</span>
 					<span className="pc:text-body6-pc ">목표인증을 시작하세요!</span>
 				</div>
-			</div>
+			</BottomLayout>
 		</BoxLayout>
 	);
 }

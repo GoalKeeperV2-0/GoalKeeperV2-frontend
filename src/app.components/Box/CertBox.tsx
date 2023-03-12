@@ -62,7 +62,11 @@ function CertBox({ certData }: Props) {
 
 	return (
 		<BoxLayout onOpenModal={openModalHandler}>
-			<BoxImage bgUrl={`https://api.goalkeeper.co.kr${picture}`} />
+			<div
+				className="h-1/2 bg-buttonGray-200 pc:rounded-t-[1.5rem] bg-cover border-t-[0.1rem] border-x-[0.1rem]   border-borderGray"
+				style={{ backgroundImage: `url(https://api.goalkeeper.co.kr${picture})` }}
+			/>
+
 			{/*하단에만 border 부여, 상부에도 부여하면 이미지가 꽉 안차보임. */}
 			<BottomLayout>
 				<div className="flex items-center justify-between ">

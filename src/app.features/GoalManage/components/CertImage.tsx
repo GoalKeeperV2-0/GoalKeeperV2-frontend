@@ -81,7 +81,7 @@ function CertImage({ todayString, certification, certDate, onCertImageChange, ce
 				) : (
 					<div
 						className="w-[46.4rem] h-[24.5rem]  rounded-[0.8rem] bg-cover relative"
-						style={{ backgroundImage: `url(${certification?.picture})` }}
+						style={{ backgroundImage: `url(https://api.goalkeeper.co.kr${certification?.picture})` }}
 					>
 						{!isCertModal && (
 							<div className=" w-full   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[0.8rem] text-white pc:text-body1-pc text-start  space-x-[0.8rem]">
