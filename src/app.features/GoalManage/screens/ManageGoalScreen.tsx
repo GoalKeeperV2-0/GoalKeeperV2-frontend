@@ -2,10 +2,12 @@ import GoalBox from 'app.components/Box/GoalBox';
 import InitGoalBox from 'app.components/Box/InitGoalBox';
 import FilterButton from 'app.components/FilterButton';
 import React, { useState } from 'react';
-import { MY_GOALS } from '../mockData';
 import { GoalDataType } from '../types';
 
-function ManageGoalScreen() {
+interface Props {
+	myGoals: GoalDataType[];
+}
+function ManageGoalScreen({ myGoals }: Props) {
 	const [filter, setFilter] = useState('전체');
 	// TODO: 중복 정의 없애기
 	const filterMap = new Map([
@@ -37,7 +39,7 @@ function ManageGoalScreen() {
 			</ul>
 			<ul className="grid grid-cols-3 gap-[3rem]">
 				<InitGoalBox />
-				{MY_GOALS.map((goal, index) => (
+				{myGoals.map((goal, index) => (
 					<li key={index}>
 						<GoalBox goalData={goal as unknown as GoalDataType} />
 					</li>

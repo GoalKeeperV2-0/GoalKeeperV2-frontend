@@ -8,7 +8,16 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			retry: false,
+			refetchOnMount: false,
+			refetchOnReconnect: false,
+			refetchOnWindowFocus: false,
+		},
+	},
+});
 root.render(
 	<QueryClientProvider client={queryClient}>
 		<RecoilRoot>

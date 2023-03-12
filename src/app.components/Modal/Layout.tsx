@@ -17,7 +17,7 @@ function ModalLayout() {
 		// eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
 		<div
 			onClick={() => setModal({ ...modal, isOpen: false })}
-			className="bg-primaryBlack-500 bg-opacity-20 absolute inset-0 w-[100%]  z-50 h-[100vh]  "
+			className="bg-primaryBlack-500 bg-opacity-20 fixed inset-0 z-50  "
 		>
 			{/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
 			<div

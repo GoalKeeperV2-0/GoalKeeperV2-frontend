@@ -44,7 +44,7 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 	const selectCertHandler = (index: number) => {
 		setSelectedCertIdx(index);
 	};
-	const getCert = () => {
+	const getFocusedCert = () => {
 		const cert = goal.certifications?.filter(
 			(item) => item.date === (goal.certDates ?? [goal.endDate])[selectedCertIdx]
 		);
@@ -96,7 +96,7 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 					<CertDateList {...goal} todayString={`${todayString}`} onSelectCert={selectCertHandler} />
 					<CertImage
 						todayString={todayString}
-						certification={getCert()}
+						certification={getFocusedCert()}
 						certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
 						onCertImageChange={certImageHandler}
 						certImagePreview={certImagePreview as string}
@@ -105,7 +105,7 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 				</div>
 				<CertContent
 					todayString={todayString}
-					certification={getCert()}
+					focusedCert={getFocusedCert()}
 					certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
 					onCertContentChange={certContentHanlder}
 					certContent={certContent}

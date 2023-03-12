@@ -33,3 +33,9 @@ export const postManytimeGoal = async (body: PostManyTimeGoal) => {
 
 	return res;
 };
+
+export const getGoalAll = async (page: number) => {
+	const res = await client.get(`goal?page=${page}`);
+
+	return res;
+};
