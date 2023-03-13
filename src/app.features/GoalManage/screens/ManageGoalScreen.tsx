@@ -8,8 +8,9 @@ interface Props {
 	myGoals: GoalDataType[];
 	onGoalFilterChange: (filter: CategoryType | null) => void;
 	goalFilter: CategoryType | null;
+	onPageChange: (page: number) => void;
 }
-function ManageGoalScreen({ myGoals, onGoalFilterChange, goalFilter }: Props) {
+function ManageGoalScreen({ myGoals, onGoalFilterChange, goalFilter, onPageChange }: Props) {
 	// TODO: 중복 정의 없애기
 
 	return (
@@ -44,6 +45,9 @@ function ManageGoalScreen({ myGoals, onGoalFilterChange, goalFilter }: Props) {
 					</li>
 				))}
 			</ul>
+			<div>
+				<button onClick={() => onPageChange(1)}>페이지 전환</button>
+			</div>
 		</div>
 	);
 }

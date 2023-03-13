@@ -5,6 +5,7 @@ import BoxContent from 'app.components/Box/common/BoxContent';
 import BoxTitle from 'app.components/Box/common/BoxTitle';
 import { postCert } from 'app.modules/api/certification';
 import { ReactComponent as BlackBallIcon } from 'app.modules/assets/icons/ball/blackBall.svg';
+import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import { getTodayString } from 'app.modules/utils/getTodayString';
 import React, { useState } from 'react';
 import CertContent from '../components/CertContent';
@@ -36,6 +37,7 @@ function DetailGoal({ goal }: Props) {
 	const todayString = getTodayString();
 
 	const [selectedCertIdx, setSelectedCertIdx] = useState<number>(0);
+	const certSubmitDisabled = !goal?.id || !certContent.trim() || !certImage;
 	// TODO:recoil로 이 상태들을 관리할까?
 	const isManyTimeGoal = () => {
 		return goal.certDates !== undefined;
@@ -74,7 +76,7 @@ function DetailGoal({ goal }: Props) {
 		e.preventDefault();
 		if (isLoading) return;
 		const goalType: 'oneTime' | 'manyTime' = isManyTimeGoal() ? 'manyTime' : 'oneTime';
-		if (!goal?.id || !certContent.trim() || !certImage) return;
+		if (certSubmitDisabled) return;
 		const formData = new FormData();
 		formData.append('goalType', goalType);
 		formData.append('content', certContent);
@@ -141,9 +143,25 @@ function DetailGoal({ goal }: Props) {
 					onCertContentChange={certContentHanlder}
 					certContent={certContent}
 				/>
-				<Button type="submit" variant="solid" size="lg" bgColor="bg-buttonGray-200">
-					닫기
-				</Button>
+				<div className="flex space-x-[1.6rem]">
+					<Button type="submit" variant="solid" size="lg" bgColor="bg-buttonGray-200">
+						닫기
+					</Button>
+					{getFocusedCert() === null && (goal.endDate === todayString || goal.certDates?.includes(todayString)) && (
+						<Button
+							onClick={() => null}
+							type="submit"
+							variant="outline"
+							size="lg"
+							disabled={certSubmitDisabled}
+							borderColor={certSubmitDisabled ? 'border-primaryBlack-300' : 'border-primaryOrange-200'}
+							textColor={certSubmitDisabled ? 'text-primaryBlack-300' : 'text-primaryOrange-200'}
+							className="min-w-[46.3rem]"
+						>
+							인증하기
+						</Button>
+					)}
+				</div>
 			</form>
 		</div>
 	);
