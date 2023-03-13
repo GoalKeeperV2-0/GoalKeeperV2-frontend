@@ -1,3 +1,4 @@
+import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import { getCookie, setCookie } from 'app.modules/cookie';
 import axios, { AxiosHeaders } from 'axios';
 
@@ -41,6 +42,7 @@ client.interceptors.response.use(
 				return await client(originalRequest);
 			} catch (refreshError) {
 				// TODO: 로그아웃
+				window.location.href = SERVICE_URL.login;
 				return Promise.reject(refreshError);
 			}
 		}
