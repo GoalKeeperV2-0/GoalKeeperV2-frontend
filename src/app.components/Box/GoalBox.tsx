@@ -8,8 +8,11 @@ import { useRecoilState } from 'recoil';
 import DetailGoal from 'app.features/GoalManage/modalContents/DetailGoal';
 import { GoalDataType, GoalStateType, MappedState } from 'app.features/GoalManage/types';
 import { getDdayMessage } from 'app.features/GoalManage/utils/getDdayMessage';
+import { getTodayString } from 'app.modules/utils/getTodayString';
 import BoxImage from './common/BoxImage';
 import BoxLayout from './common/BoxLayout';
+import BottomLayout from './common/BottomLayout';
+import BottomText from './common/BottomText';
 
 interface Props {
 	goalData: GoalDataType;
@@ -25,15 +28,15 @@ function GoalBox({ goalData }: Props) {
 		HOLD: '실패',
 	};
 	const { id, goalState, certDates, certifications, endDate, title } = goalData;
-	const { year, month, date } = getKoreaToday();
-	const todayString = formatDate(year, month, date);
+
+	const todayString = getTodayString();
 	const [modal, setModal] = useRecoilState(modalState);
 	const openModalHandler = () => {
 		setModal({ render: <DetailGoal goal={goalData} />, isOpen: true });
 	};
 	// TODO: 함수 네이밍 조정
 	const isCertDate = () => {
-		return endDate === todayString || certDates?.includes(formatDate(year, month, date));
+		return endDate === todayString || certDates?.includes(todayString);
 	};
 	const isManyTimeGoal = () => {
 		return certDates !== undefined;
@@ -61,7 +64,8 @@ function GoalBox({ goalData }: Props) {
 
 				break;
 			default:
-				if (isCertDate()) {
+				if (isCertDate() && !certifications?.filter((item) => item.date === todayString).length) {
+					// 오늘이 인증날인데, 오늘에 해당하는 인증이 올라오지 않은 경우
 					res = '목표인증을 해주세요!';
 				} else if (isManyTimeGoal()) {
 					if ((certifications ?? []).length > 0) {
@@ -129,15 +133,16 @@ function GoalBox({ goalData }: Props) {
 	return (
 		<BoxLayout onOpenModal={openModalHandler}>
 			{!isJustRegister() && (
-				<div className=" w-[27.7rem]   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[1.5rem] text-white pc:text-body1-pc text-start space-x-[0.8rem]">
+				<div className="inset-x-0   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[1.5rem] text-white pc:text-body1-pc text-start space-x-[0.8rem]">
 					{goalState !== 'ONGOING' && <img alt="" src={`/images/goalBox/icon/${goalState}.svg`} />}
 					{getBoxMessage()}
 				</div>
 			)}
 			<BoxImage bgUrl={getBgUrl()} />
 			{/*하단에만 border 부여, 상부에도 부여하면 이미지가 꽉 안차보임. */}
-			<div className="h-1/2 p-[1.6rem] flex flex-col justify-between border-t-[0.1rem]  border-borderGray">
+			<BottomLayout>
 				<div className="flex items-center justify-between ">
+					{/* TODO: 레이아웃을 div로 바꾸든지 해야할듯. 문제의 버튼 */}
 					<Button variant="solid" size="xs" bgColor={getBgColor()} textColor={getTextColor()} className="w-[7.6rem] ">
 						{mappedGoalState[goalState as GoalStateType]}
 					</Button>
@@ -152,11 +157,8 @@ function GoalBox({ goalData }: Props) {
 						})}
 					</div>
 				</div>
-				<div className="text-left flex flex-col space-y-[0.3rem]">
-					<span className="pc:text-body1-pc text-primaryOrange-200">{isManyTimeGoal() ? '지속' : '일반'}</span>
-					<span className="pc:text-body6-pc ">{title}</span>
-				</div>
-			</div>
+				<BottomText goalTypeText={isManyTimeGoal() ? '지속' : '일반'} title={title} />
+			</BottomLayout>
 		</BoxLayout>
 	);
 }

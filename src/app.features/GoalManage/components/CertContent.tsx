@@ -19,6 +19,7 @@ function CertContent({ todayString, focusedCert, certDate, certContent, onCertCo
 	return (
 		<div className="flex flex-col space-y-[1.2rem]">
 			<Label required htmlFor="certContent" content="인증 내용" className="text-[#828282]" />
+			{/* TODO: 입력 길어지는 경우 대응*/}
 			{!focusedCert?.content ? (
 				<textarea
 					id="certContent"
@@ -31,8 +32,11 @@ function CertContent({ todayString, focusedCert, certDate, certContent, onCertCo
 					className="resize-none w-full h-[9.4rem] outline-none  border-[0.1rem] rounded-[0.8rem] p-[2.4rem]"
 				/>
 			) : (
-				<div className="resize-none w-full h-[9.4rem] outline-none  border-[0.1rem] rounded-[0.8rem] p-[2.4rem] truncate">
-					{focusedCert?.content}
+				<div className="resize-none w-full h-[9.4rem] outline-none  border-[0.1rem] rounded-[0.8rem] p-[2.4rem] overflow-hidden  whitespace-normal">
+					<p>
+						{focusedCert?.content.substring(0, 86)}
+						{focusedCert?.content.length > 86 && '...'}
+					</p>
 				</div>
 			)}
 		</div>
