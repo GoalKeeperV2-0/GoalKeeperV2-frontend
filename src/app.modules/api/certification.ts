@@ -28,3 +28,16 @@ export const getCertByCategory = async (page: number, category: CategoryType) =>
 
 	return res;
 };
+
+// 검증
+
+interface PostVerificationBody {
+	certificationId: number;
+	state: boolean; // 검증 값
+}
+
+export const postVerification = async (body: PostVerificationBody) => {
+	const res = await client.post(`verification`, { ...body });
+
+	return res;
+};
