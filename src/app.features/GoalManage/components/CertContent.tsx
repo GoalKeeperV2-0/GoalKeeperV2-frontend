@@ -32,8 +32,11 @@ function CertContent({ todayString, focusedCert, certDate, certContent, onCertCo
 					className="resize-none w-full h-[9.4rem] outline-none  border-[0.1rem] rounded-[0.8rem] p-[2.4rem]"
 				/>
 			) : (
-				<div className="resize-none w-full h-[9.4rem] outline-none  border-[0.1rem] rounded-[0.8rem] p-[2.4rem] truncate">
-					<p>{focusedCert?.content}</p>
+				<div className="resize-none w-full h-[9.4rem] outline-none  border-[0.1rem] rounded-[0.8rem] p-[2.4rem] overflow-hidden  whitespace-normal">
+					<p>
+						{focusedCert?.content.substring(0, 86)}
+						{focusedCert?.content.length > 86 && '...'}
+					</p>
 				</div>
 			)}
 		</div>
