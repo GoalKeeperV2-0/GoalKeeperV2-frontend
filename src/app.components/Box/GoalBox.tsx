@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil';
 import DetailGoal from 'app.features/GoalManage/modalContents/DetailGoal';
 import { GoalDataType, GoalStateType, MappedState } from 'app.features/GoalManage/types';
 import { getDdayMessage } from 'app.features/GoalManage/utils/getDdayMessage';
+import { getTodayString } from 'app.modules/utils/getTodayString';
 import BoxImage from './common/BoxImage';
 import BoxLayout from './common/BoxLayout';
 import BottomLayout from './common/BottomLayout';
@@ -27,15 +28,15 @@ function GoalBox({ goalData }: Props) {
 		HOLD: '실패',
 	};
 	const { id, goalState, certDates, certifications, endDate, title } = goalData;
-	const { year, month, date } = getKoreaToday();
-	const todayString = formatDate(year, month, date);
+
+	const todayString = getTodayString();
 	const [modal, setModal] = useRecoilState(modalState);
 	const openModalHandler = () => {
 		setModal({ render: <DetailGoal goal={goalData} />, isOpen: true });
 	};
 	// TODO: 함수 네이밍 조정
 	const isCertDate = () => {
-		return endDate === todayString || certDates?.includes(formatDate(year, month, date));
+		return endDate === todayString || certDates?.includes(todayString);
 	};
 	const isManyTimeGoal = () => {
 		return certDates !== undefined;
@@ -63,7 +64,8 @@ function GoalBox({ goalData }: Props) {
 
 				break;
 			default:
-				if (isCertDate()) {
+				if (isCertDate() && !certifications?.filter((item) => item.date === todayString).length) {
+					// 오늘이 인증날인데, 오늘에 해당하는 인증이 올라오지 않은 경우
 					res = '목표인증을 해주세요!';
 				} else if (isManyTimeGoal()) {
 					if ((certifications ?? []).length > 0) {
