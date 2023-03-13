@@ -60,7 +60,7 @@ function CertDateList({ certifications, certDates, endDate, todayString, onSelec
 		return MappedCertState[certifications[index]?.state as CertStateType] ?? '실패';
 	};
 	return (
-		<ul className="space-y-[0.8rem]">
+		<ul className="space-y-[0.8rem] h-full w-[18.5rem] overflow-y-auto certdates-scrollbar">
 			{(certDates ?? [endDate]).map((item, index) => (
 				<Button
 					key={index}

@@ -124,7 +124,7 @@ function DetailGoal({ goal }: Props) {
 			</div>
 
 			<form className="space-y-[3.2rem]" onSubmit={certSubmitHandler}>
-				<div className="flex justify-between items-start">
+				<div className="flex justify-between items-start h-[28.1rem]">
 					<CertDateList {...goal} todayString={`${todayString}`} onSelectCert={selectCertHandler} />
 					<CertImage
 						todayString={todayString}

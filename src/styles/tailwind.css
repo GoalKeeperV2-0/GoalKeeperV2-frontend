@@ -71,4 +71,27 @@
       background: #8B8B8B;
 
     }
+   .certdates-scrollbar::-webkit-scrollbar {
+      width: 0.4rem;
+    }
+  
+   .certdates-scrollbar::-webkit-scrollbar-track {
+     
+      border-radius: 2rem;
+      background: #FAFAFA;
+    
+   
+    }
+  
+   .certdates-scrollbar::-webkit-scrollbar-thumb {
+      background: #E7E7E7;
+      border-radius: 6rem;
+     
+     
+    }
+  
+   
+    
   }
+
+
