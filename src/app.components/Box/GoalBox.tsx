@@ -1,8 +1,6 @@
 import Button from 'app.components/App.base/Button';
 import { modalState } from 'app.modules/store/modal';
-import { formatDate } from 'app.modules/utils/formatDate';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
-import { getKoreaToday } from 'app.modules/utils/getKoreaToday';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import DetailGoal from 'app.features/GoalManage/modalContents/DetailGoal';
@@ -85,12 +83,7 @@ function GoalBox({ goalData }: Props) {
 	};
 	const getBgUrl = () => {
 		let res = '';
-
 		switch (goalState) {
-			case 'WAITING_CERT_COMPLETE':
-				res = `https://api.goalkeeper.co.kr${(certifications ?? [])?.[(certifications ?? []).length - 1]?.picture}`;
-
-				break;
 			case 'SUCCESS':
 				res = '/images/goalBox/success.svg';
 				break;
@@ -101,19 +94,18 @@ function GoalBox({ goalData }: Props) {
 				res = '/images/goalBox/hold.svg';
 				break;
 			default:
-				// eslint-disable-next-line no-case-declarations, no-nested-ternary
-				const manyTimeUrl = certifications?.[certifications.length - 1]?.picture
-					? certifications?.[certifications.length - 1]?.picture
-					: isCertDate()
-					? '/images/goalBox/manytime/ongoingActive.svg'
-					: '/images/goalBox/manytime/ongoingInactive.svg';
+				if (certifications?.length) {
+					res = `https://api.goalkeeper.co.kr${certifications[certifications.length - 1]?.picture}`;
+				} else if (isManyTimeGoal()) {
+					res = isCertDate()
+						? '/images/goalBox/manytime/ongoingActive.svg'
+						: '/images/goalBox/manytime/ongoingInactive.svg';
+				} else {
+					res = isCertDate()
+						? '/images/goalBox/onetime/ongoingActive.svg'
+						: '/images/goalBox/onetime/ongoingInactive.svg';
+				}
 
-				// eslint-disable-next-line no-case-declarations
-				const oneTimeUrl = isCertDate()
-					? '/images/goalBox/onetime/ongoingActive.svg'
-					: '/images/goalBox/onetime/ongoingInactive.svg';
-
-				res = isManyTimeGoal() ? manyTimeUrl : oneTimeUrl;
 				break;
 		}
 

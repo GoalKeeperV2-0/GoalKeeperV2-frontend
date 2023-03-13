@@ -47,7 +47,7 @@ function CertImage({ todayString, certification, certDate, onCertImageChange, ce
 					required
 					htmlFor="certImage"
 					content="인증 사진"
-					className={`${getDday() < 0 ? 'text-[#828282]' : ''}`}
+					className={`${getDday() > 0 ? 'text-[#828282]' : ''}`}
 				/>
 				{certification === null && getDday() >= 0 ? (
 					<label

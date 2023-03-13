@@ -18,7 +18,12 @@ function CertContent({ todayString, focusedCert, certDate, certContent, onCertCo
 	console.log(focusedCert, 'certContent');
 	return (
 		<div className="flex flex-col space-y-[1.2rem]">
-			<Label required htmlFor="certContent" content="인증 내용" className="text-[#828282]" />
+			<Label
+				required
+				htmlFor="certContent"
+				content="인증 내용"
+				className={`${getDday() > 0 ? 'text-[#828282]' : ''}`}
+			/>
 			{/* TODO: 입력 길어지는 경우 대응*/}
 			{!focusedCert?.content ? (
 				<textarea
