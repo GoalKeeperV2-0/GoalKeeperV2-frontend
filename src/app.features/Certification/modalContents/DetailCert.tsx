@@ -74,8 +74,8 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 				</div>
 			</div>
 
-			<form className="space-y-[3.2rem]" onSubmit={judgeSubmitHandler}>
-				<div className="flex justify-between items-start">
+			<div className="space-y-[3.2rem]" onSubmit={judgeSubmitHandler}>
+				<div className="flex justify-between items-start h-[28.1rem]">
 					<CertDateList {...goal} todayString={`${todayString}`} clickDisabled />
 					<CertImage
 						todayString={todayString}
@@ -100,7 +100,7 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 						</Button>
 					</div>
 				</div>
-			</form>
+			</div>
 		</div>
 	);
 }
