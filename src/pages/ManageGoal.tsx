@@ -27,6 +27,10 @@ function ManageGoalPage() {
 	const goalFilterHandler = (filter: CategoryType | null) => {
 		setCategory(filter);
 	};
+	const pageHandler = (value: number) => {
+		console.log(value);
+		setPage(value);
+	};
 	// TODO: 목표랑 인증 둘다 최신순으로 정렬해서 받기
 	return (
 		<BaseLayout>
@@ -34,6 +38,7 @@ function ManageGoalPage() {
 				myGoals={category === null ? goals?.content : filteredGoals?.content}
 				onGoalFilterChange={goalFilterHandler}
 				goalFilter={category}
+				onPageChange={pageHandler}
 			/>
 		</BaseLayout>
 	);

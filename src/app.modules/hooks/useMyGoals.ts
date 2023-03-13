@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { getGoalAll } from 'app.modules/api/goal';
+import { useEffect } from 'react';
 
 export const useMyGoals = (page: number, enabled = true) => {
-	const { data } = useQuery(['myGoals', 'all'], () => getGoalAll(page), {
+	const { data, refetch } = useQuery(['myGoals', 'all'], () => getGoalAll(page), {
 		select: (res) => res.data.data,
 		onSuccess: (res) => {
 			console.log(res);
@@ -12,5 +13,8 @@ export const useMyGoals = (page: number, enabled = true) => {
 		},
 		enabled,
 	});
+	useEffect(() => {
+		refetch();
+	}, [page]);
 	return { data };
 };
