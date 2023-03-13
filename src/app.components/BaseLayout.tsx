@@ -16,7 +16,7 @@ const ASIDE_NOT_INCLUDE = [SERVICE_URL.login, SERVICE_URL.signUp, SERVICE_URL.oa
 export default function BaseTemplate({ isAdmin, children }: TemplateProps) {
 	const [modal, setModal] = useRecoilState(modalState);
 	return (
-		<div className="main pc:max-w-[120rem] mx-auto  pb-[2rem] px-[2rem] pc:px-0 ">
+		<div className="main pc:max-w-[120rem] mx-auto  pb-[2rem] px-[2rem] pc:px-0">
 			<Header />
 
 			<main className="flex mt-[3.3rem] pc:mt-[7.4rem]">

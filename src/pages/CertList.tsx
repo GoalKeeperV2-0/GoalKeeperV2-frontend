@@ -3,21 +3,13 @@ import BaseLayout from 'app.components/BaseLayout';
 import CertificationsScreen from 'app.features/Certification/screens/CertificationsScreen';
 import { getCertAll, getCertByCategory } from 'app.modules/api/certification';
 import { CategoryType } from 'app.modules/api/goal';
+import { useCertList } from 'app.modules/hooks/useCertList';
 import React, { useState } from 'react';
 
 function CertListPage() {
 	const [page, setPage] = useState<number>(0);
 	const [category, setCategory] = useState<CategoryType | null>(null);
-	const { data: certs } = useQuery(['certs', 'all'], () => getCertAll(page), {
-		select: (res) => res.data.data,
-		onSuccess: (res) => {
-			console.log(res);
-		},
-		onError: (error) => {
-			console.log(error);
-		},
-		enabled: !category,
-	});
+	const { data: certs } = useCertList(page, !category);
 	const { data: filteredCerts } = useQuery(
 		['certs', category],
 		() => getCertByCategory(page, category as CategoryType),
