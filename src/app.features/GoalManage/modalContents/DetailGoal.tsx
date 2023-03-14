@@ -15,6 +15,10 @@ import CertImage from '../components/CertImage';
 import { CategoryType, GoalDataType, GoalStateType, MappedCategory, MappedReward, RewardType } from '../types';
 import { getDdayMessage } from '../utils/getDdayMessage';
 
+// TODO:1. 목표 플로우
+// TODO:2. 자정에 스케줄러 이상한거
+// TODO:3. 내목표 8개씩
+// TODO:4. 정렬
 interface Props {
 	goal: GoalDataType;
 }
