@@ -4,6 +4,7 @@ import Button from 'app.components/App.base/Button';
 import BoxContent from 'app.components/Box/common/BoxContent';
 import BoxTitle from 'app.components/Box/common/BoxTitle';
 import { postCert } from 'app.modules/api/certification';
+import { patchHoldGoal } from 'app.modules/api/goal';
 import { ReactComponent as BlackBallIcon } from 'app.modules/assets/icons/ball/blackBall.svg';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import { getTodayString } from 'app.modules/utils/getTodayString';
@@ -14,6 +15,10 @@ import CertImage from '../components/CertImage';
 import { CategoryType, GoalDataType, GoalStateType, MappedCategory, MappedReward, RewardType } from '../types';
 import { getDdayMessage } from '../utils/getDdayMessage';
 
+// TODO:1. 목표 플로우
+// TODO:2. 자정에 스케줄러 이상한거
+// TODO:3. 내목표 8개씩
+// TODO:4. 정렬
 interface Props {
 	goal: GoalDataType;
 }
@@ -29,6 +34,15 @@ function DetailGoal({ goal }: Props) {
 		},
 		onError: (error) => alert('오류 발생.'),
 	});
+	const { mutate: patchHoldGoalMutate, isLoading: patchHoldGoalLoading } = useMutation(patchHoldGoal, {
+		onSuccess: (res) => {
+			console.log(res);
+
+			alert('검토요청 완료');
+			//resetGoalForm();
+		},
+		onError: (error) => alert('오류 발생.'),
+	});
 
 	const [certContent, setCertContent] = useState<string>('');
 	const [certImage, setCertImage] = useState<File>();
@@ -38,7 +52,7 @@ function DetailGoal({ goal }: Props) {
 
 	const [selectedCertIdx, setSelectedCertIdx] = useState<number>(0);
 	const certSubmitDisabled = !goal?.id || !certContent.trim() || !certImage;
-	// TODO:recoil로 이 상태들을 관리할까?
+
 	const isManyTimeGoal = () => {
 		return goal.certDates !== undefined;
 	};
@@ -144,13 +158,30 @@ function DetailGoal({ goal }: Props) {
 					certContent={certContent}
 				/>
 				<div className="flex space-x-[1.6rem]">
-					<Button type="submit" variant="solid" size="lg" bgColor="bg-buttonGray-200">
+					{goal.holdable && getDayDiff(todayString, goal.endDate) <= 0 && (
+						<Button
+							onClick={() => {
+								if (patchHoldGoalLoading || !goal?.id) return;
+								patchHoldGoal(goal.id);
+							}}
+							type="button"
+							variant="solid"
+							size="lg"
+							bgColor="bg-buttonRed-100"
+							textColor="text-buttonRed-200"
+							className="min-w-[19.1rem] w-[19.1rem]"
+						>
+							검토 요청
+						</Button>
+					)}
+					<Button type="button" variant="solid" size="lg" bgColor="bg-buttonGray-200">
 						닫기
 					</Button>
+
 					{getFocusedCert() === null && (goal.endDate === todayString || goal.certDates?.includes(todayString)) && (
 						<Button
-							onClick={() => null}
-							type="submit"
+							onClick={certSubmitHandler}
+							type="button"
 							variant="outline"
 							size="lg"
 							disabled={certSubmitDisabled}

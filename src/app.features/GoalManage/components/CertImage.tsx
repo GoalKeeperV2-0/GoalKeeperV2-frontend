@@ -18,23 +18,22 @@ function CertImage({ todayString, certification, certDate, onCertImageChange, ce
 		return getDayDiff(todayString, certDate);
 	};
 	const getBoxMessage = () => {
-		const res = '';
-		/*if (!goal.certifications) return res;
-		const { state } = goal.certifications[0];
+		let res = '';
+		if (certification === null) return res;
+		const { state } = certification;
 		switch (state) {
 			case 'SUCCESS':
 				res = '인증을 성공했어요';
 				break;
 			case 'FAIL':
-				if (goal.state === 'HOLD') res = '검토를 요청할 수 있어요';
-				else res = '인증을 실패했어요';
+				res = '인증을 실패했어요';
 				break;
 
 			default:
 				res = '';
 				break;
 		}
-*/
+
 		return res;
 	};
 	console.log(getDday());
