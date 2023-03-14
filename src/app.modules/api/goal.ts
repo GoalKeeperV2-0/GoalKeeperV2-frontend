@@ -46,3 +46,9 @@ export const getGoalByCategory = async (page: number, category: CategoryType) =>
 
 	return res;
 };
+
+export const patchHoldGoal = async (goalId: number) => {
+	const res = await client.patch(`goal/hold/${goalId}`);
+
+	return res;
+};
