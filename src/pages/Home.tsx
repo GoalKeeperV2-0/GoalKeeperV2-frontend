@@ -7,7 +7,7 @@ function HomePage() {
 	const { data: certs } = useCertList(0);
 	return (
 		<BaseLayout>
-			<HomeScreen certs={certs?.content.slice(0, 6)} />
+			<HomeScreen certs={certs?.content?.slice(0, 6)} />
 		</BaseLayout>
 	);
 }
