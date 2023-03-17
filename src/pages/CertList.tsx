@@ -31,7 +31,9 @@ function CertListPage() {
 	return (
 		<BaseLayout>
 			<CertificationsScreen
-				certs={category === null ? certs?.content : filteredCerts?.content}
+				certs={
+					category === null ? certs?.certificationResponses?.content : filteredCerts?.certificationResponses?.content
+				}
 				onCertFilterChange={certFilterHandler}
 				certFilter={category}
 			/>
