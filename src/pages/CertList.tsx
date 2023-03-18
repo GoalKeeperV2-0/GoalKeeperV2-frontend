@@ -7,12 +7,12 @@ import { useCertList } from 'app.modules/hooks/useCertList';
 import React, { useState } from 'react';
 
 function CertListPage() {
-	const [page, setPage] = useState<number>(0);
+	const [curPage, setCurPage] = useState<number>(0);
 	const [category, setCategory] = useState<CategoryType | null>(null);
-	const { data: certs } = useCertList(page, !category);
+	const { data: certs } = useCertList(curPage, !category);
 	const { data: filteredCerts } = useQuery(
 		['certs', category],
-		() => getCertByCategory(page, category as CategoryType),
+		() => getCertByCategory(curPage, category as CategoryType),
 		{
 			select: (res) => res.data.data,
 			onSuccess: (res) => {
@@ -36,6 +36,13 @@ function CertListPage() {
 				}
 				onCertFilterChange={certFilterHandler}
 				certFilter={category}
+				curPage={curPage}
+				onPageChange={(page: number) => setCurPage(page)}
+				totalPages={
+					category === null
+						? certs?.certificationResponses?.totalPages
+						: filteredCerts?.certificationResponses?.totalPages
+				}
 			/>
 		</BaseLayout>
 	);

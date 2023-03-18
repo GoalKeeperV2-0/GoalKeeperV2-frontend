@@ -6,13 +6,13 @@ import { useMyGoals } from 'app.modules/hooks/useMyGoals';
 import React, { useState } from 'react';
 
 function ManageGoalPage() {
-	const [page, setPage] = useState<number>(0);
+	const [curPage, setCurPage] = useState<number>(0);
 	const [category, setCategory] = useState<CategoryType | null>(null);
-	const { data: goals } = useMyGoals(page, !category);
+	const { data: goals } = useMyGoals(curPage, !category);
 
 	const { data: filteredGoals } = useQuery(
 		['myGoals', category],
-		() => getGoalByCategory(page, category as CategoryType),
+		() => getGoalByCategory(curPage, category as CategoryType),
 		{
 			select: (res) => res.data.data,
 			onSuccess: (res) => {
@@ -29,7 +29,7 @@ function ManageGoalPage() {
 	};
 	const pageHandler = (value: number) => {
 		console.log(value);
-		setPage(value);
+		setCurPage(value);
 	};
 	// TODO: 목표랑 인증 둘다 최신순으로 정렬해서 받기
 	return (
@@ -38,7 +38,9 @@ function ManageGoalPage() {
 				myGoals={category === null ? goals?.content : filteredGoals?.content}
 				onGoalFilterChange={goalFilterHandler}
 				goalFilter={category}
-				onPageChange={pageHandler}
+				curPage={curPage}
+				onPageChange={(page: number) => setCurPage(page)}
+				totalPages={category === null ? goals?.totalPages : filteredGoals?.totalPages}
 			/>
 		</BaseLayout>
 	);

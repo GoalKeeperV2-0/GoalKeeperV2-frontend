@@ -17,8 +17,13 @@ function ArrowButton({ direction, disabled, onClick, name }: Props) {
 			onClick={onClick}
 			name={name}
 			className="max-w-[3.4rem]"
+			disabled={disabled}
 		>
-			{direction === 'left' ? <ArrowLeftIcon className="mx-auto w-[3.4rem]" /> : <ArrowRightIcon className="mx-auto" />}
+			{direction === 'left' ? (
+				<ArrowLeftIcon className="mx-auto w-[3.4rem]" fill={`${disabled ? '#C1C1C1' : '#000000'}`} />
+			) : (
+				<ArrowRightIcon className="mx-auto w-[3.4rem]" fill={`${disabled ? '#C1C1C1' : '#000000'}`} />
+			)}
 		</Button>
 	);
 }
