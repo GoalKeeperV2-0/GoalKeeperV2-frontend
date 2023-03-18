@@ -1,5 +1,6 @@
 import CertBox from 'app.components/Box/CertBox';
 import FilterButton from 'app.components/FilterButton';
+import Pagination from 'app.components/Pagination';
 import { CategoryType, GoalDataType, MappedCategory } from 'app.features/GoalManage/types';
 import React, { useState } from 'react';
 import { CertDataType } from '../types';
@@ -12,8 +13,11 @@ interface Props {
 	certs: CertDataType[];
 	onCertFilterChange: (filter: CategoryType | null) => void;
 	certFilter: CategoryType | null;
+	curPage: number;
+	onPageChange: (page: number) => void;
+	totalPages: number;
 }
-function CertificationsScreen({ certs, onCertFilterChange, certFilter }: Props) {
+function CertificationsScreen({ certs, onCertFilterChange, certFilter, curPage, onPageChange, totalPages }: Props) {
 	return (
 		<div className="space-y-[3rem]">
 			<h3>목표인증</h3>
@@ -38,7 +42,7 @@ function CertificationsScreen({ certs, onCertFilterChange, certFilter }: Props) 
 					</li>
 				))}
 			</ul>
-			<ul className="grid grid-cols-3 gap-[3rem]">
+			<ul className="grid grid-cols-3 gap-[3rem] ] min-h-[93.3rem]">
 				{certs?.map((cert, index) => (
 					<li key={index}>
 						<CertBox certData={cert} />
@@ -46,7 +50,7 @@ function CertificationsScreen({ certs, onCertFilterChange, certFilter }: Props) 
 				))}
 			</ul>
 
-			<div>페이지네이션</div>
+			<Pagination curPage={curPage} onPageChange={onPageChange} totalPages={totalPages} numOfPageBtn={5} />
 		</div>
 	);
 }

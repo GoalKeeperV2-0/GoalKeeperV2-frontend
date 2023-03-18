@@ -45,7 +45,7 @@ function CertBox({ certData }: Props) {
 			isOpen: true,
 		});
 	};
-	console.log(certData);
+
 	const isManyTimeGoal = () => {
 		return Boolean(certData.manyTimeGoal !== undefined);
 	};

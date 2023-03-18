@@ -1,6 +1,7 @@
 import GoalBox from 'app.components/Box/GoalBox';
 import InitGoalBox from 'app.components/Box/InitGoalBox';
 import FilterButton from 'app.components/FilterButton';
+import Pagination from 'app.components/Pagination';
 import React, { useState } from 'react';
 import { CategoryType, GoalDataType, MappedCategory } from '../types';
 
@@ -8,9 +9,11 @@ interface Props {
 	myGoals: GoalDataType[];
 	onGoalFilterChange: (filter: CategoryType | null) => void;
 	goalFilter: CategoryType | null;
+	curPage: number;
 	onPageChange: (page: number) => void;
+	totalPages: number;
 }
-function ManageGoalScreen({ myGoals, onGoalFilterChange, goalFilter, onPageChange }: Props) {
+function ManageGoalScreen({ myGoals, onGoalFilterChange, goalFilter, curPage, onPageChange, totalPages }: Props) {
 	// TODO: 중복 정의 없애기
 
 	return (
@@ -37,7 +40,7 @@ function ManageGoalScreen({ myGoals, onGoalFilterChange, goalFilter, onPageChang
 					</li>
 				))}
 			</ul>
-			<ul className="grid grid-cols-3 gap-[3rem]">
+			<ul className="grid grid-cols-3 gap-[3rem] min-h-[93.3rem]">
 				<InitGoalBox />
 				{myGoals?.map((goal, index) => (
 					<li key={index}>
@@ -46,7 +49,7 @@ function ManageGoalScreen({ myGoals, onGoalFilterChange, goalFilter, onPageChang
 				))}
 			</ul>
 			<div>
-				<button onClick={() => onPageChange(1)}>페이지 전환</button>
+				<Pagination curPage={curPage} onPageChange={onPageChange} totalPages={totalPages} numOfPageBtn={5} />
 			</div>
 		</div>
 	);
