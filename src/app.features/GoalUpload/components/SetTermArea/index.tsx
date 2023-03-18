@@ -3,7 +3,7 @@ import Label from 'app.components/App.base/Input/Label';
 import Calendar from 'app.components/Calendar';
 import { goalFormState } from 'app.features/GoalUpload/store';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import ManytimeGoalStatusMessages from './ManytimeGoalStatusMessages';
 import OnetimeGoalStatusMessage from './OneTimeGoalStatusMessage';
@@ -46,7 +46,9 @@ function SetTermArea() {
 		if (!endDate.trim()) return 'init';
 		return 'selected';
 	};
-
+	useEffect(() => {
+		setGoalForm((prev) => ({ ...prev, endDate: '', certDates: [] }));
+	}, [goalType]);
 	return (
 		<div className="space-y-[2.4rem] w-full">
 			<Label required htmlFor="goal-term" content="목표기간 선택" />
