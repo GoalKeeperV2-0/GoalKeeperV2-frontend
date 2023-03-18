@@ -7,6 +7,7 @@ import DetailGoal from 'app.features/GoalManage/modalContents/DetailGoal';
 import { GoalDataType, GoalStateType, MappedState } from 'app.features/GoalManage/types';
 import { getDdayMessage } from 'app.features/GoalManage/utils/getDdayMessage';
 import { getTodayString } from 'app.modules/utils/getTodayString';
+import Badge from 'app.components/App.base/Badge';
 import BoxImage from './common/BoxImage';
 import BoxLayout from './common/BoxLayout';
 import BottomLayout from './common/BottomLayout';
@@ -134,10 +135,10 @@ function GoalBox({ goalData }: Props) {
 			{/*하단에만 border 부여, 상부에도 부여하면 이미지가 꽉 안차보임. */}
 			<BottomLayout>
 				<div className="flex items-center justify-between ">
-					{/* TODO: 레이아웃을 div로 바꾸든지 해야할듯. 문제의 버튼 */}
-					<Button variant="solid" size="xs" bgColor={getBgColor()} textColor={getTextColor()} className="w-[7.6rem] ">
+					<Badge bgColor={getBgColor()} textColor={getTextColor()} className="">
 						{mappedGoalState[goalState as GoalStateType]}
-					</Button>
+					</Badge>
+
 					<div className="pc:text-body2-pc">
 						🗓 {isManyTimeGoal() && <span />}
 						{getDdayMessage({

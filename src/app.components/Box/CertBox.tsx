@@ -8,6 +8,7 @@ import { useRecoilState } from 'recoil';
 import { GoalDataType, MappedCategory } from 'app.features/GoalManage/types';
 import { CertDataType } from 'app.features/Certification/types';
 import DetailCert from 'app.features/Certification/modalContents/DetailCert';
+import Badge from 'app.components/App.base/Badge';
 import BoxImage from './common/BoxImage';
 import BoxLayout from './common/BoxLayout';
 import BottomLayout from './common/BottomLayout';
@@ -70,15 +71,9 @@ function CertBox({ certData }: Props) {
 			{/*하단에만 border 부여, 상부에도 부여하면 이미지가 꽉 안차보임. */}
 			<BottomLayout>
 				<div className="flex items-center justify-between ">
-					<Button
-						variant="solid"
-						size="xs"
-						bgColor="bg-buttonGray-200"
-						textColor="text-primaryBlack-500"
-						className="w-[7.6rem]"
-					>
+					<Badge bgColor="bg-buttonGray-200" textColor="text-primaryBlack-500">
 						{getCategory()}
-					</Button>
+					</Badge>
 					{/*D-0 처리도 같이하기*/}
 					<div className="pc:text-body2-pc">
 						⏰ D-

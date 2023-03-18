@@ -1,7 +1,7 @@
 import CertBox from 'app.components/Box/CertBox';
 import FilterButton from 'app.components/FilterButton';
 import Pagination from 'app.components/Pagination';
-import { CategoryType, GoalDataType, MappedCategory } from 'app.features/GoalManage/types';
+import { CategoryType, MappedCategory } from 'app.features/GoalManage/types';
 import React, { useState } from 'react';
 import { CertDataType } from '../types';
 
