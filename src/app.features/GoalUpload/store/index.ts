@@ -8,20 +8,20 @@ export interface IGoalForm {
 	title: PostManyTimeGoal['title'];
 	content: PostManyTimeGoal['content'];
 	certDates: PostManyTimeGoal['certDates'];
-	categoryType: PostManyTimeGoal['categoryType'] | null;
+	categoryType: PostManyTimeGoal['categoryType'];
 	point: PostManyTimeGoal['point'];
-	reward: PostManyTimeGoal['reward'] | null;
+	reward: PostManyTimeGoal['reward'];
 }
 const initState: IGoalForm = {
-	goalType: null,
+	goalType: 'onetime',
 	startDate: getTodayString(),
 	endDate: '', // '2023-02-13'
 	title: '',
 	content: '',
 	certDates: [],
-	categoryType: null,
+	categoryType: 'EXERCISE',
 	point: '',
-	reward: null,
+	reward: 'HIGH_RETURN',
 };
 export const goalFormState = atom<IGoalForm>({
 	key: 'goalFormState',
