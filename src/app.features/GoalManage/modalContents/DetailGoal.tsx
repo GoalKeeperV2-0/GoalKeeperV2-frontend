@@ -17,12 +17,12 @@ import { getDdayMessage } from '../utils/getDdayMessage';
 
 // TODO:1. 목표 플로우
 // TODO:2. 자정에 스케줄러 이상한거
-// TODO:3. 내목표 8개씩
-// TODO:4. 정렬
+// TODO: 인증 없어서 실패한 경우 처리
+
 interface Props {
 	goal: GoalDataType;
 }
-
+// TODO: svg 포맷 다른 포맷으로 처리하기
 function DetailGoal({ goal }: Props) {
 	console.log('detail-goal');
 	const { mutate: postCertMutate, isLoading } = useMutation(postCert, {
@@ -148,6 +148,7 @@ function DetailGoal({ goal }: Props) {
 						certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
 						onCertImageChange={certImageHandler}
 						certImagePreview={certImagePreview as string}
+						point={goal?.point}
 					/>
 				</div>
 				<CertContent
@@ -177,8 +178,8 @@ function DetailGoal({ goal }: Props) {
 					<Button type="button" variant="solid" size="lg" bgColor="bg-buttonGray-200">
 						닫기
 					</Button>
-
-					{getFocusedCert() === null && (goal.endDate === todayString || goal.certDates?.includes(todayString)) && (
+					{/*인증날인데 올라온 인증이 없는 상태 */}
+					{getFocusedCert() === null && (goal.certDates ?? [goal.endDate])[selectedCertIdx] === todayString && (
 						<Button
 							onClick={certSubmitHandler}
 							type="button"

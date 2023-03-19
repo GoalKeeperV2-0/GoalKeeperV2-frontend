@@ -19,7 +19,7 @@ function CertContent({ todayString, focusedCert, certDate, certContent, onCertCo
 	return (
 		<div className="flex flex-col space-y-[1.2rem]">
 			<Label
-				required
+				required={getDday() > 0}
 				htmlFor="certContent"
 				content="인증 내용"
 				className={`${getDday() > 0 ? 'text-[#828282]' : ''}`}

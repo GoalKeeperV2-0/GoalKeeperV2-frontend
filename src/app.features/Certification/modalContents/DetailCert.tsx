@@ -6,6 +6,7 @@ import BoxTitle from 'app.components/Box/common/BoxTitle';
 import CertDateList from 'app.features/GoalManage/components/CertDateList';
 import { CategoryType, CertType, GoalDataType, MappedCategory } from 'app.features/GoalManage/types';
 import { postVerification } from 'app.modules/api/certification';
+import { getProgressText } from 'app.modules/utils/getRequireSuccess';
 import { getTodayString } from 'app.modules/utils/getTodayString';
 import React, { useState } from 'react';
 import CertContent from '../components/CertContent';
@@ -53,6 +54,9 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 					<div className="flex justify-between items-center">
 						<div className="flex space-x-[0.8rem]">
 							<Badge bgColor="bg-buttonGray-200">{MappedCategory[goal.categoryType as CategoryType]}</Badge>
+							<Badge bgColor="bg-buttonRed-100" textColor="text-buttonRed-200">
+								{getProgressText(goal.point, certData.successCount)}
+							</Badge>
 						</div>
 						{/* TODO: 컴포넌트 만들기 */}
 						<div className="pc:text-body2-pc">⏰ D-{dday}</div>

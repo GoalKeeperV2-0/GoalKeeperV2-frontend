@@ -32,15 +32,17 @@ function CertDateList({
 	const mapCertResult = () => {
 		if (!isManyTimeGoal) {
 			//일반 목표의 경우
-			if (certifications?.length) {
-				return [certifications[0].state];
+
+			if (sortCerts?.length) {
+				return [sortCerts[0].state];
 			}
+			if (getDayDiff(todayString, endDate) < 0 && !isCertPost) return ['FAIL']; // 목표를 안올린 경우
 			return [null];
 		}
 		//지속 목표
 
 		return certDates?.map((item) => {
-			const filterCert = certifications?.filter((cert) => cert.date === item);
+			const filterCert = sortCerts?.filter((cert) => cert.date === item);
 			if (filterCert?.length) {
 				return filterCert[0].state;
 			}
@@ -61,7 +63,7 @@ function CertDateList({
 		if (getDday(certDate) > 0) return 'bg-buttonGray-200';
 		if (mapCertResult()?.[index] === 'SUCCESS') return 'bg-primaryOrange-200';
 		if (mapCertResult()?.[index] === 'FAIL') return 'bg-buttonRed-100';
-		if (mapCertResult()?.[index] === 'ONGOING' || mapCertResult()?.[index] === null)
+		if (mapCertResult()?.[index] === 'ONGOING' || (isCertPost && mapCertResult()?.[index] === null))
 			//인증 & goal 범용적으로 사용하기 위한 코드
 			return 'bg-primaryOrange-100';
 		// dday === 0
@@ -72,7 +74,8 @@ function CertDateList({
 		if (getDday(certDate) > 0) return 'text-[#828282]';
 		if (mapCertResult()?.[index] === 'SUCCESS') return 'text-white';
 		if (mapCertResult()?.[index] === 'FAIL') return 'text-primaryRed-200';
-		if (mapCertResult()?.[index] === 'ONGOING' || mapCertResult()?.[index] === null) return 'text-primaryOrange-200';
+		if (mapCertResult()?.[index] === 'ONGOING' || (isCertPost && mapCertResult()?.[index] === null))
+			return 'text-primaryOrange-200';
 		// dday === 0
 		return 'text-white';
 	};
@@ -80,12 +83,16 @@ function CertDateList({
 		if (getDday(certDate) > 0) return 'text-[#828282]';
 		if (mapCertResult()?.[index] === 'SUCCESS') return 'text-primaryOrange-200';
 		if (mapCertResult()?.[index] === 'FAIL') return 'text-buttonRed-200';
-		if (mapCertResult()?.[index] === 'ONGOING' || mapCertResult()?.[index] === null) return 'text-primaryOrange-200';
+		if (mapCertResult()?.[index] === 'ONGOING' || (isCertPost && mapCertResult()?.[index] === null))
+			return 'text-primaryOrange-200';
 
 		return 'text-primaryBlack-500';
 	};
 	const getMessage = (certDate: string, index: number) => {
-		if (mapCertResult()?.[index] === null) return '검증 중';
+		if (mapCertResult()?.[index] === null) {
+			if (!isCertPost) return '인증';
+			return '검증 중';
+		}
 		return MappedCertState[mapCertResult()?.[index] as CertStateType] ?? '실패';
 	};
 
