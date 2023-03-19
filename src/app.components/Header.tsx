@@ -70,8 +70,10 @@ export default function Header() {
 					</div>
 
 					<div className="relative">
-						<UserIcon />
-						<RouteModal title="로그인 관리" isOpen={false} setIsOpen={() => null} />
+						<Link to={SERVICE_URL.login}>
+							<UserIcon />
+							<RouteModal title="로그인 관리" isOpen={false} setIsOpen={() => null} />
+						</Link>
 					</div>
 				</div>
 			</div>

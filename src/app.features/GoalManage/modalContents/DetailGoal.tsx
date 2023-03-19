@@ -158,7 +158,7 @@ function DetailGoal({ goal }: Props) {
 					certContent={certContent}
 				/>
 				<div className="flex space-x-[1.6rem]">
-					{goal.holdable && getDayDiff(todayString, goal.endDate) <= 0 && (
+					{goal.holdable && goal.goalState === 'FAIL' && getDayDiff(todayString, goal.endDate) <= 0 && (
 						<Button
 							onClick={() => {
 								if (patchHoldGoalLoading || !goal?.id) return;
