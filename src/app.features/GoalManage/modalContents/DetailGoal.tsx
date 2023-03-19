@@ -17,6 +17,7 @@ import { getDdayMessage } from '../utils/getDdayMessage';
 
 // TODO:1. 목표 플로우
 // TODO:2. 자정에 스케줄러 이상한거
+// TODO: 인증 없어서 실패한 경우 처리
 
 interface Props {
 	goal: GoalDataType;
@@ -147,6 +148,7 @@ function DetailGoal({ goal }: Props) {
 						certDate={(goal?.certDates ?? [goal.endDate])[selectedCertIdx]}
 						onCertImageChange={certImageHandler}
 						certImagePreview={certImagePreview as string}
+						point={goal?.point}
 					/>
 				</div>
 				<CertContent

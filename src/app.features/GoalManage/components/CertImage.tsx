@@ -2,6 +2,7 @@ import Label from 'app.components/App.base/Input/Label';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import React from 'react';
 import { ReactComponent as CameraIcon } from 'app.modules/assets/manageGoal/camera.svg';
+import { getProgressText, getRequireSuccess } from 'app.modules/utils/getRequireSuccess';
 import { CertType } from '../types';
 
 interface Props {
@@ -11,9 +12,18 @@ interface Props {
 	onCertImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	certImagePreview: string | null;
 	isCertModal?: boolean;
+	point: number;
 }
 // TODO: 이미지 handler
-function CertImage({ todayString, certification, certDate, onCertImageChange, certImagePreview, isCertModal }: Props) {
+function CertImage({
+	todayString,
+	certification,
+	certDate,
+	onCertImageChange,
+	certImagePreview,
+	point,
+	isCertModal,
+}: Props) {
 	const getDday = () => {
 		return getDayDiff(todayString, certDate);
 	};
@@ -21,6 +31,7 @@ function CertImage({ todayString, certification, certDate, onCertImageChange, ce
 		let res = '';
 		if (certification === null) return res;
 		const { state } = certification;
+		console.log(state);
 		switch (state) {
 			case 'SUCCESS':
 				res = '인증을 성공했어요';
@@ -30,7 +41,7 @@ function CertImage({ todayString, certification, certDate, onCertImageChange, ce
 				break;
 
 			default:
-				res = '';
+				res = getProgressText(point, certification.successCount);
 				break;
 		}
 
@@ -43,7 +54,7 @@ function CertImage({ todayString, certification, certDate, onCertImageChange, ce
 
 			<div className="flex flex-col space-y-[1.2rem]">
 				<Label
-					required
+					required={getDday() > 0}
 					htmlFor="certImage"
 					content="인증 사진"
 					className={`${getDday() > 0 ? 'text-[#828282]' : ''}`}
@@ -84,9 +95,7 @@ function CertImage({ todayString, certification, certDate, onCertImageChange, ce
 					>
 						{!isCertModal && (
 							<div className=" w-full   h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[0.8rem] text-white pc:text-body1-pc text-start  space-x-[0.8rem]">
-								{certification?.state !== 'ONGOING' && (
-									<img alt="" src={`/images/goalBox/icon/${certification?.state}.svg`} className="mr-[0.8rem]" />
-								)}
+								<img alt="" src={`/images/goalBox/icon/${certification?.state}.svg`} className="mr-[0.8rem]" />
 								{getBoxMessage()}
 							</div>
 						)}

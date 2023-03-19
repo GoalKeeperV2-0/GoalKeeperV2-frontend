@@ -10,6 +10,7 @@ export type CertType = {
 	picture: string;
 	state: 'SUCCESS' | 'FAIL' | 'ONGOING';
 	content: string;
+	successCount: number;
 };
 export const MappedCategory: { [K in CategoryType]: string } = {
 	STUDY: '공부',
