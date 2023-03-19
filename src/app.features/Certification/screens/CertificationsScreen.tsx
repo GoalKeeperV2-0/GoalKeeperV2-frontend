@@ -16,8 +16,17 @@ interface Props {
 	curPage: number;
 	onPageChange: (page: number) => void;
 	totalPages: number;
+	alreadyVerification: number[];
 }
-function CertificationsScreen({ certs, onCertFilterChange, certFilter, curPage, onPageChange, totalPages }: Props) {
+function CertificationsScreen({
+	certs,
+	alreadyVerification,
+	onCertFilterChange,
+	certFilter,
+	curPage,
+	onPageChange,
+	totalPages,
+}: Props) {
 	return (
 		<div className="space-y-[3rem]">
 			<h3>목표인증</h3>
@@ -46,7 +55,7 @@ function CertificationsScreen({ certs, onCertFilterChange, certFilter, curPage, 
 				<ul className="grid grid-cols-3  gap-[3rem] h-fit">
 					{certs?.map((cert, index) => (
 						<li key={index}>
-							<CertBox certData={cert} />
+							<CertBox certData={cert} alreadyVerified={alreadyVerification.includes(cert.id)} />
 						</li>
 					))}
 				</ul>

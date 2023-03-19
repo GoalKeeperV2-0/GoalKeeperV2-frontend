@@ -36,6 +36,7 @@ function CertListPage() {
 				certs={
 					category === null ? certs?.certificationResponses?.content : filteredCerts?.certificationResponses?.content
 				}
+				alreadyVerification={category === null ? certs?.alreadyVerification : filteredCerts?.alreadyVerification}
 				onCertFilterChange={certFilterHandler}
 				certFilter={category}
 				curPage={curPage}

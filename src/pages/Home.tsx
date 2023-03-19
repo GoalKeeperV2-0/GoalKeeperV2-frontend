@@ -7,7 +7,10 @@ function HomePage() {
 	const { data: certs } = useCertList(0);
 	return (
 		<BaseLayout>
-			<HomeScreen certs={certs?.certificationResponses?.content?.slice(0, 6)} />
+			<HomeScreen
+				certs={certs?.certificationResponses?.content?.slice(0, 6)}
+				alreadyVerification={certs?.alreadyVerification}
+			/>
 		</BaseLayout>
 	);
 }
