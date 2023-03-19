@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Badge from 'app.components/App.base/Badge';
 import Button from 'app.components/App.base/Button';
 import BoxContent from 'app.components/Box/common/BoxContent';
@@ -22,10 +22,11 @@ interface Props {
 
 function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 	console.log('detail-cert', certData, goal);
+	const queryClient = useQueryClient();
 	const { mutate: postVerificationMutate, isLoading } = useMutation(postVerification, {
-		onSuccess: (res) => {
+		onSuccess: async (res) => {
 			console.log(res);
-
+			await queryClient.refetchQueries({ queryKey: ['user', 'statistics', 'point'], type: 'active' });
 			alert('검증 완료');
 			//resetGoalForm();
 		},

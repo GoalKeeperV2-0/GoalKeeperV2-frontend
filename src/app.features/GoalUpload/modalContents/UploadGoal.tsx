@@ -1,6 +1,8 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, QueryCache, useQueryClient } from '@tanstack/react-query';
 import SubmitButton from 'app.components/SubmitButton';
 import { postManytimeGoal, PostOnetimeGoal, postOnetimeGoal } from 'app.modules/api/goal';
+import { useMyGoals } from 'app.modules/hooks/useMyGoals';
+import { useRetchOnPostGoal } from 'app.modules/hooks/useRetchOnPostGoal';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import SelectCategoryArea from '../components/SelectCategoryArea';
@@ -14,21 +16,29 @@ import { goalFormState } from '../store';
 
 function UploadGoal() {
 	console.log('upload-one-time-goal');
+
 	const [goalForm, setGoalForm] = useRecoilState(goalFormState);
 	const resetGoalForm = useResetRecoilState(goalFormState);
-	const { mutate: postOnetimeGoalMutate, isLoading: isPostOnetimeGoalLoading } = useMutation(postOnetimeGoal, {
-		onSuccess: (res) => {
-			console.log(res);
+	const queryClient = useQueryClient();
 
+	const { mutate: postOnetimeGoalMutate, isLoading: isPostOnetimeGoalLoading } = useMutation(postOnetimeGoal, {
+		onSuccess: async (res) => {
+			console.log(res);
+			// 캐시에 있는 모든 쿼리를 무효화한다.
+			await queryClient.refetchQueries({ queryKey: ['myGoals', 'all'], type: 'active' });
+			await queryClient.refetchQueries({ queryKey: ['user', 'statistics'], type: 'active' });
+			await queryClient.refetchQueries({ queryKey: ['user', 'statistics', 'point'], type: 'active' });
 			alert('일반목표등록완료');
 			resetGoalForm();
 		},
 		onError: (error) => alert('오류 발생.'),
 	});
 	const { mutate: postManytimeGoalMutate, isLoading: isPostManytimeGoalLoading } = useMutation(postManytimeGoal, {
-		onSuccess: (res) => {
+		onSuccess: async (res) => {
 			console.log(res);
-
+			await queryClient.refetchQueries({ queryKey: ['myGoals', 'all'], type: 'active' });
+			await queryClient.refetchQueries({ queryKey: ['user', 'statistics'], type: 'active' });
+			await queryClient.refetchQueries({ queryKey: ['user', 'statistics', 'point'], type: 'active' });
 			alert('지속목표등록완료');
 			resetGoalForm();
 		},

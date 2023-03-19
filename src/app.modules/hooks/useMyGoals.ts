@@ -16,5 +16,5 @@ export const useMyGoals = (page: number, enabled = true) => {
 	useEffect(() => {
 		refetch();
 	}, [page]);
-	return { data };
+	return { data, refetch };
 };
