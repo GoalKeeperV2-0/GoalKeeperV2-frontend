@@ -26,7 +26,7 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 		onSuccess: (res) => {
 			console.log(res);
 
-			alert('인증등록완료');
+			alert('검증 완료');
 			//resetGoalForm();
 		},
 		onError: (error) => alert('오류 발생.'),
