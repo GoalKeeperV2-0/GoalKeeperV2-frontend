@@ -1,4 +1,3 @@
-import Button from 'app.components/App.base/Button';
 import { modalState } from 'app.modules/store/modal';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import React from 'react';
@@ -96,6 +95,7 @@ function GoalBox({ goalData }: Props) {
 				break;
 			default:
 				if (certifications?.length) {
+					// 가장 최신 사진
 					res = `https://api.goalkeeper.co.kr${certifications[certifications.length - 1]?.picture}`;
 				} else if (isManyTimeGoal()) {
 					res = isCertDate()

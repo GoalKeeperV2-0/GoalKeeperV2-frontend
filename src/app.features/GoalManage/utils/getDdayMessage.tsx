@@ -12,7 +12,7 @@ type Params = {
 export const getDdayMessage = ({ goalState, endDate, isManyTimeGoal, certDates, todayString }: Params) => {
 	if (goalState === 'FAIL' || goalState === 'SUCCESS') return <span>정산 완료</span>;
 	if (goalState === 'HOLD') return <span>보류</span>;
-	if (goalState === 'WAITING_CERT_COMPLETE') return <span>정산</span>;
+	if (goalState === 'WAITING_CERT_COMPLETE') return <span>정산 중</span>;
 	const dEndDate = getDayDiff(todayString, endDate);
 	if (isManyTimeGoal) {
 		if (certDates === undefined) return null;

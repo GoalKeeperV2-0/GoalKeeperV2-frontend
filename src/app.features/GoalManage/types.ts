@@ -5,6 +5,7 @@ export type RewardType = 'HIGH_RETURN' | 'LOW_RETURN';
 export type MappedState = { [K in GoalStateType]: string };
 
 export type CertType = {
+	id?: number;
 	date: string;
 	picture: string;
 	state: 'SUCCESS' | 'FAIL' | 'ONGOING';
@@ -36,7 +37,7 @@ export const MappedCertState: { [K in CertStateType]: string } = {
 export type GoalDataType = {
 	id: number;
 	title: string;
-	goalState: string;
+	goalState: GoalStateType;
 	startDate: string;
 	endDate: string;
 	certDates?: string[];
