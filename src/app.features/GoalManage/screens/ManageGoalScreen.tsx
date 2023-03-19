@@ -40,14 +40,17 @@ function ManageGoalScreen({ myGoals, onGoalFilterChange, goalFilter, curPage, on
 					</li>
 				))}
 			</ul>
-			<ul className="grid grid-cols-3 gap-[3rem] min-h-[93.3rem]">
-				<InitGoalBox />
-				{myGoals?.map((goal, index) => (
-					<li key={index}>
-						<GoalBox goalData={goal as unknown as GoalDataType} />
-					</li>
-				))}
-			</ul>
+			<div className="min-h-[93.3rem]">
+				<ul className="grid grid-cols-3  gap-[3rem] h-fit">
+					<InitGoalBox />
+					{myGoals?.map((goal, index) => (
+						<li key={index}>
+							<GoalBox goalData={goal as unknown as GoalDataType} />
+						</li>
+					))}
+				</ul>
+			</div>
+
 			<div>
 				<Pagination curPage={curPage} onPageChange={onPageChange} totalPages={totalPages} numOfPageBtn={5} />
 			</div>

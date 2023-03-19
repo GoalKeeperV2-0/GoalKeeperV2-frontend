@@ -42,13 +42,15 @@ function CertificationsScreen({ certs, onCertFilterChange, certFilter, curPage, 
 					</li>
 				))}
 			</ul>
-			<ul className="grid grid-cols-3 gap-[3rem] ] min-h-[93.3rem]">
-				{certs?.map((cert, index) => (
-					<li key={index}>
-						<CertBox certData={cert} />
-					</li>
-				))}
-			</ul>
+			<div className="min-h-[93.3rem]">
+				<ul className="grid grid-cols-3  gap-[3rem] h-fit">
+					{certs?.map((cert, index) => (
+						<li key={index}>
+							<CertBox certData={cert} />
+						</li>
+					))}
+				</ul>
+			</div>
 
 			<Pagination curPage={curPage} onPageChange={onPageChange} totalPages={totalPages} numOfPageBtn={5} />
 		</div>
