@@ -4,7 +4,7 @@ import CertificationsScreen from 'app.features/Certification/screens/Certificati
 import { getCertAll, getCertByCategory } from 'app.modules/api/certification';
 import { CategoryType } from 'app.modules/api/goal';
 import { useCertList } from 'app.modules/hooks/useCertList';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function CertListPage() {
 	const [curPage, setCurPage] = useState<number>(0);
@@ -27,7 +27,9 @@ function CertListPage() {
 	const certFilterHandler = (filter: CategoryType | null) => {
 		setCategory(filter);
 	};
-
+	useEffect(() => {
+		setCurPage(0); //필터 바뀌면 페이지 num 0으로 초기화
+	}, [category]);
 	return (
 		<BaseLayout>
 			<CertificationsScreen
