@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import BaseLayout from 'app.components/BaseLayout';
 import ManageGoalScreen from 'app.features/GoalManage/screens/ManageGoalScreen';
-import { CategoryType, getGoalAll, getGoalByCategory } from 'app.modules/api/goal';
+import { CategoryType, getGoalByCategory } from 'app.modules/api/goal';
 import { useMyGoals } from 'app.modules/hooks/useMyGoals';
 import React, { useEffect, useState } from 'react';
 
