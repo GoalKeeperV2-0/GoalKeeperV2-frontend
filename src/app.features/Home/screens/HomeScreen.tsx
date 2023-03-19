@@ -6,8 +6,9 @@ import { CertDataType } from 'app.features/Certification/types';
 import CertBox from 'app.components/Box/CertBox';
 interface Props {
 	certs: CertDataType[];
+	alreadyVerification: number[];
 }
-function HomeScreen({ certs }: Props) {
+function HomeScreen({ certs, alreadyVerification }: Props) {
 	return (
 		<>
 			<section className="">
@@ -23,7 +24,7 @@ function HomeScreen({ certs }: Props) {
 				<ul className="grid grid-cols-3 gap-[3rem]">
 					{certs?.map((cert, index) => (
 						<li key={index}>
-							<CertBox certData={cert} />
+							<CertBox certData={cert} alreadyVerified={alreadyVerification.includes(cert.id)} />
 						</li>
 					))}
 				</ul>
