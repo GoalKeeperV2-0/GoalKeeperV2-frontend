@@ -4,14 +4,51 @@ import React from 'react';
 import { CertStateType, CertType, MappedCertState } from '../types';
 interface Props {
 	certDates?: string[];
-	certifications: CertType[] | null;
+	certifications: Partial<CertType>[] | null;
 	endDate: string;
 	todayString: string;
 	onSelectCert?: (index: number) => void;
 	clickDisabled?: boolean;
+	isCertPost?: boolean;
 }
 // TODO: 인증일에 인증 안올린 경우 처리 -> UI 처리도 필요
-function CertDateList({ certifications, certDates, endDate, todayString, onSelectCert, clickDisabled = false }: Props) {
+function CertDateList({
+	certifications,
+	certDates,
+	endDate,
+	todayString,
+	onSelectCert,
+	clickDisabled = false,
+	isCertPost = false,
+}: Props) {
+	const sortCerts = [...(certifications ?? [])].sort((a, b) => {
+		const x = a.date ?? '';
+		const y = b.date ?? '';
+		if (x < y) return -1;
+		if (x > y) return 1;
+		return 0;
+	});
+	const isManyTimeGoal = Boolean(certDates?.length);
+	const mapCertResult = () => {
+		if (!isManyTimeGoal) {
+			//일반 목표의 경우
+			if (certifications?.length) {
+				return [certifications[0].state];
+			}
+			return [null];
+		}
+		//지속 목표
+
+		return certDates?.map((item) => {
+			const filterCert = certifications?.filter((cert) => cert.date === item);
+			if (filterCert?.length) {
+				return filterCert[0].state;
+			}
+			if (getDayDiff(todayString, item) < 0) return 'FAIL';
+			return null;
+		});
+	};
+	console.log(mapCertResult());
 	const getDateString = (certDate: string) => {
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		const [_, goalMonth, goalDate] = certDate.split('-');
@@ -21,44 +58,37 @@ function CertDateList({ certifications, certDates, endDate, todayString, onSelec
 		return getDayDiff(todayString, certDate);
 	};
 	const getBgColor = (certDate: string, index: number) => {
-		if (certifications === null) return 'bg-buttonGray-200';
-		const dday = getDday(certDate);
-
-		if ((dday < 0 && !certifications[index]) || certifications[index]?.state === 'FAIL') return 'bg-buttonRed-100';
-		if (certifications[index]?.state === 'ONGOING') return 'bg-primaryOrange-100';
-		if (certifications[index]?.state === 'SUCCESS') return 'bg-primaryOrange-200';
-
-		if (dday === 0) return 'bg-primaryBlack-500';
-		return 'bg-buttonGray-200';
+		if (getDday(certDate) > 0) return 'bg-buttonGray-200';
+		if (mapCertResult()?.[index] === 'SUCCESS') return 'bg-primaryOrange-200';
+		if (mapCertResult()?.[index] === 'FAIL') return 'bg-buttonRed-100';
+		if (mapCertResult()?.[index] === 'ONGOING' || mapCertResult()?.[index] === null)
+			//인증 & goal 범용적으로 사용하기 위한 코드
+			return 'bg-primaryOrange-100';
+		// dday === 0
+		return 'bg-primaryBlack-500';
 	};
+
 	const getTextColor1 = (certDate: string, index: number) => {
-		if (certifications === null) return 'text-[#828282]';
-		const dday = getDday(certDate);
-
-		if ((dday < 0 && !certifications[index]) || certifications[index]?.state === 'FAIL') return 'text-primaryRed-200';
-		if (certifications[index]?.state === 'ONGOING') return 'text-primaryOrange-200';
-		if (certifications[index]?.state === 'SUCCESS') return 'text-white';
-
-		if (dday === 0) return 'text-white';
-		return 'text-[#828282]';
+		if (getDday(certDate) > 0) return 'text-[#828282]';
+		if (mapCertResult()?.[index] === 'SUCCESS') return 'text-white';
+		if (mapCertResult()?.[index] === 'FAIL') return 'text-primaryRed-200';
+		if (mapCertResult()?.[index] === 'ONGOING' || mapCertResult()?.[index] === null) return 'text-primaryOrange-200';
+		// dday === 0
+		return 'text-white';
 	};
 	const getTextColor2 = (certDate: string, index: number) => {
-		if (certifications === null) return 'text-primaryOrange-200';
-		const dday = getDday(certDate);
+		if (getDday(certDate) > 0) return 'text-[#828282]';
+		if (mapCertResult()?.[index] === 'SUCCESS') return 'text-primaryOrange-200';
+		if (mapCertResult()?.[index] === 'FAIL') return 'text-buttonRed-200';
+		if (mapCertResult()?.[index] === 'ONGOING' || mapCertResult()?.[index] === null) return 'text-primaryOrange-200';
 
-		if ((dday < 0 && !certifications[index]) || certifications[index]?.state === 'FAIL') return 'text-buttonRed-200';
-		if (certifications[index]?.state === 'ONGOING') return 'text-primaryOrange-200';
-		if (certifications[index]?.state === 'SUCCESS') return 'text-primaryOrange-200';
-
-		if (dday === 0) return 'text-primaryBlack-500';
-		return 'text-primaryOrange-200';
+		return 'text-primaryBlack-500';
 	};
 	const getMessage = (certDate: string, index: number) => {
-		if (certifications === null) return '';
-		const dday = getDday(certDate);
-		if (dday === 0 && !certifications[index]) return '인증';
-		return MappedCertState[certifications[index]?.state as CertStateType] ?? '실패';
+		if (mapCertResult()?.[index] === null) return '검증 중';
+		return MappedCertState[mapCertResult()?.[index] as CertStateType] ?? '실패';
 	};
+
 	return (
 		<ul className="space-y-[0.8rem] h-full w-[18.5rem] overflow-y-auto certdates-scrollbar">
 			{(certDates ?? [endDate]).map((item, index) => (
@@ -75,23 +105,15 @@ function CertDateList({ certifications, certDates, endDate, todayString, onSelec
 					className="text-[#828282] flex items-center  space-x-[1.6rem] w-fit p-[0.8rem]"
 				>
 					<span className={`${getTextColor1(item, index)}`}>{getDateString(item)}</span>
-					{getDday(item) <= 0 ? (
-						<span
-							className={` ${getTextColor2(
-								item,
-								index
-							)} bg-white rounded-[0.6rem] px-[0.6rem] max-h-[2rem] text-[1.2rem] flex items-center`}
-						>
-							{getMessage(item, index)}
-						</span>
-					) : (
-						<span
-							className={` text-[#828282]
-							 bg-white rounded-[0.6rem] px-[0.6rem] max-h-[2rem] flex items-center text-[1.2rem]`}
-						>
-							{`D-${getDday(item)}`}
-						</span>
-					)}
+
+					<span
+						className={` ${getTextColor2(
+							item,
+							index
+						)} bg-white rounded-[0.6rem] px-[0.6rem] max-h-[2rem] text-[1.2rem] flex items-center`}
+					>
+						{getDday(item) <= 0 ? getMessage(item, index) : `D-${getDday(item)}`}
+					</span>
 				</Button>
 			))}
 		</ul>

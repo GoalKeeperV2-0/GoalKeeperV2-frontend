@@ -4,7 +4,7 @@ import Button from 'app.components/App.base/Button';
 import BoxContent from 'app.components/Box/common/BoxContent';
 import BoxTitle from 'app.components/Box/common/BoxTitle';
 import CertDateList from 'app.features/GoalManage/components/CertDateList';
-import { CategoryType, GoalDataType, MappedCategory } from 'app.features/GoalManage/types';
+import { CategoryType, CertType, GoalDataType, MappedCategory } from 'app.features/GoalManage/types';
 import { postVerification } from 'app.modules/api/certification';
 import { getTodayString } from 'app.modules/utils/getTodayString';
 import React, { useState } from 'react';
@@ -62,7 +62,14 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 
 			<div className="space-y-[3.2rem]">
 				<div className="flex justify-between items-start h-[28.1rem]">
-					<CertDateList {...goal} todayString={`${todayString}`} clickDisabled />
+					<CertDateList
+						certDates={goal?.certDates}
+						certifications={goal?.certifications ?? certData?.relatedCertifications}
+						endDate={goal?.endDate}
+						todayString={`${todayString}`}
+						isCertPost
+						clickDisabled
+					/>
 					<CertImage picture={certData.picture} />
 				</div>
 				<CertContent content={certData.content} />

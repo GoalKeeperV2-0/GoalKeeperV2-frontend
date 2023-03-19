@@ -1,4 +1,4 @@
-import { GoalDataType } from 'app.features/GoalManage/types';
+import { CertType, GoalDataType } from 'app.features/GoalManage/types';
 
 export type CertStateType = 'ONGOING' | 'SUCCESS' | 'FAIL';
 
@@ -18,4 +18,5 @@ export type CertDataType = {
 	failCount: number;
 	oneTimeGoal?: GoalDataType;
 	manyTimeGoal?: GoalDataType;
+	relatedCertifications: CertType[];
 };
