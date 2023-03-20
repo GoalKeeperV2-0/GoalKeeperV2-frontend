@@ -1,4 +1,3 @@
-import Button from 'app.components/App.base/Button';
 import { modalState } from 'app.modules/store/modal';
 import { formatDate } from 'app.modules/utils/formatDate';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
@@ -10,7 +9,6 @@ import { CertDataType } from 'app.features/Certification/types';
 import DetailCert from 'app.features/Certification/modalContents/DetailCert';
 import Badge from 'app.components/App.base/Badge';
 import { getRequireSuccess } from 'app.modules/utils/getRequireSuccess';
-import BoxImage from './common/BoxImage';
 import BoxLayout from './common/BoxLayout';
 import BottomLayout from './common/BottomLayout';
 import BottomText from './common/BottomText';

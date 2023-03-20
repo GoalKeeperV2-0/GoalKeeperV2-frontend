@@ -16,13 +16,13 @@ import { CategoryType, GoalDataType, GoalStateType, MappedCategory, MappedReward
 import { getDdayMessage } from '../utils/getDdayMessage';
 
 // TODO:1. 목표 플로우
-// TODO:2. 자정에 스케줄러 이상한거
-// TODO: 인증 없어서 실패한 경우 처리
+// TODO: 인증 없어서 실패한 경우 처리(인증 내용,사진)
 
 interface Props {
 	goal: GoalDataType;
 }
 // TODO: svg 포맷 다른 포맷으로 처리하기
+// TODO: 가장 마지막으로 올린 인증 focusing 하기
 function DetailGoal({ goal }: Props) {
 	console.log('detail-goal');
 	const { mutate: postCertMutate, isLoading } = useMutation(postCert, {
