@@ -5,6 +5,7 @@
  html{
     font-family: 'AppleSDGothicNeo';
     font-size: 62.5%;
+    
    
  }
 
@@ -13,6 +14,7 @@
      width:100vw;
      height:100vh;
      font-size:1.6rem;
+    
   }
 
   h1 {

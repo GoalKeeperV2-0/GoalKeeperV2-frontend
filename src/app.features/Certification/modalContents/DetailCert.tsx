@@ -19,7 +19,7 @@ interface Props {
 	dday: number;
 	onCloseModal: () => void;
 }
-
+// TODO: 검증하고 인증목록 refetch , 검증 count refetch
 function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 	console.log('detail-cert', certData, goal);
 	const queryClient = useQueryClient();
