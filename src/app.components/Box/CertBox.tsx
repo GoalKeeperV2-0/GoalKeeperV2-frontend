@@ -9,6 +9,7 @@ import { CertDataType } from 'app.features/Certification/types';
 import DetailCert from 'app.features/Certification/modalContents/DetailCert';
 import Badge from 'app.components/App.base/Badge';
 import { getRequireSuccess } from 'app.modules/utils/getRequireSuccess';
+import { useNavigate } from 'react-router-dom';
 import BoxLayout from './common/BoxLayout';
 import BottomLayout from './common/BottomLayout';
 import BottomText from './common/BottomText';
@@ -21,6 +22,7 @@ interface Props {
 function CertBox({ certData, alreadyVerified }: Props) {
 	const { id, content, picture, state, date: certDate, successCount, failCount, oneTimeGoal, manyTimeGoal } = certData;
 	const { year, month, date } = getKoreaToday();
+
 	const todayString = formatDate(year, month, date);
 	const [modal, setModal] = useRecoilState(modalState);
 	const dday = getDayDiff(

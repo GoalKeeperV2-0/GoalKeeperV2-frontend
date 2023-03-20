@@ -9,6 +9,7 @@ import { postVerification } from 'app.modules/api/certification';
 import { getProgressText } from 'app.modules/utils/getRequireSuccess';
 import { getTodayString } from 'app.modules/utils/getTodayString';
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import CertContent from '../components/CertContent';
 import CertImage from '../components/CertImage';
 import { CertDataType } from '../types';
@@ -23,10 +24,12 @@ interface Props {
 function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 	console.log('detail-cert', certData, goal);
 	const queryClient = useQueryClient();
+
 	const { mutate: postVerificationMutate, isLoading } = useMutation(postVerification, {
 		onSuccess: async (res) => {
-			console.log(res);
+			const category = new URL(document.location.toString()).searchParams.get('category');
 			await queryClient.refetchQueries({ queryKey: ['user', 'statistics', 'point'], type: 'active' });
+			await queryClient.refetchQueries({ queryKey: ['certs', category ?? 'all'], type: 'active' });
 			alert('검증 완료');
 			//resetGoalForm();
 		},
