@@ -20,17 +20,19 @@ import { getDdayMessage } from '../utils/getDdayMessage';
 
 interface Props {
 	goal: GoalDataType;
+	onCloseModal: () => void;
 }
 // TODO: svg 포맷 다른 포맷으로 처리하기
 // TODO: 가장 마지막으로 올린 인증 focusing 하기
-function DetailGoal({ goal }: Props) {
+function DetailGoal({ goal, onCloseModal }: Props) {
 	console.log('detail-goal');
 	const queryClient = useQueryClient();
 
 	const { mutate: postCertMutate, isLoading } = useMutation(postCert, {
-		onSuccess: (res) => {
+		onSuccess: async (res) => {
 			console.log(res);
-
+			await queryClient.refetchQueries({ queryKey: ['myGoals', 'all'], type: 'active' });
+			onCloseModal();
 			alert('인증등록완료');
 			//resetGoalForm();
 		},
@@ -41,6 +43,7 @@ function DetailGoal({ goal }: Props) {
 			console.log(res);
 			// TODO: 검토 요청 완료후 포인트 돌아오는지 확인하기
 			await queryClient.refetchQueries({ queryKey: ['user', 'statistics'], type: 'active' });
+			onCloseModal();
 			alert('검토요청 완료');
 			//resetGoalForm();
 		},

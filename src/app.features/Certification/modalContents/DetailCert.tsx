@@ -28,8 +28,10 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 	const { mutate: postVerificationMutate, isLoading } = useMutation(postVerification, {
 		onSuccess: async (res) => {
 			const category = new URL(document.location.toString()).searchParams.get('category');
+			console.log('certs', category ?? 'all');
 			await queryClient.refetchQueries({ queryKey: ['user', 'statistics', 'point'], type: 'active' });
 			await queryClient.refetchQueries({ queryKey: ['certs', category ?? 'all'], type: 'active' });
+			onCloseModal();
 			alert('검증 완료');
 			//resetGoalForm();
 		},
