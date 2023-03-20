@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Badge from 'app.components/App.base/Badge';
 import Button from 'app.components/App.base/Button';
 import BoxContent from 'app.components/Box/common/BoxContent';
@@ -25,6 +25,8 @@ interface Props {
 // TODO: 가장 마지막으로 올린 인증 focusing 하기
 function DetailGoal({ goal }: Props) {
 	console.log('detail-goal');
+	const queryClient = useQueryClient();
+
 	const { mutate: postCertMutate, isLoading } = useMutation(postCert, {
 		onSuccess: (res) => {
 			console.log(res);
@@ -35,9 +37,10 @@ function DetailGoal({ goal }: Props) {
 		onError: (error) => alert('오류 발생.'),
 	});
 	const { mutate: patchHoldGoalMutate, isLoading: patchHoldGoalLoading } = useMutation(patchHoldGoal, {
-		onSuccess: (res) => {
+		onSuccess: async (res) => {
 			console.log(res);
-
+			// TODO: 검토 요청 완료후 포인트 돌아오는지 확인하기
+			await queryClient.refetchQueries({ queryKey: ['user', 'statistics'], type: 'active' });
 			alert('검토요청 완료');
 			//resetGoalForm();
 		},
@@ -163,7 +166,7 @@ function DetailGoal({ goal }: Props) {
 						<Button
 							onClick={() => {
 								if (patchHoldGoalLoading || !goal?.id) return;
-								patchHoldGoal(goal.id);
+								patchHoldGoalMutate(goal.id);
 							}}
 							type="button"
 							variant="solid"
