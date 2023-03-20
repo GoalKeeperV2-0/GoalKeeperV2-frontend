@@ -29,8 +29,14 @@ function GoalBox({ goalData }: Props) {
 
 	const todayString = getTodayString();
 	const [modal, setModal] = useRecoilState(modalState);
+	const closeModalHandler = () => {
+		setModal({
+			render: null,
+			isOpen: false,
+		});
+	};
 	const openModalHandler = () => {
-		setModal({ render: <DetailGoal goal={goalData} />, isOpen: true });
+		setModal({ render: <DetailGoal goal={goalData} onCloseModal={closeModalHandler} />, isOpen: true });
 	};
 	// TODO: 함수 네이밍 조정
 	const isCertDate = () => {

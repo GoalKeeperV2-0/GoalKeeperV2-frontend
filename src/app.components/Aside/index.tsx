@@ -56,9 +56,14 @@ function Aside() {
 		totalSuccessGoalCount: '성공한 목표',
 		totalFailGoalCount: '실패한 목표',
 	};
-
+	const closeModalHandler = () => {
+		setModal({
+			render: null,
+			isOpen: false,
+		});
+	};
 	const openModalHandler = (goalData: GoalDataType) => {
-		setModal({ render: <DetailGoal goal={goalData} />, isOpen: true });
+		setModal({ render: <DetailGoal goal={goalData} onCloseModal={closeModalHandler} />, isOpen: true });
 	};
 	return (
 		<aside className="h-fit min-w-[27.8rem] mr-[2.8rem] rounded-[1.6rem] w-[27.8rem] p-[2.4rem] border-[0.1rem] border-borderGray  bg-white space-y-[2rem]">
