@@ -77,6 +77,7 @@ function DetailCert({ certData, goal, dday, onCloseModal }: Props) {
 						certifications={goal?.certifications ?? certData?.relatedCertifications}
 						endDate={goal?.endDate}
 						todayString={`${todayString}`}
+						focusedCertDate={certData.date}
 						isCertPost
 						clickDisabled
 					/>
