@@ -25,7 +25,7 @@ function CertContent({ todayString, focusedCert, certDate, certContent, onCertCo
 				className={`${getDday() > 0 ? 'text-[#828282]' : ''}`}
 			/>
 			{/* TODO: 입력 길어지는 경우 대응*/}
-			{!focusedCert?.content && getDday() === 0 ? (
+			{!focusedCert?.content && getDday() >= 0 ? (
 				<textarea
 					id="certContent"
 					placeholder={isJustRegister ? `${getDday()}일 후 인증 할 수 있어요.` : '인증내용을 작성해주세요.'}
