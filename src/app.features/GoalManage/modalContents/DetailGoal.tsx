@@ -160,7 +160,12 @@ function DetailGoal({ goal, onCloseModal }: Props) {
 
 			<form className="space-y-[3.2rem]" onSubmit={certSubmitHandler}>
 				<div className="flex justify-between items-start h-[28.1rem]">
-					<CertDateList {...goal} todayString={`${todayString}`} onSelectCert={selectCertHandler} />
+					<CertDateList
+						{...goal}
+						focusedCertDate={getFocusedCert()?.date ?? goal?.certDates?.[selectedCertIdx] ?? goal?.endDate}
+						todayString={`${todayString}`}
+						onSelectCert={selectCertHandler}
+					/>
 					<CertImage
 						todayString={todayString}
 						certification={getFocusedCert()}

@@ -10,6 +10,7 @@ interface Props {
 	onSelectCert?: (index: number) => void;
 	clickDisabled?: boolean;
 	isCertPost?: boolean;
+	focusedCertDate: string;
 }
 // TODO: 인증일에 인증 안올린 경우 처리 -> UI 처리도 필요
 function CertDateList({
@@ -20,6 +21,7 @@ function CertDateList({
 	onSelectCert,
 	clickDisabled = false,
 	isCertPost = false,
+	focusedCertDate,
 }: Props) {
 	const sortCerts = [...(certifications ?? [])].sort((a, b) => {
 		const x = a.date ?? '';
@@ -99,29 +101,32 @@ function CertDateList({
 	return (
 		<ul className="space-y-[0.8rem] h-full w-[18.5rem] overflow-y-auto certdates-scrollbar">
 			{(certDates ?? [endDate]).map((item, index) => (
-				<Button
-					key={index}
-					onClick={() => {
-						if (!onSelectCert) return;
-						onSelectCert(index);
-					}}
-					disabled={clickDisabled}
-					variant="solid"
-					size="xs"
-					bgColor={getBgColor(item, index)}
-					className="text-[#828282] flex items-center  space-x-[1.6rem] w-fit p-[0.8rem]"
-				>
-					<span className={`${getTextColor1(item, index)}`}>{getDateString(item)}</span>
-
-					<span
-						className={` ${getTextColor2(
-							item,
-							index
-						)} bg-white rounded-[0.6rem] px-[0.6rem] max-h-[2rem] text-[1.2rem] flex items-center`}
+				<li key={index} className="flex items-center space-x-[0.8rem]">
+					<Button
+						onClick={() => {
+							if (!onSelectCert) return;
+							onSelectCert(index);
+						}}
+						disabled={clickDisabled}
+						variant="solid"
+						size="xs"
+						ariaPressed={focusedCertDate === item}
+						bgColor={getBgColor(item, index)}
+						className="text-[#828282] flex items-center  space-x-[1.6rem] w-fit p-[0.8rem]"
 					>
-						{getDday(item) <= 0 ? getMessage(item, index) : `D-${getDday(item)}`}
-					</span>
-				</Button>
+						<span className={`${getTextColor1(item, index)}`}>{getDateString(item)}</span>
+
+						<span
+							className={` ${getTextColor2(
+								item,
+								index
+							)} bg-white rounded-[0.6rem] px-[0.6rem] max-h-[2rem] text-[1.2rem] flex items-center`}
+						>
+							{getDday(item) <= 0 ? getMessage(item, index) : `D-${getDday(item)}`}
+						</span>
+					</Button>
+					{focusedCertDate === item && <span className=" text-[0.8rem]">◀</span>}
+				</li>
 			))}
 		</ul>
 	);
