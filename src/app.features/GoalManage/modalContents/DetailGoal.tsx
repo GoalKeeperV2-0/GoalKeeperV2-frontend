@@ -32,6 +32,8 @@ function DetailGoal({ goal, onCloseModal }: Props) {
 		onSuccess: async (res) => {
 			console.log(res);
 			await queryClient.refetchQueries({ queryKey: ['myGoals', 'all'], type: 'active' });
+			// aside 업데이트 TODO: 최적화 aside에 표시된 골일때 refetch로 범위 축소 필요
+			await queryClient.refetchQueries({ queryKey: ['user', 'statistics', 'todayCert'], type: 'active' });
 			onCloseModal();
 			alert('인증등록완료');
 			//resetGoalForm();
