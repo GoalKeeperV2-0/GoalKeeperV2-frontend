@@ -3,7 +3,7 @@ import Button from 'app.components/App.base/Button';
 import DetailGoal from 'app.features/GoalManage/modalContents/DetailGoal';
 import { GoalDataType, MappedCategory } from 'app.features/GoalManage/types';
 import UploadOnetimeGoal from 'app.features/GoalUpload/modalContents/UploadGoal';
-import { getUserPoints, getUserStatistics } from 'app.modules/api/overview';
+import { getTodayCertGoal, getUserPoints, getUserStatistics } from 'app.modules/api/overview';
 import { SERVICE_URL } from 'app.modules/constants/ServiceUrl';
 import { useMyGoals } from 'app.modules/hooks/useMyGoals';
 import { modalState } from 'app.modules/store/modal';
@@ -49,7 +49,15 @@ function Aside() {
 			console.log(error);
 		},
 	});
-	const { data: goals } = useMyGoals(0);
+	const { data: todayCertGoal } = useQuery(['user', 'statistics', 'todayCert'], getTodayCertGoal, {
+		select: (res) => res.data.data,
+		onSuccess: (res) => {
+			console.log(res);
+		},
+		onError: (error) => {
+			console.log(error);
+		},
+	});
 	const UserStatisticsMap = {
 		totalGoalCount: '등록한 목표',
 		totalOngoingGoalCount: '진행중인 목표',
@@ -65,6 +73,7 @@ function Aside() {
 	const openModalHandler = (goalData: GoalDataType) => {
 		setModal({ render: <DetailGoal goal={goalData} onCloseModal={closeModalHandler} />, isOpen: true });
 	};
+
 	return (
 		<aside className="h-fit min-w-[27.8rem] mr-[2.8rem] rounded-[1.6rem] w-[27.8rem] p-[2.4rem] border-[0.1rem] border-borderGray  bg-white space-y-[2rem]">
 			<div className="space-y-[0.4rem]">
@@ -82,14 +91,14 @@ function Aside() {
 						))}
 					</ul>
 				</OverviewTemplate>
-				<OverviewTemplate title="최근 목표">
+				<OverviewTemplate title="오늘 인증해주세요">
 					<Link to={SERVICE_URL.manageGoal}>
 						<span className="absolute top-0 right-0 text-[1.6rem] mb-[0.8rem] font-semibold leading-[1.92rem] text-primaryBlack-200">
 							더보기
 						</span>
 					</Link>
 					<ul className="space-y-[0.7rem]">
-						{goals?.content.slice(0, 2)?.map((goal: GoalDataType) => (
+						{todayCertGoal?.map((goal: GoalDataType) => (
 							<Button
 								key={goal.id}
 								size="sm"
@@ -100,12 +109,7 @@ function Aside() {
 							>
 								<div className="flex justify-between w-full h-full p-[1.6rem] truncate text-[1.6rem] leading-[1.92rem]">
 									<span className="truncate">{goal.title}</span>
-									<span>
-										🗓{' '}
-										{getDayDiff(getTodayString(), goal.endDate) === 0
-											? '지금'
-											: `D-${getDayDiff(getTodayString(), goal.endDate)}`}
-									</span>
+									<span>🗓 지금</span>
 								</div>
 							</Button>
 						))}

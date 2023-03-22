@@ -11,3 +11,9 @@ export const getUserPoints = async () => {
 
 	return res;
 };
+
+export const getTodayCertGoal = async () => {
+	const res = await client.get(`statistics/user/goals`);
+
+	return res;
+};
