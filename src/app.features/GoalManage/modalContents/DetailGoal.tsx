@@ -12,6 +12,7 @@ import React, { useState } from 'react';
 import CertContent from '../components/CertContent';
 import CertDateList from '../components/CertDateList';
 import CertImage from '../components/CertImage';
+import LeaveAlertModal from '../components/LeaveAlertModal';
 import { CategoryType, GoalDataType, GoalStateType, MappedCategory, MappedReward, RewardType } from '../types';
 import { getDdayMessage } from '../utils/getDdayMessage';
 
@@ -55,7 +56,12 @@ function DetailGoal({ goal, onCloseModal }: Props) {
 	const [certContent, setCertContent] = useState<string>('');
 	const [certImage, setCertImage] = useState<File>();
 	const [certImagePreview, setCertImagePreview] = useState<string | null>('');
-
+	const [isAlertModalOpen, setIsAlertModalOpen] = useState<{
+		alertTitle: string;
+		alertSubTitle: string;
+		confirmActionText: string;
+		onConfirmAction: () => void;
+	} | null>(null);
 	const todayString = getTodayString();
 
 	const isManyTimeGoal = () => {
@@ -124,8 +130,10 @@ function DetailGoal({ goal, onCloseModal }: Props) {
 		console.log(formData.get('picture'), certImage);
 		postCertMutate(formData);
 	};
+	// TODO:  인증 글 업로드 중에 바깥 영역 클릭했을때 경고모달 띄우기
 	return (
 		<div className="space-y-[3.2rem]">
+			{isAlertModalOpen && <LeaveAlertModal onCancel={() => setIsAlertModalOpen(null)} {...isAlertModalOpen} />}
 			<div className="flex justify-between max-h-[9.5rem]">
 				<BoxTitle title={goal.title} />
 				<div className="w-[46.4rem]  flex flex-col justify-between">
@@ -205,7 +213,14 @@ function DetailGoal({ goal, onCloseModal }: Props) {
 					{/*인증날인데 올라온 인증이 없는 상태 */}
 					{getFocusedCert() === null && (goal.certDates ?? [goal.endDate])[selectedCertIdx] === todayString && (
 						<Button
-							onClick={certSubmitHandler}
+							onClick={(e) => {
+								setIsAlertModalOpen({
+									alertTitle: '인증을 완료하시겠어요?',
+									alertSubTitle: '인증 후에는 수정이 불가능합니다.',
+									confirmActionText: '인증하기',
+									onConfirmAction: () => certSubmitHandler(e),
+								});
+							}}
 							type="button"
 							variant="outline"
 							size="lg"
