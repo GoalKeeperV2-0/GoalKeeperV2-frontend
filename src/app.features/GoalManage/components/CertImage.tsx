@@ -54,7 +54,7 @@ function CertImage({
 
 			<div className="flex flex-col space-y-[1.2rem]">
 				<Label
-					required={!certification?.picture}
+					required={!certification?.picture && getDday() >= 0}
 					htmlFor="certImage"
 					content="인증 사진"
 					className={`${getDday() > 0 ? 'text-[#828282]' : ''}`}

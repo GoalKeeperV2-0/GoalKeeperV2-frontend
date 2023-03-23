@@ -3,6 +3,7 @@ import SubmitButton from 'app.components/SubmitButton';
 import { postManytimeGoal, PostOnetimeGoal, postOnetimeGoal } from 'app.modules/api/goal';
 import { useMyGoals } from 'app.modules/hooks/useMyGoals';
 import { useRetchOnPostGoal } from 'app.modules/hooks/useRetchOnPostGoal';
+import { getTodayString } from 'app.modules/utils/getTodayString';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import SelectCategoryArea from '../components/SelectCategoryArea';
@@ -28,6 +29,13 @@ function UploadGoal() {
 			await queryClient.refetchQueries({ queryKey: ['myGoals', 'all'], type: 'active' });
 			await queryClient.refetchQueries({ queryKey: ['user', 'statistics'], type: 'active' });
 			await queryClient.refetchQueries({ queryKey: ['user', 'statistics', 'point'], type: 'active' });
+			const { endDate, certDates } = res.data.data;
+			console.log(endDate, certDates, 123);
+			const todayString = getTodayString();
+			// 목표가 당일 인증을 필요로 하는경우
+			if (endDate === todayString || certDates?.includes(todayString)) {
+				await queryClient.refetchQueries({ queryKey: ['user', 'statistics', 'todayCert'], type: 'active' });
+			}
 			alert('일반목표등록완료');
 			resetGoalForm();
 		},
@@ -39,6 +47,14 @@ function UploadGoal() {
 			await queryClient.refetchQueries({ queryKey: ['myGoals', 'all'], type: 'active' });
 			await queryClient.refetchQueries({ queryKey: ['user', 'statistics'], type: 'active' });
 			await queryClient.refetchQueries({ queryKey: ['user', 'statistics', 'point'], type: 'active' });
+			const { endDate, certDates } = res.data.data;
+			console.log(endDate, certDates, 123);
+			// 목표가 당일 인증을 필요로 하는경우 TODO: 최적화. 2개 미만 표시된  경우로 범위 축소 필요
+			const todayString = getTodayString();
+			if (endDate === todayString || certDates?.includes(todayString)) {
+				await queryClient.refetchQueries({ queryKey: ['user', 'statistics', 'todayCert'], type: 'active' });
+			}
+
 			alert('지속목표등록완료');
 			resetGoalForm();
 		},

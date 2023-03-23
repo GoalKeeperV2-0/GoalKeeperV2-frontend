@@ -19,13 +19,13 @@ function CertContent({ todayString, focusedCert, certDate, certContent, onCertCo
 	return (
 		<div className="flex flex-col space-y-[1.2rem]">
 			<Label
-				required={!certContent}
+				required={!focusedCert?.content && getDday() >= 0}
 				htmlFor="certContent"
 				content="인증 내용"
 				className={`${getDday() > 0 ? 'text-[#828282]' : ''}`}
 			/>
 			{/* TODO: 입력 길어지는 경우 대응*/}
-			{!focusedCert?.content ? (
+			{!focusedCert?.content && getDday() >= 0 ? (
 				<textarea
 					id="certContent"
 					placeholder={isJustRegister ? `${getDday()}일 후 인증 할 수 있어요.` : '인증내용을 작성해주세요.'}
@@ -39,8 +39,8 @@ function CertContent({ todayString, focusedCert, certDate, certContent, onCertCo
 			) : (
 				<div className="resize-none w-full h-[9.4rem] outline-none  border-[0.1rem] rounded-[0.8rem] p-[2.4rem] overflow-hidden  whitespace-normal">
 					<p>
-						{focusedCert?.content.substring(0, 86)}
-						{focusedCert?.content.length > 86 && '...'}
+						{focusedCert?.content?.substring(0, 86) ?? '작성한 인증내용이 없어요'}
+						{(focusedCert?.content?.length ?? 0) > 86 && '...'}
 					</p>
 				</div>
 			)}

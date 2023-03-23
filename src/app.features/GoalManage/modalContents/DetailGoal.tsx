@@ -32,6 +32,8 @@ function DetailGoal({ goal, onCloseModal }: Props) {
 		onSuccess: async (res) => {
 			console.log(res);
 			await queryClient.refetchQueries({ queryKey: ['myGoals', 'all'], type: 'active' });
+			// aside 업데이트 TODO: 최적화 aside에 표시된 골일때 refetch로 범위 축소 필요
+			await queryClient.refetchQueries({ queryKey: ['user', 'statistics', 'todayCert'], type: 'active' });
 			onCloseModal();
 			alert('인증등록완료');
 			//resetGoalForm();
@@ -56,12 +58,23 @@ function DetailGoal({ goal, onCloseModal }: Props) {
 
 	const todayString = getTodayString();
 
-	const [selectedCertIdx, setSelectedCertIdx] = useState<number>(0);
-	const certSubmitDisabled = !goal?.id || !certContent.trim() || !certImage;
-
 	const isManyTimeGoal = () => {
 		return goal.certDates !== undefined;
 	};
+	const getInitFocusCert = () => {
+		let result = 0;
+		const { certDates } = goal;
+		if (certDates === undefined) return result;
+		for (let i = certDates.length - 1; i >= 0; i -= 1) {
+			if (getDayDiff(todayString, certDates[i]) <= 0) {
+				result = i;
+				return result;
+			}
+		}
+		return result;
+	};
+	const [selectedCertIdx, setSelectedCertIdx] = useState<number>(getInitFocusCert());
+	const certSubmitDisabled = !goal?.id || !certContent.trim() || !certImage;
 
 	const selectCertHandler = (index: number) => {
 		setSelectedCertIdx(index);
@@ -147,7 +160,12 @@ function DetailGoal({ goal, onCloseModal }: Props) {
 
 			<form className="space-y-[3.2rem]" onSubmit={certSubmitHandler}>
 				<div className="flex justify-between items-start h-[28.1rem]">
-					<CertDateList {...goal} todayString={`${todayString}`} onSelectCert={selectCertHandler} />
+					<CertDateList
+						{...goal}
+						focusedCertDate={getFocusedCert()?.date ?? goal?.certDates?.[selectedCertIdx] ?? goal?.endDate}
+						todayString={`${todayString}`}
+						onSelectCert={selectCertHandler}
+					/>
 					<CertImage
 						todayString={todayString}
 						certification={getFocusedCert()}
