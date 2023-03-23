@@ -2,6 +2,7 @@ import Label from 'app.components/App.base/Input/Label';
 import { getDayDiff } from 'app.modules/utils/getDayDiff';
 import React from 'react';
 import { ReactComponent as CameraIcon } from 'app.modules/assets/manageGoal/camera.svg';
+import { ReactComponent as RetryIcon } from 'app.modules/assets/manageGoal/retry.svg';
 import { getProgressText, getRequireSuccess } from 'app.modules/utils/getRequireSuccess';
 import { CertType } from '../types';
 
@@ -62,31 +63,41 @@ function CertImage({
 				{certification === null && getDday() >= 0 ? (
 					<label
 						htmlFor="certImage"
-						className="w-[46.4rem] h-[24.5rem] border-[0.1rem] border-[#E7E7E7]  rounded-[0.8rem] grid place-content-center "
+						className="cursor-pointer w-[46.4rem] relative h-[24.5rem] border-[0.1rem] border-[#E7E7E7]  rounded-[0.8rem] grid place-content-center "
 					>
 						{certImagePreview && getDday() === 0 ? (
-							<div
-								className="w-[46.4rem] h-[24.5rem]  rounded-[0.8rem] bg-cover relative"
-								style={{ backgroundImage: `url(${certImagePreview as string})` }}
-							/>
+							<>
+								<div className="absolute rounded-[0.6rem] inset-0 top-0 space-y-[1rem] bg-black flex flex-col items-center justify-center  bg-opacity-20  z-[50]">
+									<CameraIcon fill="white" />
+									<div className="flex items-center">
+										<RetryIcon className="mt-[0.2rem]" />
+										<span className="text-white pc:text-body1-pc ">1/1</span>
+									</div>
+								</div>
+
+								<div
+									className="w-[46.4rem] h-[24.5rem]  rounded-[0.8rem] bg-cover relative"
+									style={{ backgroundImage: `url(${certImagePreview as string})` }}
+								/>
+							</>
 						) : (
 							<>
 								<div className="flex flex-col items-center space-y-[1rem]">
-									<CameraIcon />
+									<CameraIcon fill="#A6A6A6" />
 									<span className="text-primaryBlack-300 pc:text-body1-pc">
 										{getDday() > 0 ? `${getDday()}일 후 등록 할 수 있어요.` : '0/1'}
 									</span>
 								</div>
-								<input
-									id="certImage"
-									onChange={onCertImageChange}
-									disabled={getDday() !== 0}
-									type="file"
-									accept="image/*"
-									className=" hidden"
-								/>
 							</>
 						)}
+						<input
+							id="certImage"
+							onChange={onCertImageChange}
+							disabled={getDday() !== 0}
+							type="file"
+							accept="image/*"
+							className=" hidden"
+						/>
 					</label>
 				) : (
 					<div
