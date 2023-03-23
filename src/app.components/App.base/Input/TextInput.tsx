@@ -16,6 +16,7 @@ interface Props {
 	minLength?: number;
 	className?: string;
 	name?: string;
+	maxLength?: number;
 }
 function TextInput({
 	type,
@@ -30,6 +31,7 @@ function TextInput({
 	minLength,
 	className,
 	name,
+	maxLength,
 }: Props) {
 	const getFocusColor = () => {
 		if (focusColor?.includes('primaryOrange-200')) {
@@ -55,6 +57,7 @@ function TextInput({
 			disabled={disabled}
 			required={required}
 			minLength={minLength}
+			maxLength={maxLength}
 			className={`${getFocusColor()} ${getTextColor()} w-full px-[1.6rem] min-h-[4.6rem] h-[4.6rem] pc:px-[2.4rem] pc:min-h-[7rem] pc:h-[7rem]  pc:border-[0.2rem] border-[0.1rem] rounded-[0.8rem] focus:outline-none ${className}`}
 		/>
 	);

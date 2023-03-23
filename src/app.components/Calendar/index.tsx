@@ -137,7 +137,7 @@ function Calander({ dateHandler, endDate, startDate, certDates, resetEndDateHand
 						<div
 							key={idx}
 							className={`${
-								isInTerm(idx + 1) ? 'bg-primaryOrange-100 text-primaryOrange-200' : ''
+								isInTerm(idx + 1) ? 'bg-[#FFFAF4] text-primaryOrange-200' : ''
 							} min-h-[3.6rem] grid place-content-center`}
 						>
 							<button
