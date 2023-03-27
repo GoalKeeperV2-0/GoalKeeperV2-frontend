@@ -36,7 +36,10 @@ function SetGoalContentArea({ onChange }: Props) {
 					placeholder="목표 달성 게시글에 올릴 상세 내용을 작성하세요."
 					required
 					name="content"
-					onChange={onChange}
+					onChange={(e) => {
+						if (e.currentTarget.value.length > 72) return;
+						onChange(e);
+					}}
 					maxLength={72}
 					className="resize-none scrollbar w-full h-[9.4rem] outline-none focus:border-primaryOrange-200 pc:border-[0.2rem] border-[0.1rem] rounded-[0.8rem] p-[2.4rem]"
 				/>
