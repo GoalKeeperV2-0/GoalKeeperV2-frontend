@@ -21,7 +21,10 @@ function SetGoalContentArea({ onChange }: Props) {
 					focusColor="primaryOrange-200"
 					required
 					name="title"
-					onChange={onChange}
+					onChange={(e) => {
+						if (e.currentTarget.value.length > 20) return;
+						onChange(e);
+					}}
 					maxLength={20}
 				/>
 				<CountTextLength maxLength={20} textLength={goalForm.title.length} />
@@ -35,7 +38,7 @@ function SetGoalContentArea({ onChange }: Props) {
 					name="content"
 					onChange={onChange}
 					maxLength={72}
-					className="resize-none w-full h-[9.4rem] outline-none focus:border-primaryOrange-200 pc:border-[0.2rem] border-[0.1rem] rounded-[0.8rem] p-[2.4rem]"
+					className="resize-none scrollbar w-full h-[9.4rem] outline-none focus:border-primaryOrange-200 pc:border-[0.2rem] border-[0.1rem] rounded-[0.8rem] p-[2.4rem]"
 				/>
 				<CountTextLength maxLength={72} textLength={goalForm.content.length} />
 			</div>
