@@ -65,11 +65,10 @@ function CertBox({ certData, alreadyVerified }: Props) {
 
 	return (
 		<BoxLayout onOpenModal={openModalHandler}>
-			<div
-				className="h-1/2 bg-buttonGray-200 pc:rounded-t-[1.5rem] bg-cover border-t-[0.1rem] border-x-[0.1rem]   border-borderGray"
-				style={{
-					backgroundImage: `url(https://api.goalkeeper.co.kr${picture})`,
-				}}
+			<img
+				alt=""
+				className="h-1/2 bg-buttonGray-200 pc:rounded-t-[1.5rem] w-full border-t-[0.1rem] border-x-[0.1rem]   border-borderGray"
+				src={`https://api.goalkeeper.co.kr${picture}`}
 			/>
 
 			{alreadyVerified && (
