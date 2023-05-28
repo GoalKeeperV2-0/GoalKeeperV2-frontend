@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import BoxLayout from './common/BoxLayout';
 import BottomLayout from './common/BottomLayout';
 import BottomText from './common/BottomText';
+import BoxImage from './common/BoxImage';
 
 interface Props {
 	certData: CertDataType;
@@ -65,12 +66,7 @@ function CertBox({ certData, alreadyVerified }: Props) {
 
 	return (
 		<BoxLayout onOpenModal={openModalHandler}>
-			<img
-				alt=""
-				className="h-1/2 bg-buttonGray-200 pc:rounded-t-[1.5rem] w-full border-t-[0.1rem] border-x-[0.1rem]   border-borderGray"
-				src={`https://api.goalkeeper.co.kr${picture}`}
-			/>
-
+			<BoxImage imgSrc={`https://api.goalkeeper.co.kr${picture}`} />
 			{alreadyVerified && (
 				<>
 					<div className="inset-x-0 top-0 z-[100]  h-[3.6rem] flex items-center px-[1.6rem] absolute bg-primaryBlack-500 bg-opacity-80 rounded-t-[1.5rem] text-white pc:text-body1-pc text-start space-x-[0.8rem]">

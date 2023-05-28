@@ -137,7 +137,7 @@ function GoalBox({ goalData }: Props) {
 					{getBoxMessage()}
 				</div>
 			)}
-			<BoxImage bgUrl={getBgUrl()} />
+			<BoxImage imgSrc={getBgUrl()} />
 			{/*하단에만 border 부여, 상부에도 부여하면 이미지가 꽉 안차보임. */}
 			<BottomLayout>
 				<div className="flex items-center justify-between ">

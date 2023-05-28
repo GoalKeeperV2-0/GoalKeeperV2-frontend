@@ -1,14 +1,16 @@
 import React from 'react';
 
 interface Props {
-	bgUrl: string;
+	imgSrc: string;
+	classNames?: string;
 }
 
-function BoxImage({ bgUrl }: Props) {
+function BoxImage({ imgSrc, classNames }: Props) {
 	return (
-		<div
-			className="h-1/2 bg-buttonGray-200 pc:rounded-t-[1.5rem] bg-cover "
-			style={{ backgroundImage: `url(${bgUrl})` }}
+		<img
+			alt=""
+			src={imgSrc}
+			className={`h-1/2 bg-buttonGray-200 pc:rounded-t-[1.5rem] w-full border-t-[0.1rem] border-x-[0.1rem]   border-borderGray    ${classNames}`}
 		/>
 	);
 }
